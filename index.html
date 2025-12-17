@@ -5,9 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>RRB NTPC Syllabus Tracker</title>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* ===== Theme (modern premium) ===== */
-    :root{
+    /* ===== CSS Variables for Themes ===== */
+    :root {
+      /* Dark Theme (Default) */
       --bg: #0f172a;
       --glass: rgba(255,255,255,0.08);
       --card: #1e293b;
@@ -23,19 +26,124 @@
       --shadow: 0 12px 35px rgba(0,0,0,0.4);
       --gradient: linear-gradient(135deg, #6366f1, #ec4899, #f59e0b, #10b981);
       --gradient-card: linear-gradient(145deg, #1e293b, #1a2437);
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --drawer-bg: rgba(15, 23, 42, 0.95);
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0; color:var(--text);
-      background:
-        radial-gradient(1200px 600px at 85% -20%, rgba(99,102,241,0.15), transparent 60%),
-        radial-gradient(900px 500px at 10% 10%, rgba(236,72,153,0.15), transparent 60%),
-        linear-gradient(135deg,#0f172a 0%,#111827 100%);
+    
+    /* Light Theme */
+    .theme-light {
+      --bg: #f8fafc;
+      --glass: rgba(15, 23, 42, 0.05);
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --accent: #4f46e5;
+      --accent-2: #db2777;
+      --accent-3: #059669;
+      --accent-4: #d97706;
+      --accent-5: #7c3aed;
+      --pill: #f1f5f9;
+      --shadow: 0 12px 35px rgba(0,0,0,0.08);
+      --gradient: linear-gradient(135deg, #4f46e5, #db2777, #d97706, #059669);
+      --gradient-card: linear-gradient(145deg, #ffffff, #f8fafc);
+      --success: #059669;
+      --warning: #d97706;
+      --danger: #dc2626;
+      --drawer-bg: rgba(255, 255, 255, 0.98);
+    }
+    
+    /* Blue Theme */
+    .theme-blue {
+      --bg: #0c4a6e;
+      --glass: rgba(255,255,255,0.1);
+      --card: #1e3a5f;
+      --text: #e0f2fe;
+      --muted: #bae6fd;
+      --border: #1e40af;
+      --accent: #38bdf8;
+      --accent-2: #818cf8;
+      --accent-3: #22d3ee;
+      --accent-4: #60a5fa;
+      --accent-5: #3b82f6;
+      --pill: #1e3a8a;
+      --shadow: 0 12px 35px rgba(14, 165, 233, 0.2);
+      --gradient: linear-gradient(135deg, #38bdf8, #818cf8, #60a5fa, #22d3ee);
+      --gradient-card: linear-gradient(145deg, #1e3a5f, #1e3a8a);
+      --success: #22d3ee;
+      --warning: #fbbf24;
+      --danger: #fb7185;
+      --drawer-bg: rgba(12, 74, 110, 0.95);
+    }
+    
+    /* Green Theme */
+    .theme-green {
+      --bg: #064e3b;
+      --glass: rgba(255,255,255,0.08);
+      --card: #065f46;
+      --text: #d1fae5;
+      --muted: #a7f3d0;
+      --border: #047857;
+      --accent: #10b981;
+      --accent-2: #34d399;
+      --accent-3: #22c55e;
+      --accent-4: #84cc16;
+      --accent-5: #059669;
+      --pill: #064e3b;
+      --shadow: 0 12px 35px rgba(16, 185, 129, 0.2);
+      --gradient: linear-gradient(135deg, #10b981, #34d399, #84cc16, #22c55e);
+      --gradient-card: linear-gradient(145deg, #065f46, #064e3b);
+      --success: #34d399;
+      --warning: #fbbf24;
+      --danger: #f87171;
+      --drawer-bg: rgba(6, 78, 59, 0.95);
+    }
+    
+    /* Pink Theme */
+    .theme-pink {
+      --bg: #831843;
+      --glass: rgba(255,255,255,0.1);
+      --card: #9d174d;
+      --text: #fce7f3;
+      --muted: #fbcfe8;
+      --border: #be185d;
+      --accent: #ec4899;
+      --accent-2: #f472b6;
+      --accent-3: #f9a8d4;
+      --accent-4: #db2777;
+      --accent-5: #be185d;
+      --pill: #831843;
+      --shadow: 0 12px 35px rgba(236, 72, 153, 0.2);
+      --gradient: linear-gradient(135deg, #ec4899, #f472b6, #f9a8d4, #db2777);
+      --gradient-card: linear-gradient(145deg, #9d174d, #831843);
+      --success: #34d399;
+      --warning: #fbbf24;
+      --danger: #f87171;
+      --drawer-bg: rgba(131, 24, 67, 0.95);
+    }
+    
+    /* ===== Base Styles ===== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html, body {
+      height: 100%;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      overflow-x: hidden;
+      transition: background-color 0.5s ease, color 0.3s ease;
     }
-
+    
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      position: relative;
+    }
+    
     /* ===== Welcome Screen ===== */
     #welcomeScreen {
       position: fixed;
@@ -47,12 +155,12 @@
         radial-gradient(circle at 20% 80%, rgba(99,102,241,0.2) 0%, transparent 50%),
         radial-gradient(circle at 80% 20%, rgba(16,185,129,0.2) 0%, transparent 50%),
         radial-gradient(circle at 40% 40%, rgba(245,158,11,0.15) 0%, transparent 50%),
-        linear-gradient(135deg, #0f172a 0%, #111827 100%);
+        linear-gradient(135deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 80%, black) 100%);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      z-index: 100;
+      z-index: 1000;
       transition: opacity 0.8s ease, visibility 0.8s ease;
     }
     
@@ -63,15 +171,22 @@
     
     .welcome-content {
       text-align: center;
-      max-width: 700px;
+      max-width: 800px;
       padding: 50px;
       background: rgba(30, 41, 59, 0.85);
-      backdrop-filter: blur(15px);
-      border-radius: 24px;
+      backdrop-filter: blur(20px);
+      border-radius: 28px;
       border: 1px solid rgba(99,102,241,0.3);
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
       position: relative;
       overflow: hidden;
+    }
+    
+    .theme-light .welcome-content,
+    .theme-blue .welcome-content,
+    .theme-green .welcome-content,
+    .theme-pink .welcome-content {
+      background: rgba(255, 255, 255, 0.85);
     }
     
     .welcome-content::before {
@@ -80,13 +195,13 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 4px;
+      height: 6px;
       background: var(--gradient);
     }
     
     .welcome-logo {
-      width: 140px;
-      height: 140px;
+      width: 160px;
+      height: 160px;
       border-radius: 50%;
       background: var(--gradient);
       display: flex;
@@ -94,19 +209,138 @@
       justify-content: center;
       margin: 0 auto 30px;
       font-size: 4rem;
-      box-shadow: 0 15px 35px rgba(99,102,241,0.5);
+      box-shadow: 0 20px 40px rgba(99,102,241,0.5);
       animation: pulse 2.5s infinite;
+      border: 5px solid rgba(255, 255, 255, 0.2);
+      overflow: hidden;
+    }
+    
+    .welcome-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
     }
     
     @keyframes pulse {
       0% { transform: scale(1); box-shadow: 0 15px 35px rgba(99,102,241,0.5); }
-      50% { transform: scale(1.05); box-shadow: 0 20px 40px rgba(99,102,241,0.7); }
+      50% { transform: scale(1.05); box-shadow: 0 25px 50px rgba(99,102,241,0.7); }
       100% { transform: scale(1); box-shadow: 0 15px 35px rgba(99,102,241,0.5); }
     }
     
     .welcome-content h1 {
-      font-size: 2.8rem;
+      font-size: 3.2rem;
       margin: 0 0 20px;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+    }
+    
+    .welcome-content p {
+      color: var(--muted);
+      font-size: 1.3rem;
+      line-height: 1.7;
+      margin-bottom: 30px;
+    }
+    
+    .name-input {
+      width: 100%;
+      padding: 18px 24px;
+      margin: 20px 0;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(99,102,241,0.3);
+      border-radius: 16px;
+      color: var(--text);
+      font-size: 1.2rem;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    
+    .name-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(99,102,241,0.3);
+      background: rgba(255, 255, 255, 0.15);
+    }
+    
+    .welcome-btn {
+      background: var(--gradient);
+      color: white;
+      border: none;
+      padding: 20px 50px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      border-radius: 16px;
+      cursor: pointer;
+      box-shadow: 0 15px 35px rgba(99,102,241,0.5);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin-top: 10px;
+    }
+    
+    .welcome-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 25px 50px rgba(99,102,241,0.6);
+    }
+    
+    /* ===== Header / Navigation ===== */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+      background: linear-gradient(180deg, rgba(15,23,42,0.9), rgba(15,23,42,0.7));
+      border-bottom: 1px solid var(--border);
+      padding: 0 20px;
+    }
+    
+    .theme-light header,
+    .theme-blue header,
+    .theme-green header,
+    .theme-pink header {
+      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+    }
+    
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 15px 0;
+    }
+    
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .logo {
+      width: 60px;
+      height: 60px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: conic-gradient(from 220deg, var(--accent), var(--accent-3), var(--accent-4), var(--accent-2));
+      box-shadow: 0 8px 25px rgba(99,102,241,0.4);
+      overflow: hidden;
+    }
+    
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 16px;
+    }
+    
+    .titles h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      letter-spacing: 0.2px;
       background: var(--gradient);
       -webkit-background-clip: text;
       background-clip: text;
@@ -114,163 +348,462 @@
       font-weight: 800;
     }
     
-    .welcome-content p {
+    .titles p {
+      margin: 4px 0 0;
       color: var(--muted);
-      font-size: 1.2rem;
-      line-height: 1.6;
-      margin-bottom: 30px;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
     
-    .name-input {
-      width: 100%;
-      padding: 16px 20px;
-      margin: 20px 0;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(99,102,241,0.3);
-      border-radius: 12px;
-      color: var(--text);
-      font-size: 1.1rem;
-      text-align: center;
-    }
-    
-    .name-input:focus, .name-input[readonly] {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(99,102,241,0.3);
-      background: rgba(255, 255, 255, 0.1);
-    }
-    
-    .name-input[readonly] {
-      color: var(--accent);
-      font-weight: 600;
-    }
-    
-    .welcome-btn {
-      background: var(--gradient);
-      color: white;
-      border: none;
-      padding: 18px 45px;
-      font-size: 1.3rem;
+    .greeting {
       font-weight: 700;
-      border-radius: 12px;
-      cursor: pointer;
-      box-shadow: 0 12px 30px rgba(99,102,241,0.5);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      color: var(--accent);
     }
     
-    .welcome-btn:hover {
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .nav-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--border);
+      color: var(--text);
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1.2rem;
+    }
+    
+    .nav-btn:hover {
+      background: var(--accent);
       transform: translateY(-3px);
-      box-shadow: 0 18px 35px rgba(99,102,241,0.6);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     }
-
-    /* ===== Header / brand ===== */
-    header{
-      position:sticky; top:0; z-index:20;
-      backdrop-filter: blur(12px);
-      background:linear-gradient(180deg, rgba(15,23,42,0.85), rgba(15,23,42,0.7));
-      border-bottom:1px solid var(--border);
+    
+    /* ===== Drawer Menu ===== */
+    .drawer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
     }
-    .brand{
-      display:flex; align-items:center; gap:16px; padding:18px 24px;
+    
+    .drawer-overlay.active {
+      opacity: 1;
+      visibility: visible;
     }
-    .logo{
-      width:54px; height:54px; border-radius:14px; font-size:2.2rem; display:flex; align-items:center; justify-content:center;
-      background: conic-gradient(from 220deg, var(--accent), var(--accent-3), var(--accent-4), var(--accent-2));
-      box-shadow: 0 8px 20px rgba(99,102,241,0.4); color: #0f172a;
+    
+    .drawer {
+      position: fixed;
+      top: 0;
+      right: -400px;
+      width: 380px;
+      max-width: 90%;
+      height: 100%;
+      background: var(--drawer-bg);
+      backdrop-filter: blur(20px);
+      z-index: 1000;
+      overflow-y: auto;
+      transition: right 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+      box-shadow: -10px 0 40px rgba(0,0,0,0.3);
+      border-left: 1px solid var(--border);
     }
-    .titles h1{
-      margin:0; font-size:1.4rem; letter-spacing:0.2px;
+    
+    .drawer.active {
+      right: 0;
+    }
+    
+    .drawer-header {
+      padding: 25px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .drawer-header h2 {
+      font-size: 1.5rem;
       background: var(--gradient);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
     }
-    .titles p{
-      margin:4px 0 0; color:var(--muted); font-size:0.95rem;
+    
+    .drawer-close {
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.5rem;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s ease;
+    }
+    
+    .drawer-close:hover {
+      background: rgba(255,255,255,0.1);
+    }
+    
+    .drawer-content {
+      padding: 25px;
+    }
+    
+    .drawer-section {
+      margin-bottom: 30px;
+    }
+    
+    .drawer-section h3 {
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+      color: var(--accent);
       display: flex;
       align-items: center;
       gap: 10px;
     }
-    .greeting {
-      font-weight: 600;
-      color: var(--accent);
+    
+    .drawer-section h3 i {
+      font-size: 1.2rem;
     }
-
-    /* ===== Layout ===== */
-    .container{max-width:1200px; margin:28px auto; padding:0 20px}
-    .grid{display:grid; gap:20px; grid-template-columns:1fr 1fr} /* CHANGE: Equal split for 3 subjects, but now overview takes right */
-    @media (max-width:940px){ .grid{grid-template-columns:1fr} }
-
+    
+    .theme-selector {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    
+    .theme-btn {
+      padding: 12px;
+      border-radius: 12px;
+      border: 2px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+    }
+    
+    .theme-btn.active {
+      border-color: var(--accent);
+      box-shadow: 0 5px 15px rgba(99,102,241,0.3);
+    }
+    
+    .social-links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .social-link {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 15px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.05);
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.3s ease;
+    }
+    
+    .social-link:hover {
+      background: var(--accent);
+      transform: translateX(5px);
+    }
+    
+    .social-link i {
+      font-size: 1.3rem;
+      width: 30px;
+    }
+    
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .drawer-btn {
+      padding: 15px;
+      border-radius: 12px;
+      border: none;
+      background: rgba(255,255,255,0.1);
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .drawer-btn:hover {
+      background: var(--accent);
+      transform: translateX(5px);
+    }
+    
+    .drawer-btn.danger {
+      background: rgba(239, 68, 68, 0.2);
+      color: var(--danger);
+    }
+    
+    .drawer-btn.danger:hover {
+      background: var(--danger);
+      color: white;
+    }
+    
+    /* ===== Main Container ===== */
+    .container {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+    
+    /* ===== Tabs ===== */
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+    }
+    
+    .tab-btn {
+      padding: 15px 25px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      font-weight: 600;
+    }
+    
+    .tab-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      box-shadow: 0 8px 20px rgba(99,102,241,0.3);
+    }
+    
+    .tab-btn:hover:not(.active) {
+      background: rgba(255,255,255,0.1);
+    }
+    
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    /* ===== Grid Layout ===== */
+    .grid {
+      display: grid;
+      gap: 25px;
+      grid-template-columns: 1fr 1fr;
+    }
+    
+    @media (max-width: 992px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
     /* ===== Cards ===== */
-    .card{
-      background: var(--gradient-card); border:1px solid var(--border); border-radius:18px;
-      box-shadow:var(--shadow); overflow:hidden;
+    .card {
+      background: var(--gradient-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
       position: relative;
     }
+    
     .card::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
-      height: 4px;
+      height: 5px;
       background: var(--gradient);
     }
-    .card h2{
-      margin:0; padding:16px 20px; font-size:1.2rem;
-      background:linear-gradient(180deg, rgba(255,255,255,0.06), transparent);
-      border-bottom:1px solid var(--border);
+    
+    .card h2 {
+      margin: 0;
+      padding: 20px 25px;
+      font-size: 1.3rem;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), transparent);
+      border-bottom: 1px solid var(--border);
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .card .body {
+      padding: 20px;
+    }
+    
+    /* ===== Subjects List ===== */
+    .subject {
+      margin-bottom: 25px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), transparent);
+    }
+    
+    .subject-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 20px;
+      background: var(--pill);
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    
+    .subject-header:hover {
+      background: color-mix(in srgb, var(--pill) 90%, white);
+    }
+    
+    .subject-title {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+    
+    .badge {
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      color: #0f172a;
+      font-weight: 800;
+      background: white;
+    }
+    
+    .badge.math { background: var(--accent); }
+    .badge.reasoning { background: var(--accent-3); }
+    .badge.history { background: #f59e0b; }
+    .badge.polity { background: #ec4899; }
+    .badge.geography { background: #8b5cf6; }
+    .badge.economy { background: #10b981; }
+    .badge.static-gk { background: #06b6d4; }
+    .badge.science { background: #f97316; }
+    .badge.computer { background: #6366f1; }
+    
+    .progress-wrap {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+    
+    .progress-bar {
+      height: 12px;
+      width: 200px;
+      background: rgba(0,0,0,0.2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    
+    @media (max-width: 768px) {
+      .progress-bar {
+        width: 120px;
+      }
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-3));
+      width: 0%;
+      transition: width 1s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+    
+    .percent {
+      font-size: 0.95rem;
+      color: var(--muted);
+      width: 60px;
+      text-align: right;
       font-weight: 700;
     }
-    .card .body{padding:18px}
-
-    /* ===== Subjects list ===== */
-    .subject{
-      margin-bottom:20px; border:1px solid var(--border); border-radius:16px; overflow:hidden;
-      background:linear-gradient(180deg, rgba(255,255,255,0.04), transparent);
+    
+    .topics {
+      padding: 15px 20px;
+      display: grid;
+      gap: 12px;
+      max-height: 400px;
+      overflow-y: auto;
     }
-    .subject-header{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:14px 16px; background:var(--pill);
+    
+    .topic {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      padding: 15px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
     }
-    .subject-title{display:flex; gap:12px; align-items:center}
-    .badge{
-      padding:5px 12px; border-radius:999px; font-size:0.8rem; color:#0f172a; font-weight:700;
-      background:#fff;
-    }
-    .badge.math{background:var(--accent); color:#0f172a}
-    .badge.reasoning{background:var(--accent-3); color:#081313}
-    .badge.awareness{background:var(--accent-4); color:#140f05}
-    .progress-wrap{display:flex; gap:12px; align-items:center}
-    .progress-bar{
-      height:12px; width:240px; background:#0f1428; border:1px solid var(--border); border-radius:10px; overflow:hidden;
-    }
-    .progress-fill{height:100%; background:linear-gradient(90deg,var(--accent),var(--accent-3)); width:0%}
-    .percent{font-size:0.9rem; color:var(--muted); width:70px; text-align:right; font-weight: 600;}
-    .topics{
-      padding:12px 16px; display:grid; gap:10px; max-height:320px; overflow-y:auto; /* Scroller added for topics */
-    }
-    .topic{
-      display:flex; align-items:flex-start; gap:12px; padding:12px 14px; border-radius:14px;
-      background:rgba(255,255,255,0.04); border:1px solid #334155;
-      transition: all 0.2s ease;
-    }
+    
     .topic:hover {
-      background: rgba(255,255,255,0.07);
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      background: rgba(255,255,255,0.08);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
     }
-    .topic input{
-      transform:translateY(2px);
-      width: 18px;
-      height: 18px;
+    
+    .topic input {
+      width: 22px;
+      height: 22px;
       cursor: pointer;
+      transform: translateY(3px);
+      accent-color: var(--accent);
     }
-    .topic label{cursor:pointer; line-height:1.5; flex: 1;}
-    .topic small{display:block; color:var(--muted); margin-top:6px; font-size:0.85rem;}
-    .weight{
-      margin-left:auto; font-size:0.8rem; color:#6366f1; background:#0f1428; padding:4px 10px; border-radius:999px; border:1px solid #334155;
-      font-weight: 600;
+    
+    .topic label {
+      cursor: pointer;
+      line-height: 1.5;
+      flex: 1;
+    }
+    
+    .topic small {
+      display: block;
+      color: var(--muted);
+      margin-top: 8px;
+      font-size: 0.9rem;
+    }
+    
+    .weight {
+      margin-left: auto;
+      font-size: 0.85rem;
+      color: var(--accent);
+      background: rgba(0,0,0,0.2);
+      padding: 5px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      font-weight: 700;
     }
     
     /* Star ratings */
@@ -279,793 +812,2155 @@
       color: #fbbf24;
       font-size: 0.9rem;
     }
+    
     .stars.three-stars::after { content: " ★★★"; }
     .stars.two-stars::after { content: " ★★"; }
     .stars.one-star::after { content: " ★"; }
-
+    
     /* ===== Charts ===== */
-    .charts{display:grid; gap:20px; text-align:center}
-    .overall-chart{margin-bottom:28px}
-    .overall-donut{width:220px; height:220px; display:block; margin:0 auto}
-    .overall-donut text{fill:var(--text); font-size:26px; font-weight:800}
-    .subject-charts{display:flex; flex-direction:row; justify-content:space-around; gap:24px; flex-wrap:wrap}
-    .chart-card{
-      display:flex; flex-direction:column; align-items:center; gap:10px; min-width:190px;
-      padding: 15px;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(99,102,241,0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .chart-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-    }
-    .donut{width:110px; height:110px;}
-    .donut text{fill:var(--text); font-size:14px; font-weight:800}
-    .legend{display:flex; gap:12px; flex-wrap:wrap; justify-content: center;}
-    .legend-item{display:flex; align-items:center; gap:8px; font-size:0.95rem; color:var(--muted)}
-    .dot{width:14px; height:14px; border-radius:50%}
-    .dot.math{background:var(--accent)}
-    .dot.reasoning{background:var(--accent-3)}
-    .dot.awareness{background:var(--accent-4)}
-    .dot.todo{background:#334155}
-    .dot.done{background:var(--accent-3)}
-    .subject-names{margin-top:6px; font-size:1.1rem; font-weight:700; color:var(--accent)}
-
-    /* ===== Controls ===== */
-    .controls{display:flex; gap:10px; flex-wrap:wrap}
-    button{
-      background:linear-gradient(180deg,#4f46e5,#4338ca); color:var(--text); border:1px solid #4f46e5;
-      padding:12px 16px; border-radius:12px; cursor:pointer; font-weight:700;
-      transition: all 0.2s ease;
-    }
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    }
-    button.secondary{background:#172042; border-color:#23305f}
-    button.danger{background:#401827; border-color:#6a1f36}
-    .note{color:var(--muted); font-size:0.95rem; margin-top: 15px;}
-
-    /* ===== Footer ===== */
-    footer{
-      margin:28px auto; max-width:1200px; padding:0 20px; color:var(--muted); font-size:0.95rem;
+    .charts {
+      display: grid;
+      gap: 25px;
       text-align: center;
-      padding: 20px;
-      border-top: 1px solid var(--border);
-    }
-    .creator {
-      font-weight: 700;
-      color: var(--accent);
-    }
-
-    /* Print */
-    @media print{
-      header{position:static; background:#fff; color:#000; border:0}
-      body{background:#fff; color:#000}
-      .card{box-shadow:none}
-      .badge{color:#000}
-    }
-
-    /* Custom scrollbar */
-    .topics::-webkit-scrollbar {
-      width: 8px;
-    }
-    .topics::-webkit-scrollbar-track {
-      background: rgba(255,255,255,0.05);
-      border-radius: 10px;
-    }
-    .topics::-webkit-scrollbar-thumb {
-      background: var(--accent);
-      border-radius: 10px;
-    }
-    .topics::-webkit-scrollbar-thumb:hover {
-      background: var(--accent-3);
-    }
-
-    /* Motivational message */
-    .motivational-message {
-      text-align: center;
-      margin: 15px 0;
-      padding: 12px;
-      background: rgba(99,102,241,0.1);
-      border-radius: 12px;
-      border-left: 4px solid var(--accent);
-      font-style: italic;
-    }
-
-    
-    /* Progress rings for admin panel */
-    .progress-ring {
-      position: relative;
-      width: 40px;
-      height: 40px;
     }
     
-    .progress-ring-circle {
-      transform: rotate(-90deg);
-      transform-origin: 50% 50%;
+    .overall-chart {
+      margin-bottom: 30px;
     }
     
-    .admin-student-progress {
+    .overall-donut {
+      width: 240px;
+      height: 240px;
+      display: block;
+      margin: 0 auto;
+    }
+    
+    .overall-donut text {
+      fill: var(--text);
+      font-size: 28px;
+      font-weight: 900;
+    }
+    
+    .subject-charts {
       display: flex;
-      align-items: center;
-      gap: 15px;
+      flex-direction: row;
+      justify-content: space-around;
+      gap: 20px;
+      flex-wrap: wrap;
     }
     
-    .admin-progress-item {
+    .chart-card {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 5px;
+      gap: 12px;
+      min-width: 180px;
+      padding: 20px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-
-
     
+    .chart-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    }
+    
+    .donut {
+      width: 120px;
+      height: 120px;
+    }
+    
+    .donut text {
+      fill: var(--text);
+      font-size: 16px;
+      font-weight: 800;
+    }
+    
+    .legend {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 15px;
+    }
+    
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+    
+    .dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+    }
+    
+    .dot.math { background: var(--accent); }
+    .dot.reasoning { background: var(--accent-3); }
+    .dot.history { background: #f59e0b; }
+    .dot.polity { background: #ec4899; }
+    .dot.geography { background: #8b5cf6; }
+    .dot.economy { background: #10b981; }
+    .dot.static-gk { background: #06b6d4; }
+    .dot.science { background: #f97316; }
+    .dot.computer { background: #6366f1; }
+    .dot.todo { background: var(--border); }
+    .dot.done { background: var(--accent-3); }
+    
+    .subject-names {
+      margin-top: 8px;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+    
+    /* ===== CBT Analysis Section ===== */
+    .cbt-container {
+      display: grid;
+      gap: 25px;
+      grid-template-columns: 1fr 1fr;
+    }
+    
+    @media (max-width: 768px) {
+      .cbt-container {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .cbt-card {
+      grid-column: 1 / -1;
+    }
+    
+    .cbt-controls {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    
+    .cbt-btn {
+      padding: 12px 20px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+    }
+    
+    .cbt-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+    
+    .cbt-form {
+      display: grid;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .form-group label {
+      font-weight: 600;
+      color: var(--muted);
+    }
+    
+    .form-group input, .form-group select {
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      font-size: 1rem;
+    }
+    
+    .form-group input:focus, .form-group select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(99,102,241,0.2);
+    }
+    
+    /* ===== Congratulations Modal ===== */
+    .congrats-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+    
+    .congrats-modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .congrats-content {
+      background: var(--gradient-card);
+      border-radius: 24px;
+      padding: 40px;
+      text-align: center;
+      max-width: 500px;
+      width: 90%;
+      border: 1px solid var(--border);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .congrats-content::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: var(--gradient);
+    }
+    
+    .congrats-icon {
+      font-size: 5rem;
+      margin-bottom: 20px;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    .congrats-content h2 {
+      font-size: 2.2rem;
+      margin-bottom: 15px;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    .congrats-content p {
+      color: var(--muted);
+      font-size: 1.2rem;
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
+    
+    .close-congrats {
+      padding: 12px 30px;
+      background: var(--accent);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    
+    .close-congrats:hover {
+      transform: translateY(-3px);
+    }
+    
+    /* ===== Controls ===== */
+    .controls {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    
+    button {
+      padding: 14px 22px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .btn-primary {
+      background: var(--gradient);
+      color: white;
+    }
+    
+    .btn-secondary {
+      background: rgba(255,255,255,0.1);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.2);
+      color: var(--danger);
+      border: 1px solid var(--danger);
+    }
+    
+    .btn-danger:hover {
+      background: var(--danger);
+      color: white;
+    }
+    
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+    
+    .note {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-top: 15px;
+      font-style: italic;
+    }
+    
+    /* ===== Motivational Message ===== */
+    .motivational-message {
+      text-align: center;
+      margin: 20px 0;
+      padding: 15px;
+      background: rgba(99,102,241,0.1);
+      border-radius: 16px;
+      border-left: 5px solid var(--accent);
+      font-style: italic;
+      font-size: 1.1rem;
+    }
+    
+    /* ===== Footer ===== */
+    footer {
+      margin: 40px auto;
+      max-width: 1200px;
+      padding: 0 20px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      text-align: center;
+      padding: 25px;
+      border-top: 1px solid var(--border);
+    }
+    
+    .creator {
+      font-weight: 800;
+      color: var(--accent);
+    }
+    
+    /* ===== Reset Confirmation ===== */
+    .reset-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+    
+    .reset-modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .reset-content {
+      background: var(--gradient-card);
+      border-radius: 24px;
+      padding: 40px;
+      text-align: center;
+      max-width: 500px;
+      width: 90%;
+      border: 1px solid var(--border);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+    }
+    
+    .reset-content h2 {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+      color: var(--danger);
+    }
+    
+    .reset-content p {
+      color: var(--muted);
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
+    
+    .reset-confirm-input {
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 2px solid var(--border);
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      font-size: 1rem;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    
+    .reset-confirm-input:focus {
+      outline: none;
+      border-color: var(--danger);
+    }
+    
+    .reset-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+    }
+    
+    /* ===== Print Styles ===== */
+    @media print {
+      .drawer, .nav-controls, .tabs, .cbt-form, .controls button:not(.print-btn) {
+        display: none !important;
+      }
+      
+      .card {
+        box-shadow: none;
+        border: 1px solid #ccc;
+      }
+      
+      body {
+        background: white;
+        color: black;
+      }
+    }
+    
+    /* ===== Responsive Adjustments ===== */
+    @media (max-width: 768px) {
+      .welcome-content {
+        padding: 30px 20px;
+        margin: 20px;
+      }
+      
+      .welcome-content h1 {
+        font-size: 2.2rem;
+      }
+      
+      .welcome-content p {
+        font-size: 1.1rem;
+      }
+      
+      .titles h1 {
+        font-size: 1.2rem;
+      }
+      
+      .grid {
+        gap: 20px;
+      }
+      
+      .drawer {
+        width: 320px;
+      }
+      
+      .tab-btn {
+        padding: 12px 18px;
+        font-size: 0.9rem;
+      }
+      
+      .subject-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+      }
+      
+      .progress-wrap {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .nav-container {
+        padding: 10px 0;
+      }
+      
+      .logo {
+        width: 50px;
+        height: 50px;
+      }
+      
+      .titles h1 {
+        font-size: 1rem;
+      }
+      
+      .nav-btn {
+        width: 45px;
+        height: 45px;
+      }
+      
+      .container {
+        padding: 0 15px;
+      }
+    }
   </style>
 </head>
-<body>
-  <!-- Welcome Screen (Now shows EVERY time, with conditional input) -->
+<body class="theme-dark">
+  <!-- Welcome Screen -->
   <div id="welcomeScreen">
     <div class="welcome-content">
-      <div class="welcome-logo">🚆</div>
-      <h1 id="welcomeTitle">RRB NTPC Syllabus Tracker</h1>
-      <p id="welcomeDesc">अपनी RRB NTPC परीक्षा की तैयारी को व्यवस्थित और ट्रैक करें। विषय-वार प्रगति देखें और अपने अध्ययन को बेहतर बनाएं।</p>
+      <div class="welcome-logo">
+        <img src="https://image2url.com/images/1765963464649-16fe2bee-cc47-4d16-b4ae-96e40492943d.png" alt="RRB NTPC Logo">
+      </div>
+      <h1>RRB NTPC Syllabus Tracker</h1>
+      <p>अपनी RRB NTPC परीक्षा की तैयारी को व्यवस्थित और ट्रैक करें। विषय-वार प्रगति देखें, CBT परीक्षा का विश्लेषण करें और अपने अध्ययन को बेहतर बनाएं।</p>
       
-      <input type="text" class="name-input" id="studentName" placeholder="अपना नाम दर्ज करें" maxlength="30">
+      <input type="text" class="name-input" id="studentName" placeholder="अपना नाम दर्ज करें (उदा: राहुल शर्मा)" maxlength="30">
       
-      <button class="welcome-btn" id="startTracking">Track Your Progress</button>
+      <button class="welcome-btn" id="startTracking">
+        <i class="fas fa-chart-line"></i> Track Your Progress
+      </button>
+      <p style="margin-top: 20px; color: var(--muted); font-size: 0.9rem;">डेटा आपके डिवाइस पर सुरक्षित रहेगा। आप इसे कभी भी एक्सपोर्ट/इम्पोर्ट कर सकते हैं।</p>
     </div>
   </div>
-
+  
+  <!-- Drawer Overlay -->
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+  
+  <!-- Drawer Menu -->
+  <div class="drawer" id="drawer">
+    <div class="drawer-header">
+      <h2><i class="fas fa-bars"></i> मेनू</h2>
+      <button class="drawer-close" id="drawerClose">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="drawer-content">
+      <div class="drawer-section">
+        <h3><i class="fas fa-palette"></i> थीम</h3>
+        <div class="theme-selector">
+          <button class="theme-btn active" data-theme="dark">डार्क</button>
+          <button class="theme-btn" data-theme="light">लाइट</button>
+          <button class="theme-btn" data-theme="blue">ब्लू</button>
+          <button class="theme-btn" data-theme="green">ग्रीन</button>
+          <button class="theme-btn" data-theme="pink">पिंक</button>
+        </div>
+      </div>
+      
+      <div class="drawer-section">
+        <h3><i class="fas fa-share-alt"></i> शेयर करें</h3>
+        <div class="social-links">
+          <a href="https://skpro7.github.io/ntpc/" class="social-link" target="_blank">
+            <i class="fab fa-github"></i>
+            <div>
+              <strong>GitHub पर देखें</strong>
+              <small>सोर्स कोड और अपडेट</small>
+            </div>
+          </a>
+          <a href="https://t.me/shailuk7" class="social-link" target="_blank">
+            <i class="fab fa-telegram"></i>
+            <div>
+              <strong>Telegram पर क्वेरी</strong>
+              <small>सहायता और अपडेट के लिए</small>
+            </div>
+          </a>
+        </div>
+      </div>
+      
+      <div class="drawer-section">
+        <h3><i class="fas fa-cog"></i> सेटिंग्स</h3>
+        <div class="btn-group">
+          <button class="drawer-btn" id="exportBackupBtn">
+            <i class="fas fa-file-export"></i> बैकअप एक्सपोर्ट करें
+          </button>
+          <button class="drawer-btn" id="importBackupBtn">
+            <i class="fas fa-file-import"></i> बैकअप इम्पोर्ट करें
+          </button>
+          <button class="drawer-btn" onclick="window.print()">
+            <i class="fas fa-print"></i> प्रिंट / PDF सेव करें
+          </button>
+          <button class="drawer-btn danger" id="resetBtn">
+            <i class="fas fa-trash-alt"></i> प्रोग्रेस रीसेट करें
+          </button>
+        </div>
+      </div>
+      
+      <div class="drawer-section">
+        <h3><i class="fas fa-info-circle"></i> जानकारी</h3>
+        <p style="color: var(--muted); font-size: 0.95rem; line-height: 1.6;">
+          यह टूल RRB NTPC परीक्षा की तैयारी करने वाले उम्मीदवारों के लिए बनाया गया है। 
+          आप अपनी प्रगति ट्रैक कर सकते हैं, विषयवार विश्लेषण देख सकते हैं और CBT परीक्षा का मूल्यांकन कर सकते हैं।
+        </p>
+        <p style="color: var(--accent); margin-top: 15px; font-weight: 600;">
+          <i class="fas fa-heart"></i> Created by: Mr. SHAILENDRA KUSHWAH
+        </p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Reset Confirmation Modal -->
+  <div class="reset-modal" id="resetModal">
+    <div class="reset-content">
+      <h2><i class="fas fa-exclamation-triangle"></i> प्रोग्रेस रीसेट करें</h2>
+      <p>क्या आप वाकई सभी टॉपिक्स और प्रोग्रेस को रीसेट करना चाहते हैं? यह एक्शन पूर्ववत नहीं किया जा सकता।</p>
+      <p>पुष्टि करने के लिए नीचे दिए गए बॉक्स में <strong>"RESET MY PROGRESS"</strong> टाइप करें:</p>
+      <input type="text" class="reset-confirm-input" id="resetConfirmInput" placeholder='यहां "RESET MY PROGRESS" टाइप करें'>
+      <div class="reset-buttons">
+        <button class="btn-secondary" id="resetCancel">कैंसल</button>
+        <button class="btn-danger" id="resetConfirm" disabled>रीसेट करें</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Congratulations Modal -->
+  <div class="congrats-modal" id="congratsModal">
+    <div class="congrats-content">
+      <div class="congrats-icon">
+        <i class="fas fa-trophy"></i>
+      </div>
+      <h2>बधाई हो!</h2>
+      <p id="congratsMessage">आपने एक टॉपिक पूरा किया है! आपकी मेहनत आपको सफलता दिलाएगी।</p>
+      <button class="close-congrats" id="closeCongrats">जारी रखें</button>
+    </div>
+  </div>
+  
   <!-- Main App -->
   <div id="mainApp" style="display: none;">
-    <!-- CHANGE: Add admin toggle button -->
-    
-    
     <header>
-      <div class="brand">
-        <div class="logo" aria-hidden="true">
-          <img src="https://api.memozing.com/res/contents/600x600crop/lessons/d87939d95432b31083271a1c-ea11ba456b077ac2b90ad30.jpg" alt="Logo" style="width: 100%; height: 100%; border-radius: 14px; object-fit: cover;">
+      <div class="nav-container">
+        <div class="brand">
+          <div class="logo">
+            <img src="https://image2url.com/images/1765963464649-16fe2bee-cc47-4d16-b4ae-96e40492943d.png" alt="RRB NTPC Logo">
+          </div>
+          <div class="titles">
+            <h1>RRB NTPC Syllabus Tracker</h1>
+            <p><span class="greeting" id="greetingText">Welcome</span> | Tick topics to update graphs. Progress auto-saves.</p>
+          </div>
         </div>
-        <div class="titles">
-          <h1>Mr.SK Study Help - RRB NTPC Syllabus Tracker</h1>
-          <p><span class="greeting" id="greetingText">Welcome</span> | Tick topics to update graphs. Progress auto-saves.</p>
+        <div class="nav-controls">
+          <button class="nav-btn" id="menuBtn">
+            <i class="fas fa-bars"></i>
+          </button>
+          <button class="nav-btn" id="themeToggle">
+            <i class="fas fa-moon"></i>
+          </button>
         </div>
       </div>
     </header>
-
-    <div class="container grid">
-      <div class="card">
-        <h2>Subjects and Topics</h2>
-        <div class="body" id="subjectsContainer"></div>
+    
+    <div class="container">
+      <!-- Tabs -->
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="syllabus">सिलेबस ट्रैकर</button>
+        <button class="tab-btn" data-tab="cbt-analysis">CBT विश्लेषण</button>
+        <button class="tab-btn" data-tab="performance">प्रदर्शन ग्राफ</button>
       </div>
-
-      <div class="card">
-        <h2>Progress Overview</h2>
-        <div class="body charts">
-          <div class="motivational-message" id="motivationalMessage">
-            आपकी सफलता की यात्रा आज से शुरू होती है!
+      
+      <!-- Syllabus Tab -->
+      <div class="tab-content active" id="syllabus-tab">
+        <div class="motivational-message" id="motivationalMessage">
+          आपकी सफलता की यात्रा आज से शुरू होती है! हर दिन थोड़ा पढ़ें, सफलता आपके कदम चूमेगी!
+        </div>
+        
+        <div class="grid">
+          <!-- Subjects List -->
+          <div class="card">
+            <h2>विषय और टॉपिक्स <span id="totalProgress">(0% पूर्ण)</span></h2>
+            <div class="body">
+              <div id="subjectsContainer"></div>
+              <div class="controls">
+                <button class="btn-primary" id="expandAll">
+                  <i class="fas fa-expand-alt"></i> सभी एक्सपैंड करें
+                </button>
+                <button class="btn-secondary" id="collapseAll">
+                  <i class="fas fa-compress-alt"></i> सभी कोलैप्स करें
+                </button>
+                <button class="btn-secondary" id="markAll">
+                  <i class="fas fa-check-double"></i> सभी मार्क करें
+                </button>
+                <button class="btn-secondary" id="unmarkAll">
+                  <i class="fas fa-undo"></i> सभी अनमार्क करें
+                </button>
+              </div>
+            </div>
           </div>
           
-          <div class="overall-chart">
-            <svg class="overall-donut" viewBox="0 0 200 200" aria-label="Overall completion donut">
-              <circle cx="100" cy="100" r="85" fill="none" stroke="#334155" stroke-width="25"/>
-              <circle id="donutOverall" cx="100" cy="100" r="85" fill="none" stroke="url(#gradOverall)" stroke-width="25" stroke-linecap="round" stroke-dasharray="534" stroke-dashoffset="534"/>
-              <defs>
-                <linearGradient id="gradOverall" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#6366f1"/>
-                  <stop offset="100%" stop-color="#10b981"/>
-                </linearGradient>
-              </defs>
-              <text x="100" y="105" text-anchor="middle" id="overallText">0%</text>
-            </svg>
-            <div class="legend">
-              <div class="legend-item"><span class="dot done"></span>Completed</div>
-              <div class="legend-item"><span class="dot todo"></span>Pending</div>
-            </div>
-            <p class="note">Overall completion updates as you tick topics across all subjects.</p>
-          </div>
-
-          <!-- CHANGE: Remove Science chart; now 3 charts -->
-          <div class="subject-charts">
-            <div class="chart-card">
-              <svg class="donut" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="40" fill="none" stroke="#334155" stroke-width="15"/>
-                <circle id="donutMath" cx="50" cy="50" r="40" fill="none" stroke="#6366f1" stroke-width="15" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="251"/>
-                <text x="50" y="55" text-anchor="middle" id="mathText">0%</text>
-              </svg>
-              <div class="progress-bar" style="width:100px"><div class="progress-fill" id="barMath"></div></div>
-              <div class="subject-names">Mathematics</div>
-            </div>
-
-            <div class="chart-card">
-              <svg class="donut" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="40" fill="none" stroke="#334155" stroke-width="15"/>
-                <circle id="donutReasoning" cx="50" cy="50" r="40" fill="none" stroke="#10b981" stroke-width="15" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="251"/>
-                <text x="50" y="55" text-anchor="middle" id="reasoningText">0%</text>
-              </svg>
-              <div class="progress-bar" style="width:100px"><div class="progress-fill" id="barReasoning"></div></div>
-              <div class="subject-names">Reasoning</div>
-            </div>
-
-            <div class="chart-card">
-              <svg class="donut" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="40" fill="none" stroke="#334155" stroke-width="15"/>
-                <circle id="donutAwareness" cx="50" cy="50" r="40" fill="none" stroke="#f59e0b" stroke-width="15" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="251"/>
-                <text x="50" y="55" text-anchor="middle" id="awarenessText">0%</text>
-              </svg>
-              <div class="progress-bar" style="width:100px"><div class="progress-fill" id="barAwareness"></div></div>
-              <div class="subject-names">General Awareness & Science</div>
+          <!-- Progress Overview -->
+          <div class="card">
+            <h2>प्रगति अवलोकन</h2>
+            <div class="body charts">
+              <div class="overall-chart">
+                <svg class="overall-donut" viewBox="0 0 200 200" aria-label="Overall completion donut">
+                  <circle cx="100" cy="100" r="85" fill="none" stroke="var(--border)" stroke-width="25"/>
+                  <circle id="donutOverall" cx="100" cy="100" r="85" fill="none" stroke="url(#gradOverall)" stroke-width="25" stroke-linecap="round" stroke-dasharray="534" stroke-dashoffset="534"/>
+                  <defs>
+                    <linearGradient id="gradOverall" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="var(--accent)"/>
+                      <stop offset="100%" stop-color="var(--accent-3)"/>
+                    </linearGradient>
+                  </defs>
+                  <text x="100" y="105" text-anchor="middle" id="overallText">0%</text>
+                </svg>
+                <div class="legend">
+                  <div class="legend-item"><span class="dot done"></span>पूर्ण</div>
+                  <div class="legend-item"><span class="dot todo"></span>शेष</div>
+                </div>
+                <p class="note">आपके द्वारा टिक किए गए टॉपिक्स के अनुसार समग्र प्रगति अपडेट होती है।</p>
+              </div>
+              
+              <div class="subject-charts" id="subjectCharts">
+                <!-- Charts will be dynamically generated -->
+              </div>
             </div>
           </div>
-
-          <div class="controls">
-            <button id="expandAll">Expand All</button>
-            <button class="secondary" id="collapseAll">Collapse All</button>
-            <button class="danger" id="resetProgress">Reset Progress</button>
-            <button class="secondary" onclick="window.print()">Print / Save PDF</button>
-            <button id="exportBtn">Export Backup</button>
-            <button class="secondary" id="importBtn">Import Backup</button>
-            <input type="file" id="importFile" accept=".json" style="display:none">
-          
-
+        </div>
+      </div>
+      
+      <!-- CBT Analysis Tab -->
+      <div class="tab-content" id="cbt-analysis-tab">
+        <div class="card">
+          <h2>CBT परीक्षा विश्लेषण</h2>
+          <div class="body">
+            <div class="cbt-controls">
+              <button class="cbt-btn active" data-cbt="cbt1">CBT 1</button>
+              <button class="cbt-btn" data-cbt="cbt2">CBT 2</button>
+              <button class="cbt-btn" data-cbt="full">फुल टेस्ट</button>
+            </div>
+            
+            <div class="cbt-container">
+              <div class="card">
+                <h3>मार्क्स एंट्री</h3>
+                <div class="body">
+                  <form class="cbt-form" id="cbtForm">
+                    <div class="form-group">
+                      <label for="testName">टेस्ट का नाम:</label>
+                      <input type="text" id="testName" placeholder="उदा: Mock Test 1, Previous Year Paper" required>
+                    </div>
+                    
+                    <div class="form-group">
+                      <label for="testDate">तारीख:</label>
+                      <input type="date" id="testDate" required>
+                    </div>
+                    
+                    <div class="form-group">
+                      <label for="mathMarks">गणित (अंक):</label>
+                      <input type="number" id="mathMarks" min="0" max="100" placeholder="0-100" required>
+                    </div>
+                    
+                    <div class="form-group">
+                      <label for="reasoningMarks">रीजनिंग (अंक):</label>
+                      <input type="number" id="reasoningMarks" min="0" max="100" placeholder="0-100" required>
+                    </div>
+                    
+                    <div class="form-group">
+                      <label for="gsMarks">सामान्य जागरूकता (अंक):</label>
+                      <input type="number" id="gsMarks" min="0" max="100" placeholder="0-100" required>
+                    </div>
+                    
+                    <div class="form-group">
+                      <label for="totalMarks">कुल अंक:</label>
+                      <input type="number" id="totalMarks" min="0" max="300" placeholder="0-300" required>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary">
+                      <i class="fas fa-save"></i> सेव करें
+                    </button>
+                  </form>
+                </div>
+              </div>
+              
+              <div class="card">
+                <h3>अंतिम प्रदर्शन</h3>
+                <div class="body">
+                  <div id="latestPerformance">
+                    <p style="text-align: center; color: var(--muted); padding: 30px;">अभी तक कोई टेस्ट डेटा नहीं है। पहला टेस्ट एंट्री जोड़ें।</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="card cbt-card">
+                <h3>प्रदर्शन ट्रेंड</h3>
+                <div class="body">
+                  <canvas id="performanceChart" height="250"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Performance Graph Tab -->
+      <div class="tab-content" id="performance-tab">
+        <div class="card">
+          <h2>विस्तृत प्रदर्शन विश्लेषण</h2>
+          <div class="body">
+            <div class="grid">
+              <div class="card">
+                <h3>विषयवार प्रगति</h3>
+                <div class="body">
+                  <canvas id="subjectProgressChart" height="300"></canvas>
+                </div>
+              </div>
+              
+              <div class="card">
+                <h3>टॉपिक कवरेज</h3>
+                <div class="body">
+                  <canvas id="topicCoverageChart" height="300"></canvas>
+                </div>
+              </div>
+            </div>
+            
+            <div class="card" style="margin-top: 25px;">
+              <h3>साप्ताहिक अध्ययन ट्रेंड</h3>
+              <div class="body">
+                <canvas id="studyTrendChart" height="250"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
     <footer>
-      © <span class="creator">Mr. SHAILENDRA KUSHWAH</span> — RRB NTPC Syllabus Tracker. Designed for reproducible tracking. Data is saved locally on your device.
+      © <span class="creator">Mr. SHAILENDRA KUSHWAH</span> — RRB NTPC Syllabus Tracker 2026. Designed for effective exam preparation. Data is saved locally on your device.
+      <p style="margin-top: 10px; font-size: 0.85rem;">
+        <i class="fas fa-mobile-alt"></i> मोबाइल फ्रेंडली | <i class="fas fa-cloud-download-alt"></i> ऑफलाइन उपलब्ध | <i class="fas fa-chart-bar"></i> एडवांस्ड एनालिटिक्स
+      </p>
     </footer>
   </div>
-
+  
+  <!-- Hidden file input for import -->
+  <input type="file" id="importFile" accept=".json" style="display:none">
+  
   <script>
-    /* ========== CONFIG: RRB NTPC Syllabus (CHANGE: Merged Science into Awareness; 3 subjects only) ========== */
+    // ========== CONFIGURATION ==========
     const CONFIG = {
-      brandName: "Mr. SHAILENDRA KUSHWAH - RRB NTPC Syllabus Tracker",
-      subjectWeights: { Math: 1, Reasoning: 1, Awareness: 1 }, // CHANGE: Removed Science
-      // CHANGE: Removed adminPassword; now direct access for you
+      brandName: "RRB NTPC Syllabus Tracker",
+      appVersion: "2026.1.0",
+      
+      // Subjects with detailed breakdown
       subjects: [
         {
-          id: "Math",
-          title: "Mathematics (गणित)",
+          id: "math",
+          title: "गणित (Mathematics)",
           colorClass: "math",
+          weight: 1,
           topics: [
-            { id:"numSys", name:"Number System", hint:"Number System, Decimals, Fractions, LCM and HCF", weight:1, stars: 3 },
-            { id:"ratio", name:"Ratio and Proportions", hint:"Ratio and Proportions", weight:1, stars: 2 },
-            { id:"percent", name:"Percentage", hint:"Percentage", weight:1, stars: 3 },
-            { id:"mensuration", name:"Mensuration", hint:"Mensuration", weight:1, stars: 2 },
-            { id:"timeWork", name:"Time and Work", hint:"Time and Work", weight:1, stars: 3 },
-            { id:"speedTime", name:"Speed, Time, and Distance", hint:"Speed, Time, and Distance", weight:1, stars: 3 },
-            { id:"simpleInterest", name:"Simple and Compound Interest", hint:"Simple and Compound Interest", weight:1, stars: 2 },
-            { id:"profitLoss", name:"Profit and Loss", hint:"Profit and Loss", weight:1, stars: 2 },
-            { id:"algebra", name:"Elementary Algebra", hint:"Elementary Algebra", weight:1, stars: 3 },
-            { id:"geometry", name:"Geometry", hint:"Geometry", weight:1, stars: 2 },
-            { id:"trigonometry", name:"Trigonometry", hint:"Trigonometry", weight:1, stars: 1 },
-            { id:"statistics", name:"Elementary Statistics", hint:"Elementary Statistics", weight:1, stars: 1 },
-            { id:"dataInterpretation", name:"Data Interpretation", hint:"Data Interpretation", weight:1, stars: 3 },
-            { id:"simplification", name:"Simplification", hint:"Simplification", weight:1, stars: 2 }
+            { id:"numSys", name:"संख्या प्रणाली", hint:"संख्या प्रणाली, दशमलव, भिन्न, लघुत्तम समापवर्त्य और महत्तम समापवर्तक", weight:1, stars: 3 },
+            { id:"ratio", name:"अनुपात और समानुपात", hint:"अनुपात और समानुपात", weight:1, stars: 2 },
+            { id:"percent", name:"प्रतिशत", hint:"प्रतिशत", weight:1, stars: 3 },
+            { id:"mensuration", name:"क्षेत्रमिति", hint:"क्षेत्रमिति", weight:1, stars: 2 },
+            { id:"timeWork", name:"समय और कार्य", hint:"समय और कार्य", weight:1, stars: 3 },
+            { id:"speedTime", name:"चाल, समय और दूरी", hint:"चाल, समय और दूरी", weight:1, stars: 3 },
+            { id:"simpleInterest", name:"साधारण और चक्रवृद्धि ब्याज", hint:"साधारण और चक्रवृद्धि ब्याज", weight:1, stars: 2 },
+            { id:"profitLoss", name:"लाभ और हानि", hint:"लाभ और हानि", weight:1, stars: 2 },
+            { id:"algebra", name:"प्रारंभिक बीजगणित", hint:"प्रारंभिक बीजगणित", weight:1, stars: 3 },
+            { id:"geometry", name:"ज्यामिति", hint:"ज्यामिति", weight:1, stars: 2 },
+            { id:"trigonometry", name:"त्रिकोणमिति", hint:"त्रिकोणमिति", weight:1, stars: 1 },
+            { id:"statistics", name:"प्रारंभिक सांख्यिकी", hint:"प्रारंभिक सांख्यिकी", weight:1, stars: 1 },
+            { id:"dataInterpretation", name:"डाटा इंटरप्रिटेशन", hint:"डाटा इंटरप्रिटेशन", weight:1, stars: 3 },
+            { id:"simplification", name:"सरलीकरण", hint:"सरलीकरण", weight:1, stars: 2 }
           ]
         },
         {
-          id: "Reasoning",
-          title: "General Intelligence & Reasoning (तार्किक क्षमता)",
+          id: "reasoning",
+          title: "तार्किक क्षमता (Reasoning)",
           colorClass: "reasoning",
+          weight: 1,
           topics: [
-            { id:"analogies", name:"Analogies", hint:"Analogies", weight:1, stars: 2 },
-            { id:"series", name:"Completion of Number and Alphabetical Series", hint:"Completion of Number and Alphabetical Series", weight:1, stars: 3 },
-            { id:"coding", name:"Coding and Decoding", hint:"Coding and Decoding", weight:1, stars: 3 },
-            { id:"mathOps", name:"Mathematical Operations", hint:"Mathematical Operations", weight:1, stars: 2 },
-            { id:"similarities", name:"Similarities and Differences", hint:"Similarities and Differences", weight:1, stars: 1 },
-            { id:"relationships", name:"Relationships", hint:"Relationships", weight:1, stars: 1 },
-            { id:"analytical", name:"Analytical Reasoning", hint:"Analytical Reasoning", weight:1, stars: 3 },
-            { id:"syllogism", name:"Syllogism", hint:"Syllogism", weight:1, stars: 3 },
-            { id:"jumbling", name:"Jumbling", hint:"Jumbling", weight:1, stars: 2 },
-            { id:"venn", name:"Venn Diagrams", hint:"Venn Diagrams", weight:1, stars: 2 },
-            { id:"puzzle", name:"Puzzle", hint:"Puzzle", weight:1, stars: 3 },
-            { id:"dataSuff", name:"Data Sufficiency", hint:"Data Sufficiency", weight:1, stars: 2 },
-            { id:"statementConcl", name:"Statement-Conclusion", hint:"Statement-Conclusion", weight:1, stars: 2 },
-            { id:"coursesAction", name:"Statement: Courses of Action", hint:"Statement: Courses of Action", weight:1, stars: 1 },
-            { id:"decisionMaking", name:"Decision Making", hint:"Decision Making", weight:1, stars: 1 },
-            { id:"maps", name:"Maps", hint:"Maps", weight:1, stars: 1 },
-            { id:"graphs", name:"Interpretation of Graphs", hint:"Interpretation of Graphs", weight:1, stars: 2 }
+            { id:"analogies", name:"सादृश्यता", hint:"सादृश्यता", weight:1, stars: 2 },
+            { id:"series", name:"संख्या और वर्णमाला श्रृंखला", hint:"संख्या और वर्णमाला श्रृंखला का पूरा करना", weight:1, stars: 3 },
+            { id:"coding", name:"कोडिंग और डिकोडिंग", hint:"कोडिंग और डिकोडिंग", weight:1, stars: 3 },
+            { id:"mathOps", name:"गणितीय संचालन", hint:"गणितीय संचालन", weight:1, stars: 2 },
+            { id:"similarities", name:"समानता और अंतर", hint:"समानता और अंतर", weight:1, stars: 1 },
+            { id:"relationships", name:"संबंध", hint:"संबंध", weight:1, stars: 1 },
+            { id:"analytical", name:"विश्लेषणात्मक तर्क", hint:"विश्लेषणात्मक तर्क", weight:1, stars: 3 },
+            { id:"syllogism", name:"न्यायवाक्य", hint:"न्यायवाक्य", weight:1, stars: 3 },
+            { id:"jumbling", name:"जंबलिंग", hint:"जंबलिंग", weight:1, stars: 2 },
+            { id:"venn", name:"वेन आरेख", hint:"वेन आरेख", weight:1, stars: 2 },
+            { id:"puzzle", name:"पहेली", hint:"पहेली", weight:1, stars: 3 },
+            { id:"dataSuff", name:"डाटा पर्याप्तता", hint:"डाटा पर्याप्तता", weight:1, stars: 2 },
+            { id:"statementConcl", name:"कथन-निष्कर्ष", hint:"कथन-निष्कर्ष", weight:1, stars: 2 },
+            { id:"coursesAction", name:"कार्रवाई के पाठ्यक्रम", hint:"कथन: कार्रवाई के पाठ्यक्रम", weight:1, stars: 1 },
+            { id:"decisionMaking", name:"निर्णय लेना", hint:"निर्णय लेना", weight:1, stars: 1 },
+            { id:"maps", name:"मानचित्र", hint:"मानचित्र", weight:1, stars: 1 },
+            { id:"graphs", name:"ग्राफ की व्याख्या", hint:"ग्राफ की व्याख्या", weight:1, stars: 2 }
           ]
         },
         {
-          id: "Awareness",
-          title: "General Awareness & Science (सामान्य जागरूकता और विज्ञान)", // CHANGE: Merged title
-          colorClass: "awareness",
-          topics: [ // CHANGE: Appended all Science topics here
-            { id:"currentEvents", name:"Current Events of National and International Importance", hint:"Current Events of National and International Importance", weight:1, stars: 3 },
-            { id:"gamesSports", name:"Games and Sports", hint:"Games and Sports", weight:1, stars: 1 },
-            { id:"artCulture", name:"Art and Culture of India", hint:"Art and Culture of India", weight:1, stars: 2 },
-            { id:"indianLit", name:"Indian Literature", hint:"Indian Literature", weight:1, stars: 1 },
-            { id:"monuments", name:"Monuments and Places of India", hint:"Monuments and Places of India", weight:1, stars: 1 },
-            { id:"history", name:"History of India and Freedom Struggle", hint:"Ancient, Medieval, Modern History, Delhi Sultanate, Mughal Empire, British Rule, Freedom Struggle", weight:1, stars: 3 },
-            { id:"ancientHistory", name:"Ancient Indian History", hint:"Indus Valley Civilization, Vedic Period, Mauryan Empire, Gupta Empire", weight:1, stars: 2 },
-            { id:"medievalHistory", name:"Medieval Indian History", hint:"Delhi Sultanate, Mughal Empire, Vijayanagara Empire, Maratha Empire", weight:1, stars: 2 },
-            { id:"modernHistory", name:"Modern Indian History", hint:"British Rule, Revolt of 1857, Indian National Movement, Independence", weight:1, stars: 3 },
-            { id:"geography", name:"Physical, Social, and Economic Geography of India and the World", hint:"Physical, Social, and Economic Geography of India and the World", weight:1, stars: 3 },
-            { id:"polity", name:"Indian Polity and Governance", hint:"Constitution, Political System, Parliament, Judiciary, President, Prime Minister", weight:1, stars: 3 },
-            { id:"sciTech", name:"Scientific and Technological Developments", hint:"Space & Nuclear Programs, IT Revolution, Biotechnology", weight:1, stars: 2 },
-            { id:"worldOrgs", name:"UN and Other Important World Organisations", hint:"UN and Other Important World Organisations", weight:1, stars: 2 },
-            { id:"envIssues", name:"Environmental Issues", hint:"Environmental Issues", weight:1, stars: 2 },
-            { id:"computers", name:"Basics of Computers and Applications", hint:"Basics of Computers and Applications", weight:1, stars: 1 },
-            { id:"abbrev", name:"Common Abbreviations", hint:"Common Abbreviations", weight:1, stars: 1 },
-            { id:"transport", name:"Transport Systems in India", hint:"Transport Systems in India", weight:1, stars: 1 },
-            { id:"economy", name:"Indian Economy", hint:"Indian Economy", weight:1, stars: 3 },
-            { id:"personalities", name:"Famous Personalities", hint:"Famous Personalities", weight:1, stars: 1 },
-            { id:"govtProg", name:"Flagship Government Programmes", hint:"Flagship Government Programmes", weight:1, stars: 2 },
-            { id:"floraFauna", name:"Flora and Fauna of India", hint:"Flora and Fauna of India", weight:1, stars: 1 },
-            { id:"govtOrgs", name:"Important Government and Public Sector Organisations of India", hint:"Important Government and Public Sector Organisations of India", weight:1, stars: 2 },
-            // Merged Science topics below
-            { id:"physicsMeasure", name:"Physics: Units and Measurements", hint:"Units and Measurements", weight:1, stars: 2 },
-            { id:"physicsMotion", name:"Physics: Motion and Force", hint:"Motion, Force, Newton's Laws", weight:1, stars: 3 },
-            { id:"physicsWork", name:"Physics: Work, Energy and Power", hint:"Work, Energy and Power", weight:1, stars: 3 },
-            { id:"physicsHeat", name:"Physics: Heat and Thermodynamics", hint:"Heat and Thermodynamics", weight:1, stars: 2 },
-            { id:"physicsLight", name:"Physics: Light and Optics", hint:"Light and Optics", weight:1, stars: 2 },
-            { id:"physicsSound", name:"Physics: Sound and Waves", hint:"Sound and Waves", weight:1, stars: 1 },
-            { id:"physicsElectricity", name:"Physics: Electricity and Magnetism", hint:"Electricity and Magnetism", weight:1, stars: 3 },
-            { id:"physicsModern", name:"Physics: Modern Physics", hint:"Modern Physics", weight:1, stars: 1 },
-            { id:"chemMatter", name:"Chemistry: Matter and Its Properties", hint:"Matter and Its Properties", weight:1, stars: 2 },
-            { id:"chemAtomic", name:"Chemistry: Atomic Structure", hint:"Atomic Structure", weight:1, stars: 3 },
-            { id:"chemPeriodic", name:"Chemistry: Periodic Table", hint:"Periodic Table", weight:1, stars: 3 },
-            { id:"chemBonding", name:"Chemistry: Chemical Bonding", hint:"Chemical Bonding", weight:1, stars: 2 },
-            { id:"chemReactions", name:"Chemistry: Chemical Reactions", hint:"Chemical Reactions", weight:1, stars: 2 },
-            { id:"chemAcids", name:"Chemistry: Acids, Bases and Salts", hint:"Acids, Bases and Salts", weight:1, stars: 2 },
-            { id:"chemMetals", name:"Chemistry: Metals and Non-metals", hint:"Metals and Non-metals", weight:1, stars: 2 },
-            { id:"chemCarbon", name:"Chemistry: Carbon and Its Compounds", hint:"Carbon and Its Compounds", weight:1, stars: 1 },
-            { id:"bioCell", name:"Biology: Cell Structure and Function", hint:"Cell Structure and Function", weight:1, stars: 3 },
-            { id:"bioTissues", name:"Biology: Tissues and Organs", hint:"Tissues and Organs", weight:1, stars: 2 },
-            { id:"bioHuman", name:"Biology: Human Physiology", hint:"Human Physiology", weight:1, stars: 3 },
-            { id:"bioPlants", name:"Biology: Plant Physiology", hint:"Plant Physiology", weight:1, stars: 2 },
-            { id:"bioGenetics", name:"Biology: Genetics and Evolution", hint:"Genetics and Evolution", weight:1, stars: 2 },
-            { id:"bioHealth", name:"Biology: Health and Diseases", hint:"Health and Diseases", weight:1, stars: 2 },
-            { id:"bioEnvironment", name:"Biology: Environmental Science", hint:"Environmental Science", weight:1, stars: 2 }
+          id: "history",
+          title: "भारतीय इतिहास (History)",
+          colorClass: "history",
+          weight: 1,
+          topics: [
+            { id:"ancientHistory", name:"प्राचीन भारतीय इतिहास", hint:"सिंधु घाटी सभ्यता, वैदिक काल, मौर्य साम्राज्य, गुप्त साम्राज्य", weight:1, stars: 2 },
+            { id:"medievalHistory", name:"मध्यकालीन भारतीय इतिहास", hint:"दिल्ली सल्तनत, मुगल साम्राज्य, विजयनगर साम्राज्य, मराठा साम्राज्य", weight:1, stars: 2 },
+            { id:"modernHistory", name:"आधुनिक भारतीय इतिहास", hint:"ब्रिटिश शासन, 1857 का विद्रोह, भारतीय राष्ट्रीय आंदोलन, स्वतंत्रता", weight:1, stars: 3 },
+            { id:"freedomStruggle", name:"स्वतंत्रता संग्राम", hint:"भारतीय स्वतंत्रता संग्राम के प्रमुख घटनाएं और नेता", weight:1, stars: 3 },
+            { id:"indianCulture", name:"भारतीय कला और संस्कृति", hint:"भारतीय कला, संस्कृति, वास्तुकला और त्योहार", weight:1, stars: 2 },
+            { id:"worldHistory", name:"विश्व इतिहास", hint:"विश्व इतिहास की प्रमुख घटनाएं", weight:1, stars: 1 }
+          ]
+        },
+        {
+          id: "polity",
+          title: "भारतीय राजव्यवस्था (Polity)",
+          colorClass: "polity",
+          weight: 1,
+          topics: [
+            { id:"constitution", name:"भारतीय संविधान", hint:"संविधान का निर्माण, प्रस्तावना, मूल अधिकार और कर्तव्य", weight:1, stars: 3 },
+            { id:"politicalSystem", name:"राजनीतिक व्यवस्था", hint:"संसद, राष्ट्रपति, प्रधानमंत्री, मंत्रिमंडल", weight:1, stars: 3 },
+            { id:"judiciary", name:"न्यायपालिका", hint:"सर्वोच्च न्यायालय, उच्च न्यायालय, न्यायिक व्यवस्था", weight:1, stars: 2 },
+            { id:"centralState", name:"केंद्र-राज्य संबंध", hint:"केंद्र और राज्य सरकारों के बीच संबंध", weight:1, stars: 2 },
+            { id:"localGovt", name:"स्थानीय शासन", hint:"पंचायती राज, नगर निगम", weight:1, stars: 1 },
+            { id:"constitutionalBodies", name:"संवैधानिक निकाय", hint:"चुनाव आयोग, यूपीएससी, सीएजी", weight:1, stars: 2 }
+          ]
+        },
+        {
+          id: "geography",
+          title: "भूगोल (Geography)",
+          colorClass: "geography",
+          weight: 1,
+          topics: [
+            { id:"physicalGeo", name:"भौतिक भूगोल", hint:"पर्वत, पठार, मैदान, नदियाँ, जलवायु", weight:1, stars: 3 },
+            { id:"indianGeo", name:"भारत का भूगोल", hint:"भारत की भौगोलिक विशेषताएं, राज्य और राजधानियाँ", weight:1, stars: 3 },
+            { id:"worldGeo", name:"विश्व भूगोल", hint:"महाद्वीप, महासागर, महत्वपूर्ण स्थान", weight:1, stars: 2 },
+            { id:"economicGeo", name:"आर्थिक भूगोल", hint:"कृषि, खनिज, उद्योग, परिवहन", weight:1, stars: 2 },
+            { id:"environment", name:"पर्यावरण और पारिस्थितिकी", hint:"पर्यावरणीय मुद्दे, संरक्षण, राष्ट्रीय उद्यान", weight:1, stars: 2 },
+            { id:"disasterMgmt", name:"आपदा प्रबंधन", hint:"प्राकृतिक आपदाएं और उनका प्रबंधन", weight:1, stars: 1 }
+          ]
+        },
+        {
+          id: "economy",
+          title: "अर्थव्यवस्था (Economy)",
+          colorClass: "economy",
+          weight: 1,
+          topics: [
+            { id:"basicConcepts", name:"अर्थव्यवस्था के मूल सिद्धांत", hint:"मांग और आपूर्ति, मुद्रास्फीति, बेरोजगारी", weight:1, stars: 3 },
+            { id:"indianEconomy", name:"भारतीय अर्थव्यवस्था", hint:"योजना, बजट, बैंकिंग, कर व्यवस्था", weight:1, stars: 3 },
+            { id:"economicTerms", name:"आर्थिक शब्दावली", hint:"जीडीपी, जीएनपी, रेपो दर, रिवर्स रेपो", weight:1, stars: 2 },
+            { id:"agriculture", name:"कृषि और ग्रामीण विकास", hint:"कृषि नीतियां, हरित क्रांति", weight:1, stars: 2 },
+            { id:"industry", name:"उद्योग और बुनियादी ढांचा", hint:"औद्योगिक नीतियां, बुनियादी ढांचा परियोजनाएं", weight:1, stars: 2 },
+            { id:"internationalEco", name:"अंतर्राष्ट्रीय अर्थव्यवस्था", hint:"विश्व बैंक, आईएमएफ, विश्व व्यापार संगठन", weight:1, stars: 1 }
+          ]
+        },
+        {
+          id: "static-gk",
+          title: "स्थैतिक सामान्य ज्ञान (Static GK)",
+          colorClass: "static-gk",
+          weight: 1,
+          topics: [
+            { id:"awards", name:"पुरस्कार और सम्मान", hint:"भारत रत्न, पद्म पुरस्कार, नोबेल पुरस्कार", weight:1, stars: 2 },
+            { id:"booksAuthors", name:"पुस्तकें और लेखक", hint:"प्रसिद्ध पुस्तकें और उनके लेखक", weight:1, stars: 2 },
+            { id:"importantDays", name:"महत्वपूर्ण दिवस", hint:"राष्ट्रीय और अंतर्राष्ट्रीय दिवस", weight:1, stars: 1 },
+            { id:"sports", name:"खेल", hint:"खेल प्रतियोगिताएं, पुरस्कार, खिलाड़ी", weight:1, stars: 1 },
+            { id:"inventions", name:"आविष्कार और आविष्कारक", hint:"महत्वपूर्ण आविष्कार और आविष्कारक", weight:1, stars: 1 },
+            { id:"capitalsCurrencies", name:"राजधानियाँ और मुद्राएँ", hint:"देशों की राजधानियाँ और मुद्राएँ", weight:1, stars: 2 },
+            { id:"organizations", name:"संगठन और मुख्यालय", hint:"राष्ट्रीय और अंतर्राष्ट्रीय संगठन", weight:1, stars: 2 }
+          ]
+        },
+        {
+          id: "science",
+          title: "विज्ञान (Science)",
+          colorClass: "science",
+          weight: 1,
+          topics: [
+            { id:"physics", name:"भौतिक विज्ञान", hint:"यांत्रिकी, प्रकाशिकी, बिजली, चुंबकत्व", weight:1, stars: 3 },
+            { id:"chemistry", name:"रसायन विज्ञान", hint:"तत्व, यौगिक, अम्ल, क्षार, लवण", weight:1, stars: 2 },
+            { id:"biology", name:"जीव विज्ञान", hint:"मानव शरीर, पौधे, जानवर, पारिस्थितिकी", weight:1, stars: 3 },
+            { id:"everydayScience", name:"दैनिक विज्ञान", hint:"दैनिक जीवन में विज्ञान", weight:1, stars: 2 },
+            { id:"sciInventions", name:"वैज्ञानिक आविष्कार", hint:"महत्वपूर्ण वैज्ञानिक आविष्कार", weight:1, stars: 1 },
+            { id:"scientists", name:"वैज्ञानिक और उनका योगदान", hint:"प्रसिद्ध वैज्ञानिक और उनका योगदान", weight:1, stars: 1 }
+          ]
+        },
+        {
+          id: "computer",
+          title: "कंप्यूटर (Computer)",
+          colorClass: "computer",
+          weight: 1,
+          topics: [
+            { id:"computerFundamentals", name:"कंप्यूटर मूल बातें", hint:"हार्डवेयर, सॉफ्टवेयर, ऑपरेटिंग सिस्टम", weight:1, stars: 3 },
+            { id:"msOffice", name:"एमएस ऑफिस", hint:"वर्ड, एक्सेल, पावरपॉइंट", weight:1, stars: 2 },
+            { id:"internet", name:"इंटरनेट और नेटवर्किंग", hint:"इंटरनेट, ईमेल, सोशल मीडिया", weight:1, stars: 2 },
+            { id:"abbreviations", name:"कंप्यूटर संक्षिप्त रूप", hint:"कंप्यूटर से संबंधित संक्षिप्त रूप", weight:1, stars: 1 },
+            { id:"cyberSecurity", name:"साइबर सुरक्षा", hint:"वायरस, हैकिंग, डाटा सुरक्षा", weight:1, stars: 1 },
+            { id:"emergingTech", name:"उभरती प्रौद्योगिकियाँ", hint:"आर्टिफिशियल इंटेलिजेंस, ब्लॉकचेन, IoT", weight:1, stars: 1 }
           ]
         }
-        // CHANGE: Removed Science subject entirely
+      ],
+      
+      // Motivational messages
+      motivationalMessages: [
+        "आपकी सफलता की यात्रा आज से शुरू होती है!",
+        "हर दिन थोड़ा पढ़ें, सफलता आपके कदम चूमेगी!",
+        "मेहनत करने वालों की कभी हार नहीं होती!",
+        "सपने वो नहीं जो आप सोते समय देखते हैं, सपने वो हैं जो आपको सोने नहीं देते!",
+        "कठिनाइयाँ आपको तोड़ने नहीं, बल्कि मजबूत बनाने आती हैं!",
+        "सफलता छोटे-छोटे प्रयासों का योग है!",
+        "आज का समर्पण कल की सफलता की नींव है!",
+        "जो सीखता है वही आगे बढ़ता है!",
+        "सफलता का कोई शॉर्टकट नहीं, केवल कड़ी मेहनत है!",
+        "आपकी मेहनत रंग लाएगी, बस निरंतरता बनाए रखें!"
       ]
     };
-    /* ========== END CONFIG ========== */
-
-    // Storage keys (versioned)
-    const STORE_KEY = "rrb_ntpc_tracker_v2";
-    const UI_STATE_KEY = "rrb_ntpc_ui_v2";
-    const STUDENT_NAME_KEY = "rrb_ntpc_student_name";
-    const ADMIN_DATA_KEY = "rrb_ntpc_admin_data";
-
-    // Load saved data (persistent)
-    const saved = JSON.parse(localStorage.getItem(STORE_KEY) || "{}");
-    const uiSaved = JSON.parse(localStorage.getItem(UI_STATE_KEY) || "{}");
-    const studentName = localStorage.getItem(STUDENT_NAME_KEY) || "";
-    let adminData = JSON.parse(localStorage.getItem(ADMIN_DATA_KEY) || "{}");
-
-    // Motivational messages
-    const motivationalMessages = [
-      "आपकी सफलता की यात्रा आज से शुरू होती है!",
-      "हर दिन थोड़ा पढ़ें, सफलता आपके कदम चूमेगी!",
-      "मेहनत करने वालों की कभी हार नहीं होती!",
-      "सपने वो नहीं जो आप सोते समय देखते हैं, सपने वो हैं जो आपको सोने नहीं देते!",
-      "कठिनाइयाँ आपको तोड़ने नहीं, बल्कि मजबूत बनाने आती हैं!",
-      "सफलता छोटे-छोटे प्रयासों का योग है!",
-      "आज का समर्पण कल की सफलता की नींव है!",
-      "जो सीखता है वही आगे बढ़ता है!"
-    ];
-
-    // CHANGE: Always initialize welcome screen; conditional name handling
+    
+    // ========== GLOBAL VARIABLES ==========
+    const STORAGE_KEYS = {
+      PROGRESS: "rrb_ntpc_progress_v2",
+      UI_STATE: "rrb_ntpc_ui_v2",
+      STUDENT_NAME: "rrb_ntpc_student_name",
+      CBT_RESULTS: "rrb_ntpc_cbt_results",
+      THEME: "rrb_ntpc_theme",
+      STUDY_LOG: "rrb_ntpc_study_log"
+    };
+    
+    let savedProgress = JSON.parse(localStorage.getItem(STORAGE_KEYS.PROGRESS) || "{}");
+    let savedUIState = JSON.parse(localStorage.getItem(STORAGE_KEYS.UI_STATE) || "{}");
+    let cbtResults = JSON.parse(localStorage.getItem(STORAGE_KEYS.CBT_RESULTS) || "[]");
+    let studyLog = JSON.parse(localStorage.getItem(STORAGE_KEYS.STUDY_LOG) || "[]");
+    let currentTheme = localStorage.getItem(STORAGE_KEYS.THEME) || "dark";
+    let charts = {};
+    
+    // ========== INITIALIZATION ==========
     function initializeApp() {
+      // Set theme
+      document.body.className = `theme-${currentTheme}`;
+      
+      // Initialize welcome screen
       const welcomeScreen = document.getElementById('welcomeScreen');
       const mainApp = document.getElementById('mainApp');
       const nameInput = document.getElementById('studentName');
       const startBtn = document.getElementById('startTracking');
-      const welcomeTitle = document.getElementById('welcomeTitle');
-      const welcomeDesc = document.getElementById('welcomeDesc');
-
-      welcomeScreen.style.display = 'flex'; // Always show
+      const studentName = localStorage.getItem(STORAGE_KEYS.STUDENT_NAME) || "";
+      
+      // Always show welcome screen
+      welcomeScreen.style.display = 'flex';
       mainApp.style.display = 'none';
-
+      
       if (studentName) {
-        // Prefill and make readonly; auto-start after 2s or click
+        // Returning user
         nameInput.value = studentName;
         nameInput.readOnly = true;
-        welcomeTitle.textContent = `Welcome Back, ${studentName}!`;
-        welcomeDesc.textContent = 'आज फिर से अपनी प्रगति ट्रैक करें। आपकी मेहनत जारी रखें।';
-        startBtn.textContent = 'Start Tracking Today';
-
-        // Auto-advance for seamless feel
+        startBtn.innerHTML = '<i class="fas fa-rocket"></i> Continue Tracking';
+        
+        // Auto-advance after 2 seconds
         setTimeout(() => {
-          if (document.visibilityState === 'visible') { // Only if tab active
+          if (document.visibilityState === 'visible') {
             startWelcomeTransition();
           }
         }, 2000);
       } else {
-        // First time: Require input
+        // New user
         nameInput.readOnly = false;
-        startBtn.textContent = 'Track Your Progress';
+        startBtn.innerHTML = '<i class="fas fa-chart-line"></i> Start Tracking';
       }
-
-      // Shared event for button
+      
+      // Start button event
       startBtn.onclick = () => {
         const name = nameInput.value.trim();
-        if (!studentName && !name) { // Only validate first time
+        if (!studentName && !name) {
           alert('कृपया अपना नाम दर्ज करें!');
+          nameInput.focus();
           return;
         }
+        
         if (!studentName) {
-          localStorage.setItem(STUDENT_NAME_KEY, name);
+          localStorage.setItem(STORAGE_KEYS.STUDENT_NAME, name);
         }
+        
         startWelcomeTransition();
       };
-
+      
+      // Allow pressing Enter in name input
+      nameInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          startBtn.click();
+        }
+      });
+      
       function startWelcomeTransition() {
         welcomeScreen.classList.add('hidden');
         setTimeout(() => {
           welcomeScreen.style.display = 'none';
           mainApp.style.display = 'block';
-          updateGreeting();
-          updateMotivationalMessage();
-          renderSubjects();
-          updateProgress();
-          saveStudentData(); // Initial save
+          initializeMainApp();
         }, 800);
       }
     }
-
+    
+    function initializeMainApp() {
+      updateGreeting();
+      updateMotivationalMessage();
+      renderSubjects();
+      updateProgress();
+      setupEventListeners();
+      initializeCharts();
+      loadCBTResults();
+      
+      // Set up auto-save for study log
+      setInterval(saveStudyLog, 60000); // Every minute
+      
+      // Update time-based elements periodically
+      setInterval(updateGreeting, 60000); // Every minute
+      setInterval(updateMotivationalMessage, 300000); // Every 5 minutes
+    }
+    
+    // ========== UI FUNCTIONS ==========
     function updateGreeting() {
-      const studentName = localStorage.getItem(STUDENT_NAME_KEY) || '';
+      const studentName = localStorage.getItem(STORAGE_KEYS.STUDENT_NAME) || "";
       const hour = new Date().getHours();
       let greeting = '';
       
       if (hour < 12) {
-        greeting = 'Good Morning';
+        greeting = 'सुप्रभात';
       } else if (hour < 18) {
-        greeting = 'Good Afternoon';
+        greeting = 'नमस्कार';
       } else {
-        greeting = 'Good Evening';
+        greeting = 'शुभ संध्या';
       }
       
       document.getElementById('greetingText').textContent = `${greeting}, ${studentName}`;
     }
-
+    
     function updateMotivationalMessage() {
-      const randomIndex = Math.floor(Math.random() * motivationalMessages.length);
-      document.getElementById('motivationalMessage').textContent = motivationalMessages[randomIndex];
+      const messages = CONFIG.motivationalMessages;
+      const randomIndex = Math.floor(Math.random() * messages.length);
+      document.getElementById('motivationalMessage').textContent = messages[randomIndex];
     }
-
-    // CHANGE: Simplified saveStudentData; now tracks 3 subjects
-    function saveStudentData() {
-      const studentName = localStorage.getItem(STUDENT_NAME_KEY);
-      if (!studentName) return;
+    
+    function renderSubjects() {
+      const container = document.getElementById('subjectsContainer');
+      container.innerHTML = '';
       
-      const progressData = calculateProgress();
+      CONFIG.subjects.forEach(subject => {
+        const subjectElement = document.createElement('div');
+        subjectElement.className = 'subject';
+        subjectElement.dataset.subject = subject.id;
+        
+        // Calculate progress for this subject
+        const progress = calculateSubjectProgress(subject.id);
+        const collapsed = savedUIState[subject.id]?.collapsed || false;
+        
+        // Create header
+        const header = document.createElement('div');
+        header.className = 'subject-header';
+        header.innerHTML = `
+          <div class="subject-title">
+            <span class="badge ${subject.colorClass}">${subject.title.split(' ')[0]}</span>
+            <div><strong>${subject.title}</strong></div>
+          </div>
+          <div class="progress-wrap">
+            <div class="progress-bar">
+              <div class="progress-fill" id="bar_${subject.id}" style="width: ${progress}%"></div>
+            </div>
+            <div class="percent" id="percent_${subject.id}">${Math.round(progress)}%</div>
+            <button class="cbt-btn" data-toggle="${subject.id}">
+              ${collapsed ? 'विस्तार करें' : 'संकुचित करें'}
+            </button>
+          </div>
+        `;
+        
+        // Create topics container
+        const topicsContainer = document.createElement('div');
+        topicsContainer.className = 'topics';
+        topicsContainer.id = `topics_${subject.id}`;
+        topicsContainer.style.display = collapsed ? 'none' : '';
+        
+        // Add topics
+        subject.topics.forEach(topic => {
+          const topicId = `${subject.id}_${topic.id}`;
+          const isChecked = savedProgress[topicId] || false;
+          
+          const topicElement = document.createElement('div');
+          topicElement.className = 'topic';
+          
+          let starClass = '';
+          if (topic.stars === 3) starClass = 'three-stars';
+          else if (topic.stars === 2) starClass = 'two-stars';
+          else if (topic.stars === 1) starClass = 'one-star';
+          
+          topicElement.innerHTML = `
+            <input type="checkbox" id="${topicId}" ${isChecked ? 'checked' : ''}>
+            <label for="${topicId}">
+              <strong>${topic.name}<span class="stars ${starClass}"></span></strong>
+              <small>${topic.hint}</small>
+            </label>
+            <span class="weight">wt ${topic.weight}</span>
+          `;
+          
+          topicsContainer.appendChild(topicElement);
+        });
+        
+        subjectElement.appendChild(header);
+        subjectElement.appendChild(topicsContainer);
+        container.appendChild(subjectElement);
+      });
       
-      adminData[studentName] = {
-        name: studentName,
-        overallProgress: progressData.overall,
-        mathProgress: progressData.math,
-        reasoningProgress: progressData.reasoning,
-        awarenessProgress: progressData.awareness, // Now includes Science
-        lastUpdated: new Date().toISOString()
-      };
+      // Add event listeners for subject headers
+      document.querySelectorAll('.subject-header').forEach(header => {
+        header.addEventListener('click', (e) => {
+          if (e.target.closest('button')) return; // Don't toggle if clicking the button
+          
+          const subjectId = e.currentTarget.closest('.subject').dataset.subject;
+          const topicsEl = document.getElementById(`topics_${subjectId}`);
+          const collapsed = topicsEl.style.display === 'none';
+          
+          topicsEl.style.display = collapsed ? '' : 'none';
+          const btn = e.currentTarget.querySelector(`button[data-toggle="${subjectId}"]`);
+          if (btn) btn.textContent = collapsed ? 'संकुचित करें' : 'विस्तार करें';
+          
+          // Save UI state
+          savedUIState[subjectId] = { collapsed: !collapsed };
+          localStorage.setItem(STORAGE_KEYS.UI_STATE, JSON.stringify(savedUIState));
+        });
+      });
       
-      localStorage.setItem(ADMIN_DATA_KEY, JSON.stringify(adminData));
+      // Add event listeners for topic checkboxes
+      document.querySelectorAll('.topic input[type="checkbox"]').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+          const topicId = this.id;
+          savedProgress[topicId] = this.checked;
+          localStorage.setItem(STORAGE_KEYS.PROGRESS, JSON.stringify(savedProgress));
+          
+          // Update progress
+          updateProgress();
+          
+          // Show congratulations if checked
+          if (this.checked) {
+            showCongratulations(this);
+            
+            // Log study activity
+            logStudyActivity(topicId);
+          }
+        });
+      });
+      
+      // Add event listeners for toggle buttons
+      document.querySelectorAll('button[data-toggle]').forEach(button => {
+        button.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const subjectId = this.dataset.toggle;
+          const topicsEl = document.getElementById(`topics_${subjectId}`);
+          const collapsed = topicsEl.style.display === 'none';
+          
+          topicsEl.style.display = collapsed ? '' : 'none';
+          this.textContent = collapsed ? 'संकुचित करें' : 'विस्तार करें';
+          
+          // Save UI state
+          savedUIState[subjectId] = { collapsed: !collapsed };
+          localStorage.setItem(STORAGE_KEYS.UI_STATE, JSON.stringify(savedUIState));
+        });
+      });
     }
-
-    // CHANGE: Updated calculateProgress for 3 subjects
-    function calculateProgress() {
-      const mathProgress = calculateSubjectProgress("Math");
-      const reasoningProgress = calculateSubjectProgress("Reasoning");
-      const awarenessProgress = calculateSubjectProgress("Awareness");
-      
-      const subjTotals = [
-        { progress: mathProgress, weight: 1 },
-        { progress: reasoningProgress, weight: 1 },
-        { progress: awarenessProgress, weight: 1 }
-      ];
-      const totalWeight = subjTotals.reduce((s, a) => s + a.weight, 0) || 1;
-      const overallProgress = subjTotals.reduce((s, a) => s + a.progress * a.weight, 0) / totalWeight;
-      
-      return {
-        overall: Math.round(overallProgress),
-        math: Math.round(mathProgress),
-        reasoning: Math.round(reasoningProgress),
-        awareness: Math.round(awarenessProgress)
-      };
-    }
-
+    
     function calculateSubjectProgress(subjectId) {
       const subject = CONFIG.subjects.find(s => s.id === subjectId);
       if (!subject) return 0;
       
-      const totalWt = sumWeights(subject.topics);
-      const doneWt = doneWeights(subject);
-      return totalWt ? (doneWt/totalWt)*100 : 0;
+      let totalWeight = 0;
+      let completedWeight = 0;
+      
+      subject.topics.forEach(topic => {
+        const topicId = `${subject.id}_${topic.id}`;
+        totalWeight += topic.weight;
+        if (savedProgress[topicId]) {
+          completedWeight += topic.weight;
+        }
+      });
+      
+      return totalWeight > 0 ? (completedWeight / totalWeight) * 100 : 0;
     }
-
-    const subjectsContainer = document.getElementById("subjectsContainer");
-
-    function subjectWeight(id){
-      const w = CONFIG.subjectWeights || {};
-      return (w[id] ?? 1);
+    
+    function calculateOverallProgress() {
+      let totalWeight = 0;
+      let completedWeight = 0;
+      
+      CONFIG.subjects.forEach(subject => {
+        subject.topics.forEach(topic => {
+          const topicId = `${subject.id}_${topic.id}`;
+          totalWeight += topic.weight;
+          if (savedProgress[topicId]) {
+            completedWeight += topic.weight;
+          }
+        });
+      });
+      
+      return totalWeight > 0 ? (completedWeight / totalWeight) * 100 : 0;
     }
-
-    function renderSubjects(){
-      subjectsContainer.innerHTML = "";
-      CONFIG.subjects.forEach(subj => { // Now loops 3 subjects
-        const section = document.createElement("div");
-        section.className = "subject";
-        section.dataset.subj = subj.id;
-
-        // Header
-        const header = document.createElement("div");
-        header.className = "subject-header";
-
-        const titleWrap = document.createElement("div");
-        titleWrap.className = "subject-title";
-        const badge = document.createElement("span");
-        badge.className = `badge ${subj.colorClass}`;
-        badge.textContent = subj.title.split(" ")[0];
-        const title = document.createElement("div");
-        title.innerHTML = `<strong>${subj.title}</strong>`;
-        titleWrap.appendChild(badge); titleWrap.appendChild(title);
-
-        const progressWrap = document.createElement("div");
-        progressWrap.className = "progress-wrap";
-        progressWrap.innerHTML = `
-          <div class="progress-bar"><div class="progress-fill" id="bar_${subj.id}"></div></div>
-          <div class="percent" id="percent_${subj.id}">0%</div>
-          <button class="secondary" data-toggle="${subj.id}">${(uiSaved[subj.id]?.collapsed)? "Expand" : "Collapse"}</button>
+    
+    function updateProgress() {
+      // Update overall progress
+      const overallProgress = calculateOverallProgress();
+      document.getElementById('totalProgress').textContent = `(${Math.round(overallProgress)}% पूर्ण)`;
+      
+      // Update donut chart
+      const donut = document.getElementById('donutOverall');
+      const circumference = 2 * Math.PI * 85;
+      const offset = circumference * (1 - overallProgress / 100);
+      donut.setAttribute('stroke-dasharray', circumference);
+      donut.setAttribute('stroke-dashoffset', offset);
+      document.getElementById('overallText').textContent = `${Math.round(overallProgress)}%`;
+      
+      // Update subject progress bars and percentages
+      CONFIG.subjects.forEach(subject => {
+        const progress = calculateSubjectProgress(subject.id);
+        const progressBar = document.getElementById(`bar_${subject.id}`);
+        const percentText = document.getElementById(`percent_${subject.id}`);
+        
+        if (progressBar) progressBar.style.width = `${progress}%`;
+        if (percentText) percentText.textContent = `${Math.round(progress)}%`;
+      });
+      
+      // Update subject charts
+      updateSubjectCharts();
+      
+      // Update performance charts
+      updatePerformanceCharts();
+    }
+    
+    function updateSubjectCharts() {
+      const container = document.getElementById('subjectCharts');
+      container.innerHTML = '';
+      
+      // Show top 6 subjects by progress
+      const subjectsWithProgress = CONFIG.subjects.map(subject => ({
+        ...subject,
+        progress: calculateSubjectProgress(subject.id)
+      })).sort((a, b) => b.progress - a.progress).slice(0, 6);
+      
+      subjectsWithProgress.forEach(subject => {
+        const chartCard = document.createElement('div');
+        chartCard.className = 'chart-card';
+        
+        // Create donut SVG
+        const donutSize = 100;
+        const radius = 40;
+        const circumference = 2 * Math.PI * radius;
+        const offset = circumference * (1 - subject.progress / 100);
+        
+        chartCard.innerHTML = `
+          <svg class="donut" viewBox="0 0 100 100" width="100" height="100">
+            <circle cx="50" cy="50" r="${radius}" fill="none" stroke="var(--border)" stroke-width="15"/>
+            <circle cx="50" cy="50" r="${radius}" fill="none" stroke="var(--accent)" stroke-width="15" stroke-linecap="round"
+              stroke-dasharray="${circumference}" stroke-dashoffset="${offset}"/>
+            <text x="50" y="55" text-anchor="middle" font-size="14" font-weight="800" fill="var(--text)">${Math.round(subject.progress)}%</text>
+          </svg>
+          <div class="progress-bar" style="width:100px">
+            <div class="progress-fill" style="width: ${subject.progress}%"></div>
+          </div>
+          <div class="subject-names">${subject.title.split('(')[0].trim()}</div>
         `;
-
-        header.appendChild(titleWrap);
-        header.appendChild(progressWrap);
-
-        // Topics (now more for Awareness)
-        const topics = document.createElement("div");
-        topics.className = "topics";
-        topics.id = `topics_${subj.id}`;
-        if (uiSaved[subj.id]?.collapsed) topics.style.display = "none";
-
-        subj.topics.forEach(t => {
-          const row = document.createElement("div");
-          row.className = "topic";
-          const input = document.createElement("input");
-          input.type = "checkbox";
-          input.id = `${subj.id}_${t.id}`;
-          input.checked = !!saved[input.id];
-          input.addEventListener("change", ()=> {
-            saved[input.id] = input.checked;
-            localStorage.setItem(STORE_KEY, JSON.stringify(saved));
-            updateProgress();
-            saveStudentData(); // CHANGE: Always save on tick
-            
-            if (input.checked) {
-              confetti({
-                particleCount: 150,
-                spread: 90,
-                origin: { y: 0.6 },
-                colors: ['#6366f1', '#10b981', '#ec4899', '#f59e0b', '#8b5cf6']
-              });
-              setTimeout(() => {
-                confetti({
-                  particleCount: 100,
-                  angle: 60,
-                  spread: 55,
-                  origin: { x: 0 },
-                  colors: ['#ec4899', '#f59e0b']
-                });
-                confetti({
-                  particleCount: 100,
-                  angle: 120,
-                  spread: 55,
-                  origin: { x: 1 },
-                  colors: ['#6366f1', '#10b981', '#8b5cf6']
-                });
-              }, 250);
+        
+        container.appendChild(chartCard);
+      });
+    }
+    
+    function showCongratulations(checkbox) {
+      const topicId = checkbox.id;
+      const [subjectId, topicKey] = topicId.split('_');
+      
+      const subject = CONFIG.subjects.find(s => s.id === subjectId);
+      if (!subject) return;
+      
+      const topic = subject.topics.find(t => t.id === topicKey);
+      if (!topic) return;
+      
+      // Update congratulation message
+      const messages = [
+        `बधाई हो! आपने "${topic.name}" पूरा किया है!`,
+        `शानदार! "${topic.name}" अब पूरा हुआ!`,
+        `अद्भुत! आपने "${topic.name}" सफलतापूर्वक पूरा किया!`,
+        `वाह! "${topic.name}" पूरा करने के लिए बधाई!`
+      ];
+      
+      const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+      document.getElementById('congratsMessage').textContent = randomMessage;
+      
+      // Show modal
+      document.getElementById('congratsModal').classList.add('active');
+      
+      // Launch confetti
+      launchConfetti();
+    }
+    
+    function launchConfetti() {
+      // Main burst
+      confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#6366f1', '#10b981', '#ec4899', '#f59e0b', '#8b5cf6']
+      });
+      
+      // Left side
+      setTimeout(() => {
+        confetti({
+          particleCount: 100,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          colors: ['#ec4899', '#f59e0b']
+        });
+      }, 250);
+      
+      // Right side
+      setTimeout(() => {
+        confetti({
+          particleCount: 100,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          colors: ['#6366f1', '#10b981', '#8b5cf6']
+        });
+      }, 500);
+      
+      // Additional bursts
+      setTimeout(() => {
+        confetti({
+          particleCount: 200,
+          spread: 100,
+          origin: { y: 0.5 },
+          colors: ['#6366f1', '#10b981', '#ec4899', '#f59e0b', '#8b5cf6']
+        });
+      }, 750);
+    }
+    
+    // ========== CBT ANALYSIS FUNCTIONS ==========
+    function loadCBTResults() {
+      const latestPerformance = document.getElementById('latestPerformance');
+      
+      if (cbtResults.length === 0) {
+        latestPerformance.innerHTML = '<p style="text-align: center; color: var(--muted); padding: 30px;">अभी तक कोई टेस्ट डेटा नहीं है। पहला टेस्ट एंट्री जोड़ें।</p>';
+        return;
+      }
+      
+      // Sort by date (newest first)
+      cbtResults.sort((a, b) => new Date(b.date) - new Date(a.date));
+      const latest = cbtResults[0];
+      
+      const percentage = ((latest.total / 300) * 100).toFixed(1);
+      const date = new Date(latest.date).toLocaleDateString('hi-IN');
+      
+      latestPerformance.innerHTML = `
+        <div style="text-align: center;">
+          <h3 style="color: var(--accent); margin-bottom: 15px;">${latest.name}</h3>
+          <div style="font-size: 2.5rem; font-weight: 800; color: var(--accent); margin: 15px 0;">${percentage}%</div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0;">
+            <div style="background: rgba(99,102,241,0.1); padding: 15px; border-radius: 12px;">
+              <div style="font-size: 0.9rem; color: var(--muted);">गणित</div>
+              <div style="font-size: 1.5rem; font-weight: 800;">${latest.math}</div>
+            </div>
+            <div style="background: rgba(16,185,129,0.1); padding: 15px; border-radius: 12px;">
+              <div style="font-size: 0.9rem; color: var(--muted);">रीजनिंग</div>
+              <div style="font-size: 1.5rem; font-weight: 800;">${latest.reasoning}</div>
+            </div>
+            <div style="background: rgba(245,158,11,0.1); padding: 15px; border-radius: 12px;">
+              <div style="font-size: 0.9rem; color: var(--muted);">सामान्य जागरूकता</div>
+              <div style="font-size: 1.5rem; font-weight: 800;">${latest.gs}</div>
+            </div>
+            <div style="background: rgba(139,92,246,0.1); padding: 15px; border-radius: 12px;">
+              <div style="font-size: 0.9rem; color: var(--muted);">कुल अंक</div>
+              <div style="font-size: 1.5rem; font-weight: 800;">${latest.total}/300</div>
+            </div>
+          </div>
+          <div style="color: var(--muted); font-size: 0.9rem;">तारीख: ${date}</div>
+        </div>
+      `;
+      
+      // Update performance chart
+      updatePerformanceChart();
+    }
+    
+    function updatePerformanceChart() {
+      const ctx = document.getElementById('performanceChart').getContext('2d');
+      
+      // Destroy existing chart if it exists
+      if (charts.performance) {
+        charts.performance.destroy();
+      }
+      
+      // Prepare data
+      const labels = cbtResults.map(r => r.name).slice(-10); // Last 10 tests
+      const mathScores = cbtResults.map(r => r.math).slice(-10);
+      const reasoningScores = cbtResults.map(r => r.reasoning).slice(-10);
+      const gsScores = cbtResults.map(r => r.gs).slice(-10);
+      const totalScores = cbtResults.map(r => r.total).slice(-10);
+      
+      // Create chart
+      charts.performance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'गणित',
+              data: mathScores,
+              borderColor: '#6366f1',
+              backgroundColor: 'rgba(99, 102, 241, 0.1)',
+              tension: 0.3,
+              fill: false
+            },
+            {
+              label: 'रीजनिंग',
+              data: reasoningScores,
+              borderColor: '#10b981',
+              backgroundColor: 'rgba(16, 185, 129, 0.1)',
+              tension: 0.3,
+              fill: false
+            },
+            {
+              label: 'सामान्य जागरूकता',
+              data: gsScores,
+              borderColor: '#f59e0b',
+              backgroundColor: 'rgba(245, 158, 11, 0.1)',
+              tension: 0.3,
+              fill: false
+            },
+            {
+              label: 'कुल अंक',
+              data: totalScores,
+              borderColor: '#8b5cf6',
+              backgroundColor: 'rgba(139, 92, 246, 0.1)',
+              tension: 0.3,
+              fill: false,
+              borderDash: [5, 5]
             }
+          ]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+              labels: {
+                color: 'var(--text)',
+                font: {
+                  size: 12
+                }
+              }
+            },
+            title: {
+              display: true,
+              text: 'टेस्ट प्रदर्शन ट्रेंड',
+              color: 'var(--text)',
+              font: {
+                size: 16,
+                weight: 'bold'
+              }
+            }
+          },
+          scales: {
+            x: {
+              ticks: {
+                color: 'var(--muted)',
+                maxRotation: 45
+              },
+              grid: {
+                color: 'var(--border)'
+              }
+            },
+            y: {
+              beginAtZero: true,
+              max: 300,
+              ticks: {
+                color: 'var(--muted)'
+              },
+              grid: {
+                color: 'var(--border)'
+              }
+            }
+          }
+        }
+      });
+    }
+    
+    function updatePerformanceCharts() {
+      // Update subject progress chart
+      updateSubjectProgressChart();
+      
+      // Update topic coverage chart
+      updateTopicCoverageChart();
+      
+      // Update study trend chart
+      updateStudyTrendChart();
+    }
+    
+    function updateSubjectProgressChart() {
+      const ctx = document.getElementById('subjectProgressChart').getContext('2d');
+      
+      // Destroy existing chart if it exists
+      if (charts.subjectProgress) {
+        charts.subjectProgress.destroy();
+      }
+      
+      // Prepare data
+      const subjects = CONFIG.subjects.map(s => s.title.split('(')[0].trim());
+      const progress = CONFIG.subjects.map(s => calculateSubjectProgress(s.id));
+      const colors = CONFIG.subjects.map(s => {
+        switch(s.colorClass) {
+          case 'math': return '#6366f1';
+          case 'reasoning': return '#10b981';
+          case 'history': return '#f59e0b';
+          case 'polity': return '#ec4899';
+          case 'geography': return '#8b5cf6';
+          case 'economy': return '#10b981';
+          case 'static-gk': return '#06b6d4';
+          case 'science': return '#f97316';
+          case 'computer': return '#6366f1';
+          default: return '#94a3b8';
+        }
+      });
+      
+      // Create chart
+      charts.subjectProgress = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: subjects,
+          datasets: [{
+            label: 'प्रगति %',
+            data: progress,
+            backgroundColor: colors,
+            borderColor: colors.map(c => c.replace('0.8', '1')),
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              display: false
+            },
+            title: {
+              display: true,
+              text: 'विषयवार प्रगति',
+              color: 'var(--text)',
+              font: {
+                size: 16,
+                weight: 'bold'
+              }
+            }
+          },
+          scales: {
+            x: {
+              ticks: {
+                color: 'var(--muted)',
+                maxRotation: 45
+              },
+              grid: {
+                color: 'var(--border)'
+              }
+            },
+            y: {
+              beginAtZero: true,
+              max: 100,
+              ticks: {
+                color: 'var(--muted)',
+                callback: function(value) {
+                  return value + '%';
+                }
+              },
+              grid: {
+                color: 'var(--border)'
+              }
+            }
+          }
+        }
+      });
+    }
+    
+    function updateTopicCoverageChart() {
+      const ctx = document.getElementById('topicCoverageChart').getContext('2d');
+      
+      // Destroy existing chart if it exists
+      if (charts.topicCoverage) {
+        charts.topicCoverage.destroy();
+      }
+      
+      // Calculate completed and pending topics per subject
+      const subjects = CONFIG.subjects.map(s => s.title.split('(')[0].trim());
+      const completed = CONFIG.subjects.map(subject => {
+        return subject.topics.filter(topic => {
+          const topicId = `${subject.id}_${topic.id}`;
+          return savedProgress[topicId];
+        }).length;
+      });
+      
+      const pending = CONFIG.subjects.map(subject => {
+        return subject.topics.length - completed[CONFIG.subjects.indexOf(subject)];
+      });
+      
+      // Create chart
+      charts.topicCoverage = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['पूर्ण', 'शेष'],
+          datasets: [{
+            data: [
+              completed.reduce((a, b) => a + b, 0),
+              pending.reduce((a, b) => a + b, 0)
+            ],
+            backgroundColor: ['#10b981', 'var(--border)'],
+            borderColor: ['#10b981', 'var(--border)'],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+              labels: {
+                color: 'var(--text)',
+                font: {
+                  size: 12
+                }
+              }
+            },
+            title: {
+              display: true,
+              text: 'कुल टॉपिक कवरेज',
+              color: 'var(--text)',
+              font: {
+                size: 16,
+                weight: 'bold'
+              }
+            }
+          }
+        }
+      });
+    }
+    
+    function updateStudyTrendChart() {
+      const ctx = document.getElementById('studyTrendChart').getContext('2d');
+      
+      // Destroy existing chart if it exists
+      if (charts.studyTrend) {
+        charts.studyTrend.destroy();
+      }
+      
+      // Prepare study log data (last 7 days)
+      const last7Days = Array.from({length: 7}, (_, i) => {
+        const date = new Date();
+        date.setDate(date.getDate() - (6 - i));
+        return date.toLocaleDateString('hi-IN', { weekday: 'short' });
+      });
+      
+      const studyData = Array(7).fill(0);
+      
+      studyLog.forEach(entry => {
+        const entryDate = new Date(entry.date);
+        const today = new Date();
+        const diffDays = Math.floor((today - entryDate) / (1000 * 60 * 60 * 24));
+        
+        if (diffDays >= 0 && diffDays < 7) {
+          studyData[6 - diffDays] += entry.topics.length;
+        }
+      });
+      
+      // Create chart
+      charts.studyTrend = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: last7Days,
+          datasets: [{
+            label: 'टॉपिक्स पूर्ण किए',
+            data: studyData,
+            borderColor: '#6366f1',
+            backgroundColor: 'rgba(99, 102, 241, 0.1)',
+            tension: 0.3,
+            fill: true
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+              labels: {
+                color: 'var(--text)',
+                font: {
+                  size: 12
+                }
+              }
+            },
+            title: {
+              display: true,
+              text: 'साप्ताहिक अध्ययन ट्रेंड',
+              color: 'var(--text)',
+              font: {
+                size: 16,
+                weight: 'bold'
+              }
+            }
+          },
+          scales: {
+            x: {
+              ticks: {
+                color: 'var(--muted)'
+              },
+              grid: {
+                color: 'var(--border)'
+              }
+            },
+            y: {
+              beginAtZero: true,
+              ticks: {
+                color: 'var(--muted)'
+              },
+              grid: {
+                color: 'var(--border)'
+              }
+            }
+          }
+        }
+      });
+    }
+    
+    function logStudyActivity(topicId) {
+      const today = new Date().toDateString();
+      const todayLog = studyLog.find(log => new Date(log.date).toDateString() === today);
+      
+      if (todayLog) {
+        if (!todayLog.topics.includes(topicId)) {
+          todayLog.topics.push(topicId);
+        }
+      } else {
+        studyLog.push({
+          date: new Date().toISOString(),
+          topics: [topicId]
+        });
+      }
+      
+      // Keep only last 30 days
+      const thirtyDaysAgo = new Date();
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+      studyLog = studyLog.filter(log => new Date(log.date) >= thirtyDaysAgo);
+      
+      localStorage.setItem(STORAGE_KEYS.STUDY_LOG, JSON.stringify(studyLog));
+    }
+    
+    function saveStudyLog() {
+      localStorage.setItem(STORAGE_KEYS.STUDY_LOG, JSON.stringify(studyLog));
+    }
+    
+    // ========== EVENT LISTENERS SETUP ==========
+    function setupEventListeners() {
+      // Drawer menu
+      document.getElementById('menuBtn').addEventListener('click', () => {
+        document.getElementById('drawer').classList.add('active');
+        document.getElementById('drawerOverlay').classList.add('active');
+      });
+      
+      document.getElementById('drawerClose').addEventListener('click', closeDrawer);
+      document.getElementById('drawerOverlay').addEventListener('click', closeDrawer);
+      
+      // Theme buttons
+      document.querySelectorAll('.theme-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const theme = this.dataset.theme;
+          setTheme(theme);
+          
+          // Update active button
+          document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+      
+      // Tab buttons
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const tabId = this.dataset.tab;
+          
+          // Update active tab button
+          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          
+          // Show corresponding tab content
+          document.querySelectorAll('.tab-content').forEach(content => {
+            content.classList.remove('active');
           });
-
-          const label = document.createElement("label");
-          label.setAttribute("for", input.id);
-          
-          let starClass = "";
-          if (t.stars === 3) starClass = "three-stars";
-          else if (t.stars === 2) starClass = "two-stars";
-          else if (t.stars === 1) starClass = "one-star";
-          
-          label.innerHTML = `<strong>${t.name}<span class="stars ${starClass}"></span></strong><small>${t.hint}</small>`;
-
-          const weight = document.createElement("span");
-          weight.className = "weight";
-          weight.title = "Topic weight (for progress calc)";
-          weight.textContent = `wt ${t.weight}`;
-
-          row.appendChild(input);
-          row.appendChild(label);
-          row.appendChild(weight);
-          topics.appendChild(row);
-        });
-
-        section.appendChild(header);
-        section.appendChild(topics);
-        subjectsContainer.appendChild(section);
-      });
-
-      // Collapse/Expand toggle
-      subjectsContainer.addEventListener("click", (e)=>{
-        const btn = e.target.closest("button[data-toggle]");
-        if(!btn) return;
-        const id = btn.getAttribute("data-toggle");
-        const topicsEl = document.getElementById(`topics_${id}`);
-        const collapsed = topicsEl.style.display === "none";
-        topicsEl.style.display = collapsed ? "" : "none";
-        btn.textContent = collapsed ? "Collapse" : "Expand";
-        uiSaved[id] = { collapsed: !collapsed };
-        localStorage.setItem(UI_STATE_KEY, JSON.stringify(uiSaved));
-      });
-    }
-
-    // Weight helpers
-    function sumWeights(arr){ return arr.reduce((s,a)=> s + (a.weight ?? 1), 0); }
-    function doneWeights(subj){
-      return subj.topics.reduce((s,t)=>{
-        const key = `${subj.id}_${t.id}`;
-        const isDone = !!saved[key];
-        const wt = t.weight ?? 1;
-        return s + (isDone ? wt : 0);
-      }, 0);
-    }
-
-    // Charts (CHANGE: Updated for 3 subjects; removed Science refs)
-    const OVERALL_CIRCUMFERENCE = 2 * Math.PI * 85;
-    function setDonut(id, percent){
-      const circle = document.getElementById(id);
-      if(!circle) return;
-      const circumference = id === "donutOverall" ? OVERALL_CIRCUMFERENCE : 2 * Math.PI * 40;
-      const offset = circumference * (1 - percent/100);
-      circle.setAttribute("stroke-dasharray", circumference.toFixed(0));
-      circle.setAttribute("stroke-dashoffset", offset.toFixed(2));
-    }
-    function setBar(id, percent){
-      const bar = document.getElementById(id);
-      if(bar) bar.style.width = `${percent}%`;
-    }
-    function setText(id, percent){
-      const el = document.getElementById(id);
-      if(el) el.textContent = `${percent.toFixed(0)}%`;
-    }
-
-    function updateProgress(){
-      CONFIG.subjects.forEach(subj=>{ // Now 3
-        const totalWt = sumWeights(subj.topics);
-        const doneWt = doneWeights(subj);
-        const pct = totalWt ? (doneWt/totalWt)*100 : 0;
-        setBar(`bar_${subj.id}`, pct);
-        setText(`${subj.id.toLowerCase()}Text`, pct);
-        setDonut(`donut${subj.id}`, pct);
-        const p = document.getElementById(`percent_${subj.id}`);
-        if(p) p.textContent = `${pct.toFixed(0)}%`;
-      });
-
-      // Overall for 3 subjects
-      const subjTotals = CONFIG.subjects.map(s=>{
-        const totalWt = sumWeights(s.topics);
-        const doneWt = doneWeights(s);
-        const pctFrac = totalWt ? (doneWt/totalWt) : 0;
-        return { id:s.id, pctFrac, weight:subjectWeight(s.id) };
-      });
-      const totalWeight = subjTotals.reduce((s,a)=> s+a.weight, 0) || 1;
-      const overallPct = subjTotals.reduce((s,a)=> s + a.pctFrac*a.weight, 0) / totalWeight * 100;
-      setDonut("donutOverall", overallPct);
-      setText("overallText", overallPct);
-    }
-
- 
-
-    // Controls
-    document.getElementById("expandAll").addEventListener("click", ()=>{
-      CONFIG.subjects.forEach(s=>{
-        document.getElementById(`topics_${s.id}`).style.display = "";
-        uiSaved[s.id] = { collapsed:false };
-      });
-      localStorage.setItem(UI_STATE_KEY, JSON.stringify(uiSaved));
-    });
-    document.getElementById("collapseAll").addEventListener("click", ()=>{
-      CONFIG.subjects.forEach(s=>{
-        document.getElementById(`topics_${s.id}`).style.display = "none";
-        uiSaved[s.id] = { collapsed:true };
-      });
-      localStorage.setItem(UI_STATE_KEY, JSON.stringify(uiSaved));
-    });
-    document.getElementById("resetProgress").addEventListener("click", ()=>{
-      if(!confirm("Reset all ticks and progress?")) return;
-      localStorage.removeItem(STORE_KEY);
-      Object.keys(saved).forEach(k=> delete saved[k]);
-      updateProgress();
-      saveStudentData();
-      CONFIG.subjects.forEach(s=>{
-        s.topics.forEach(t=>{
-          const key = `${s.id}_${t.id}`;
-          const el = document.getElementById(key);
-          if(el) el.checked = false;
+          document.getElementById(`${tabId}-tab`).classList.add('active');
         });
       });
-    });
-
-    // Backup: Export/Import (unchanged, but now for 3 subjects)
-    document.getElementById("exportBtn").addEventListener("click", ()=>{
-      const payload = {
-        brand: CONFIG.brandName,
-        saved,
-        ui: uiSaved,
-        studentName: localStorage.getItem(STUDENT_NAME_KEY),
+      
+      // CBT buttons
+      document.querySelectorAll('.cbt-btn[data-cbt]').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.cbt-btn').forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          // In a full implementation, this would filter CBT results
+        });
+      });
+      
+      // CBT form submission
+      document.getElementById('cbtForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const testData = {
+          name: document.getElementById('testName').value,
+          date: document.getElementById('testDate').value,
+          math: parseInt(document.getElementById('mathMarks').value),
+          reasoning: parseInt(document.getElementById('reasoningMarks').value),
+          gs: parseInt(document.getElementById('gsMarks').value),
+          total: parseInt(document.getElementById('totalMarks').value)
+        };
+        
+        cbtResults.push(testData);
+        localStorage.setItem(STORAGE_KEYS.CBT_RESULTS, JSON.stringify(cbtResults));
+        
+        // Reset form
+        this.reset();
+        document.getElementById('testDate').valueAsDate = new Date();
+        
+        // Update display
+        loadCBTResults();
+        
+        // Show success message
+        alert('टेस्ट डेटा सफलतापूर्वक सेव हो गया!');
+      });
+      
+      // Control buttons
+      document.getElementById('expandAll').addEventListener('click', () => {
+        CONFIG.subjects.forEach(subject => {
+          const topicsEl = document.getElementById(`topics_${subject.id}`);
+          topicsEl.style.display = '';
+          const btn = document.querySelector(`button[data-toggle="${subject.id}"]`);
+          if (btn) btn.textContent = 'संकुचित करें';
+          
+          savedUIState[subject.id] = { collapsed: false };
+        });
+        localStorage.setItem(STORAGE_KEYS.UI_STATE, JSON.stringify(savedUIState));
+      });
+      
+      document.getElementById('collapseAll').addEventListener('click', () => {
+        CONFIG.subjects.forEach(subject => {
+          const topicsEl = document.getElementById(`topics_${subject.id}`);
+          topicsEl.style.display = 'none';
+          const btn = document.querySelector(`button[data-toggle="${subject.id}"]`);
+          if (btn) btn.textContent = 'विस्तार करें';
+          
+          savedUIState[subject.id] = { collapsed: true };
+        });
+        localStorage.setItem(STORAGE_KEYS.UI_STATE, JSON.stringify(savedUIState));
+      });
+      
+      document.getElementById('markAll').addEventListener('click', () => {
+        CONFIG.subjects.forEach(subject => {
+          subject.topics.forEach(topic => {
+            const topicId = `${subject.id}_${topic.id}`;
+            savedProgress[topicId] = true;
+            const checkbox = document.getElementById(topicId);
+            if (checkbox) checkbox.checked = true;
+          });
+        });
+        localStorage.setItem(STORAGE_KEYS.PROGRESS, JSON.stringify(savedProgress));
+        updateProgress();
+      });
+      
+      document.getElementById('unmarkAll').addEventListener('click', () => {
+        CONFIG.subjects.forEach(subject => {
+          subject.topics.forEach(topic => {
+            const topicId = `${subject.id}_${topic.id}`;
+            savedProgress[topicId] = false;
+            const checkbox = document.getElementById(topicId);
+            if (checkbox) checkbox.checked = false;
+          });
+        });
+        localStorage.setItem(STORAGE_KEYS.PROGRESS, JSON.stringify(savedProgress));
+        updateProgress();
+      });
+      
+      // Reset button
+      document.getElementById('resetBtn').addEventListener('click', () => {
+        document.getElementById('resetModal').classList.add('active');
+      });
+      
+      document.getElementById('resetCancel').addEventListener('click', () => {
+        document.getElementById('resetModal').classList.remove('active');
+        document.getElementById('resetConfirmInput').value = '';
+        document.getElementById('resetConfirm').disabled = true;
+      });
+      
+      document.getElementById('resetConfirmInput').addEventListener('input', function() {
+        document.getElementById('resetConfirm').disabled = 
+          this.value !== 'RESET MY PROGRESS';
+      });
+      
+      document.getElementById('resetConfirm').addEventListener('click', () => {
+        // Clear all progress data
+        savedProgress = {};
+        cbtResults = [];
+        studyLog = [];
+        
+        localStorage.setItem(STORAGE_KEYS.PROGRESS, JSON.stringify(savedProgress));
+        localStorage.setItem(STORAGE_KEYS.CBT_RESULTS, JSON.stringify(cbtResults));
+        localStorage.setItem(STORAGE_KEYS.STUDY_LOG, JSON.stringify(studyLog));
+        
+        // Reset checkboxes
+        document.querySelectorAll('.topic input[type="checkbox"]').forEach(checkbox => {
+          checkbox.checked = false;
+        });
+        
+        // Update UI
+        updateProgress();
+        loadCBTResults();
+        
+        // Close modal
+        document.getElementById('resetModal').classList.remove('active');
+        document.getElementById('resetConfirmInput').value = '';
+        document.getElementById('resetConfirm').disabled = true;
+        
+        alert('सभी प्रोग्रेस रीसेट हो गया है!');
+      });
+      
+      // Export/Import buttons
+      document.getElementById('exportBackupBtn').addEventListener('click', exportBackup);
+      document.getElementById('importBackupBtn').addEventListener('click', () => {
+        document.getElementById('importFile').click();
+      });
+      
+      document.getElementById('importFile').addEventListener('change', importBackup);
+      
+      // Close congratulations modal
+      document.getElementById('closeCongrats').addEventListener('click', () => {
+        document.getElementById('congratsModal').classList.remove('active');
+      });
+      
+      // Set today's date as default in CBT form
+      document.getElementById('testDate').valueAsDate = new Date();
+    }
+    
+    function closeDrawer() {
+      document.getElementById('drawer').classList.remove('active');
+      document.getElementById('drawerOverlay').classList.remove('active');
+    }
+    
+    function setTheme(theme) {
+      currentTheme = theme;
+      document.body.className = `theme-${theme}`;
+      localStorage.setItem(STORAGE_KEYS.THEME, theme);
+      
+      // Update theme toggle button icon
+      const themeToggle = document.getElementById('themeToggle');
+      themeToggle.innerHTML = theme === 'dark' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+      
+      // Update charts if they exist
+      setTimeout(() => {
+        if (charts.performance) updatePerformanceChart();
+        if (charts.subjectProgress) updateSubjectProgressChart();
+        if (charts.topicCoverage) updateTopicCoverageChart();
+        if (charts.studyTrend) updateStudyTrendChart();
+      }, 100);
+    }
+    
+    // ========== BACKUP FUNCTIONS ==========
+    function exportBackup() {
+      const backupData = {
+        app: 'RRB NTPC Syllabus Tracker',
+        version: CONFIG.appVersion,
         timestamp: new Date().toISOString(),
-        version: "v2"
+        studentName: localStorage.getItem(STORAGE_KEYS.STUDENT_NAME),
+        progress: savedProgress,
+        uiState: savedUIState,
+        cbtResults: cbtResults,
+        studyLog: studyLog,
+        theme: currentTheme
       };
-      const blob = new Blob([JSON.stringify(payload,null,2)], {type:"application/json"});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
+      
+      const dataStr = JSON.stringify(backupData, null, 2);
+      const dataBlob = new Blob([dataStr], {type: 'application/json'});
+      const url = URL.createObjectURL(dataBlob);
+      
+      const a = document.createElement('a');
       a.href = url;
-      a.download = "RRB_NTPC_Tracker_Backup.json";
+      a.download = `rrb_ntpc_backup_${new Date().toISOString().slice(0,10)}.json`;
       document.body.appendChild(a);
       a.click();
-      a.remove();
+      document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      alert("Backup exported. Share to import on any device.");
-    });
-
-    const importFile = document.getElementById("importFile");
-    document.getElementById("importBtn").addEventListener("click", ()=> importFile.click());
-    importFile.addEventListener("change", async ()=>{
-      const file = importFile.files[0];
-      if(!file) return;
-      try{
-        const text = await file.text();
-        const data = JSON.parse(text);
-        if(!data || !data.saved) throw new Error("Invalid backup.");
-        Object.keys(saved).forEach(k=> delete saved[k]);
-        Object.assign(saved, data.saved);
-        localStorage.setItem(STORE_KEY, JSON.stringify(saved));
-
-        Object.keys(uiSaved).forEach(k=> delete uiSaved[k]);
-        Object.assign(uiSaved, data.ui || {});
-        localStorage.setItem(UI_STATE_KEY, JSON.stringify(uiSaved));
-
-        if (data.studentName) {
-          localStorage.setItem(STUDENT_NAME_KEY, data.studentName);
-          updateGreeting();
-        }
-
-        CONFIG.subjects.forEach(s=>{
-          s.topics.forEach(t=>{
-            const key = `${s.id}_${t.id}`;
-            const el = document.getElementById(key);
-            if(el) el.checked = !!saved[key];
-          });
-        });
-        CONFIG.subjects.forEach(s=>{
-          const topicsEl = document.getElementById(`topics_${s.id}`);
-          const collapsed = !!(uiSaved[s.id]?.collapsed);
-          topicsEl.style.display = collapsed ? "none" : "";
-          const btn = document.querySelector(`button[data-toggle="${s.id}"]`);
-          if(btn) btn.textContent = collapsed ? "Expand" : "Collapse";
-        });
-
-        updateProgress();
-        updateMotivationalMessage();
-        saveStudentData();
-        alert("Backup imported successfully!");
-      }catch(err){
-        alert("Import failed: Select a valid JSON backup.");
-      }finally{
-        importFile.value = "";
-      }
-    });
-
-   
-    // Initialize
-    initializeApp();
+      
+      alert('बैकअप सफलतापूर्वक एक्सपोर्ट हो गया!');
+    }
     
-    setInterval(updateGreeting, 60 * 60 * 1000);
-    setInterval(updateMotivationalMessage, 30 * 60 * 1000);
+    function importBackup(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const backupData = JSON.parse(e.target.result);
+          
+          // Validate backup file
+          if (!backupData.app || !backupData.version) {
+            throw new Error('Invalid backup file');
+          }
+          
+          // Import data
+          if (backupData.studentName) {
+            localStorage.setItem(STORAGE_KEYS.STUDENT_NAME, backupData.studentName);
+          }
+          
+          if (backupData.progress) {
+            savedProgress = backupData.progress;
+            localStorage.setItem(STORAGE_KEYS.PROGRESS, JSON.stringify(savedProgress));
+          }
+          
+          if (backupData.uiState) {
+            savedUIState = backupData.uiState;
+            localStorage.setItem(STORAGE_KEYS.UI_STATE, JSON.stringify(savedUIState));
+          }
+          
+          if (backupData.cbtResults) {
+            cbtResults = backupData.cbtResults;
+            localStorage.setItem(STORAGE_KEYS.CBT_RESULTS, JSON.stringify(cbtResults));
+          }
+          
+          if (backupData.studyLog) {
+            studyLog = backupData.studyLog;
+            localStorage.setItem(STORAGE_KEYS.STUDY_LOG, JSON.stringify(studyLog));
+          }
+          
+          if (backupData.theme) {
+            currentTheme = backupData.theme;
+            localStorage.setItem(STORAGE_KEYS.THEME, currentTheme);
+            setTheme(currentTheme);
+          }
+          
+          // Update UI
+          updateGreeting();
+          renderSubjects();
+          updateProgress();
+          loadCBTResults();
+          
+          alert('बैकअप सफलतापूर्वक इम्पोर्ट हो गया!');
+        } catch (error) {
+          alert('बैकअप फ़ाइल अमान्य है। कृपया एक वैध बैकअप फ़ाइल चुनें।');
+          console.error('Import error:', error);
+        }
+      };
+      
+      reader.readAsText(file);
+      event.target.value = ''; // Reset file input
+    }
+    
+    function initializeCharts() {
+      // Initialize empty charts
+      updatePerformanceChart();
+      updateSubjectProgressChart();
+      updateTopicCoverageChart();
+      updateStudyTrendChart();
+    }
+    
+    // ========== INITIALIZE APP ==========
+    document.addEventListener('DOMContentLoaded', initializeApp);
   </script>
 </body>
 </html>
