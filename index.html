@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RRB NTPC Syllabus Tracker</title>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <style>
+    /* ===== Theme (modern premium) ===== */
+    :root{
+      --bg: #0f172a;
+      --glass: rgba(255,255,255,0.08);
+      --card: #1e293b;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --border: #334155;
+      --accent: #6366f1;
+      --accent-2: #ec4899;
+      --accent-3: #10b981;
+      --accent-4: #f59e0b;
+      --accent-5: #8b5cf6;
+      --pill: #1a2437;
+      --shadow: 0 12px 35px rgba(0,0,0,0.4);
+      --gradient: linear-gradient(135deg, #6366f1, #ec4899, #f59e0b, #10b981);
+      --gradient-card: linear-gradient(145deg, #1e293b, #1a2437);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 85% -20%, rgba(99,102,241,0.15), transparent 60%),
+        radial-gradient(900px 500px at 10% 10%, rgba(236,72,153,0.15), transparent 60%),
+        linear-gradient(135deg,#0f172a 0%,#111827 100%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ===== Welcome Screen ===== */
+    #welcomeScreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(99,102,241,0.2) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(16,185,129,0.2) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(245,158,11,0.15) 0%, transparent 50%),
+        linear-gradient(135deg, #0f172a 0%, #111827 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+    
+    #welcomeScreen.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+    
+    .welcome-content {
+      text-align: center;
+      max-width: 700px;
+      padding: 50px;
+      background: rgba(30, 41, 59, 0.85);
+      backdrop-filter: blur(15px);
+      border-radius: 24px;
+      border: 1px solid rgba(99,102,241,0.3);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .welcome-content::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient);
+    }
+    
+    .welcome-logo {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: var(--gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 30px;
+      font-size: 4rem;
+      box-shadow: 0 15px 35px rgba(99,102,241,0.5);
+      animation: pulse 2.5s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 15px 35px rgba(99,102,241,0.5); }
+      50% { transform: scale(1.05); box-shadow: 0 20px 40px rgba(99,102,241,0.7); }
+      100% { transform: scale(1); box-shadow: 0 15px 35px rgba(99,102,241,0.5); }
+    }
+    
+    .welcome-content h1 {
+      font-size: 2.8rem;
+      margin: 0 0 20px;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 800;
+    }
+    
+    .welcome-content p {
+      color: var(--muted);
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+    
+    .name-input {
+      width: 100%;
+      padding: 16px 20px;
+      margin: 20px 0;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(99,102,241,0.3);
+      border-radius: 12px;
+      color: var(--text);
+      font-size: 1.1rem;
+      text-align: center;
+    }
+    
+    .name-input:focus, .name-input[readonly] {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(99,102,241,0.3);
+      background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .name-input[readonly] {
+      color: var(--accent);
+      font-weight: 600;
+    }
+    
+    .welcome-btn {
+      background: var(--gradient);
+      color: white;
+      border: none;
+      padding: 18px 45px;
+      font-size: 1.3rem;
+      font-weight: 700;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 12px 30px rgba(99,102,241,0.5);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .welcome-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 35px rgba(99,102,241,0.6);
+    }
+
+    /* ===== Header / brand ===== */
+    header{
+      position:sticky; top:0; z-index:20;
+      backdrop-filter: blur(12px);
+      background:linear-gradient(180deg, rgba(15,23,42,0.85), rgba(15,23,42,0.7));
+      border-bottom:1px solid var(--border);
+    }
+    .brand{
+      display:flex; align-items:center; gap:16px; padding:18px 24px;
+    }
+    .logo{
+      width:54px; height:54px; border-radius:14px; font-size:2.2rem; display:flex; align-items:center; justify-content:center;
+      background: conic-gradient(from 220deg, var(--accent), var(--accent-3), var(--accent-4), var(--accent-2));
+      box-shadow: 0 8px 20px rgba(99,102,241,0.4); color: #0f172a;
+    }
+    .titles h1{
+      margin:0; font-size:1.4rem; letter-spacing:0.2px;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .titles p{
+      margin:4px 0 0; color:var(--muted); font-size:0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .greeting {
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    /* ===== Layout ===== */
+    .container{max-width:1200px; margin:28px auto; padding:0 20px}
+    .grid{display:grid; gap:20px; grid-template-columns:1fr 1fr} /* CHANGE: Equal split for 3 subjects, but now overview takes right */
+    @media (max-width:940px){ .grid{grid-template-columns:1fr} }
+
+    /* ===== Cards ===== */
+    .card{
+      background: var(--gradient-card); border:1px solid var(--border); border-radius:18px;
+      box-shadow:var(--shadow); overflow:hidden;
+      position: relative;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient);
+    }
+    .card h2{
+      margin:0; padding:16px 20px; font-size:1.2rem;
+      background:linear-gradient(180deg, rgba(255,255,255,0.06), transparent);
+      border-bottom:1px solid var(--border);
+      font-weight: 700;
+    }
+    .card .body{padding:18px}
+
+    /* ===== Subjects list ===== */
+    .subject{
+      margin-bottom:20px; border:1px solid var(--border); border-radius:16px; overflow:hidden;
+      background:linear-gradient(180deg, rgba(255,255,255,0.04), transparent);
+    }
+    .subject-header{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 16px; background:var(--pill);
+    }
+    .subject-title{display:flex; gap:12px; align-items:center}
+    .badge{
+      padding:5px 12px; border-radius:999px; font-size:0.8rem; color:#0f172a; font-weight:700;
+      background:#fff;
+    }
+    .badge.math{background:var(--accent); color:#0f172a}
+    .badge.reasoning{background:var(--accent-3); color:#081313}
+    .badge.awareness{background:var(--accent-4); color:#140f05}
+    .progress-wrap{display:flex; gap:12px; align-items:center}
+    .progress-bar{
+      height:12px; width:240px; background:#0f1428; border:1px solid var(--border); border-radius:10px; overflow:hidden;
+    }
+    .progress-fill{height:100%; background:linear-gradient(90deg,var(--accent),var(--accent-3)); width:0%}
+    .percent{font-size:0.9rem; color:var(--muted); width:70px; text-align:right; font-weight: 600;}
+    .topics{
+      padding:12px 16px; display:grid; gap:10px; max-height:320px; overflow-y:auto; /* Scroller added for topics */
+    }
+    .topic{
+      display:flex; align-items:flex-start; gap:12px; padding:12px 14px; border-radius:14px;
+      background:rgba(255,255,255,0.04); border:1px solid #334155;
+      transition: all 0.2s ease;
+    }
+    .topic:hover {
+      background: rgba(255,255,255,0.07);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    .topic input{
+      transform:translateY(2px);
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+    .topic label{cursor:pointer; line-height:1.5; flex: 1;}
+    .topic small{display:block; color:var(--muted); margin-top:6px; font-size:0.85rem;}
+    .weight{
+      margin-left:auto; font-size:0.8rem; color:#6366f1; background:#0f1428; padding:4px 10px; border-radius:999px; border:1px solid #334155;
+      font-weight: 600;
+    }
+    
+    /* Star ratings */
+    .stars {
+      margin-left: 10px;
+      color: #fbbf24;
+      font-size: 0.9rem;
+    }
+    .stars.three-stars::after { content: " ★★★"; }
+    .stars.two-stars::after { content: " ★★"; }
+    .stars.one-star::after { content: " ★"; }
+
+    /* ===== Charts ===== */
+    .charts{display:grid; gap:20px; text-align:center}
+    .overall-chart{margin-bottom:28px}
+    .overall-donut{width:220px; height:220px; display:block; margin:0 auto}
+    .overall-donut text{fill:var(--text); font-size:26px; font-weight:800}
+    .subject-charts{display:flex; flex-direction:row; justify-content:space-around; gap:24px; flex-wrap:wrap}
+    .chart-card{
+      display:flex; flex-direction:column; align-items:center; gap:10px; min-width:190px;
+      padding: 15px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(99,102,241,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .chart-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+    .donut{width:110px; height:110px;}
+    .donut text{fill:var(--text); font-size:14px; font-weight:800}
+    .legend{display:flex; gap:12px; flex-wrap:wrap; justify-content: center;}
+    .legend-item{display:flex; align-items:center; gap:8px; font-size:0.95rem; color:var(--muted)}
+    .dot{width:14px; height:14px; border-radius:50%}
+    .dot.math{background:var(--accent)}
+    .dot.reasoning{background:var(--accent-3)}
+    .dot.awareness{background:var(--accent-4)}
+    .dot.todo{background:#334155}
+    .dot.done{background:var(--accent-3)}
+    .subject-names{margin-top:6px; font-size:1.1rem; font-weight:700; color:var(--accent)}
+
+    /* ===== Controls ===== */
+    .controls{display:flex; gap:10px; flex-wrap:wrap}
+    button{
+      background:linear-gradient(180deg,#4f46e5,#4338ca); color:var(--text); border:1px solid #4f46e5;
+      padding:12px 16px; border-radius:12px; cursor:pointer; font-weight:700;
+      transition: all 0.2s ease;
+    }
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    button.secondary{background:#172042; border-color:#23305f}
+    button.danger{background:#401827; border-color:#6a1f36}
+    .note{color:var(--muted); font-size:0.95rem; margin-top: 15px;}
+
+    /* ===== Footer ===== */
+    footer{
+      margin:28px auto; max-width:1200px; padding:0 20px; color:var(--muted); font-size:0.95rem;
+      text-align: center;
+      padding: 20px;
+      border-top: 1px solid var(--border);
+    }
+    .creator {
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    /* Print */
+    @media print{
+      header{position:static; background:#fff; color:#000; border:0}
+      body{background:#fff; color:#000}
+      .card{box-shadow:none}
+      .badge{color:#000}
+    }
+
+    /* Custom scrollbar */
+    .topics::-webkit-scrollbar {
+      width: 8px;
+    }
+    .topics::-webkit-scrollbar-track {
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
+    }
+    .topics::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 10px;
+    }
+    .topics::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-3);
+    }
+
+    /* Motivational message */
+    .motivational-message {
+      text-align: center;
+      margin: 15px 0;
+      padding: 12px;
+      background: rgba(99,102,241,0.1);
+      border-radius: 12px;
+      border-left: 4px solid var(--accent);
+      font-style: italic;
+    }
+
+    
+    /* Progress rings for admin panel */
+    .progress-ring {
+      position: relative;
+      width: 40px;
+      height: 40px;
+    }
+    
+    .progress-ring-circle {
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+    }
+    
+    .admin-student-progress {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .admin-progress-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+
+
+    
+  </style>
+</head>
+<body>
+  <!-- Welcome Screen (Now shows EVERY time, with conditional input) -->
+  <div id="welcomeScreen">
+    <div class="welcome-content">
+      <div class="welcome-logo">🚆</div>
+      <h1 id="welcomeTitle">RRB NTPC Syllabus Tracker</h1>
+      <p id="welcomeDesc">अपनी RRB NTPC परीक्षा की तैयारी को व्यवस्थित और ट्रैक करें। विषय-वार प्रगति देखें और अपने अध्ययन को बेहतर बनाएं।</p>
+      
+      <input type="text" class="name-input" id="studentName" placeholder="अपना नाम दर्ज करें" maxlength="30">
+      
+      <button class="welcome-btn" id="startTracking">Track Your Progress</button>
+    </div>
+  </div>
+
+  <!-- Main App -->
+  <div id="mainApp" style="display: none;">
+    <!-- CHANGE: Add admin toggle button -->
+    
+    
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <img src="https://api.memozing.com/res/contents/600x600crop/lessons/d87939d95432b31083271a1c-ea11ba456b077ac2b90ad30.jpg" alt="Logo" style="width: 100%; height: 100%; border-radius: 14px; object-fit: cover;">
+        </div>
+        <div class="titles">
+          <h1>Mr.SK Study Help - RRB NTPC Syllabus Tracker</h1>
+          <p><span class="greeting" id="greetingText">Welcome</span> | Tick topics to update graphs. Progress auto-saves.</p>
+        </div>
+      </div>
+    </header>
+
+    <div class="container grid">
+      <div class="card">
+        <h2>Subjects and Topics</h2>
+        <div class="body" id="subjectsContainer"></div>
+      </div>
+
+      <div class="card">
+        <h2>Progress Overview</h2>
+        <div class="body charts">
+          <div class="motivational-message" id="motivationalMessage">
+            आपकी सफलता की यात्रा आज से शुरू होती है!
+          </div>
+          
+          <div class="overall-chart">
+            <svg class="overall-donut" viewBox="0 0 200 200" aria-label="Overall completion donut">
+              <circle cx="100" cy="100" r="85" fill="none" stroke="#334155" stroke-width="25"/>
+              <circle id="donutOverall" cx="100" cy="100" r="85" fill="none" stroke="url(#gradOverall)" stroke-width="25" stroke-linecap="round" stroke-dasharray="534" stroke-dashoffset="534"/>
+              <defs>
+                <linearGradient id="gradOverall" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#6366f1"/>
+                  <stop offset="100%" stop-color="#10b981"/>
+                </linearGradient>
+              </defs>
+              <text x="100" y="105" text-anchor="middle" id="overallText">0%</text>
+            </svg>
+            <div class="legend">
+              <div class="legend-item"><span class="dot done"></span>Completed</div>
+              <div class="legend-item"><span class="dot todo"></span>Pending</div>
+            </div>
+            <p class="note">Overall completion updates as you tick topics across all subjects.</p>
+          </div>
+
+          <!-- CHANGE: Remove Science chart; now 3 charts -->
+          <div class="subject-charts">
+            <div class="chart-card">
+              <svg class="donut" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="40" fill="none" stroke="#334155" stroke-width="15"/>
+                <circle id="donutMath" cx="50" cy="50" r="40" fill="none" stroke="#6366f1" stroke-width="15" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="251"/>
+                <text x="50" y="55" text-anchor="middle" id="mathText">0%</text>
+              </svg>
+              <div class="progress-bar" style="width:100px"><div class="progress-fill" id="barMath"></div></div>
+              <div class="subject-names">Mathematics</div>
+            </div>
+
+            <div class="chart-card">
+              <svg class="donut" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="40" fill="none" stroke="#334155" stroke-width="15"/>
+                <circle id="donutReasoning" cx="50" cy="50" r="40" fill="none" stroke="#10b981" stroke-width="15" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="251"/>
+                <text x="50" y="55" text-anchor="middle" id="reasoningText">0%</text>
+              </svg>
+              <div class="progress-bar" style="width:100px"><div class="progress-fill" id="barReasoning"></div></div>
+              <div class="subject-names">Reasoning</div>
+            </div>
+
+            <div class="chart-card">
+              <svg class="donut" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="40" fill="none" stroke="#334155" stroke-width="15"/>
+                <circle id="donutAwareness" cx="50" cy="50" r="40" fill="none" stroke="#f59e0b" stroke-width="15" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="251"/>
+                <text x="50" y="55" text-anchor="middle" id="awarenessText">0%</text>
+              </svg>
+              <div class="progress-bar" style="width:100px"><div class="progress-fill" id="barAwareness"></div></div>
+              <div class="subject-names">General Awareness & Science</div>
+            </div>
+          </div>
+
+          <div class="controls">
+            <button id="expandAll">Expand All</button>
+            <button class="secondary" id="collapseAll">Collapse All</button>
+            <button class="danger" id="resetProgress">Reset Progress</button>
+            <button class="secondary" onclick="window.print()">Print / Save PDF</button>
+            <button id="exportBtn">Export Backup</button>
+            <button class="secondary" id="importBtn">Import Backup</button>
+            <input type="file" id="importFile" accept=".json" style="display:none">
+          
+
+    <footer>
+      © <span class="creator">Mr. SHAILENDRA KUSHWAH</span> — RRB NTPC Syllabus Tracker. Designed for reproducible tracking. Data is saved locally on your device.
+    </footer>
+  </div>
+
+  <script>
+    /* ========== CONFIG: RRB NTPC Syllabus (CHANGE: Merged Science into Awareness; 3 subjects only) ========== */
+    const CONFIG = {
+      brandName: "Mr. SHAILENDRA KUSHWAH - RRB NTPC Syllabus Tracker",
+      subjectWeights: { Math: 1, Reasoning: 1, Awareness: 1 }, // CHANGE: Removed Science
+      // CHANGE: Removed adminPassword; now direct access for you
+      subjects: [
+        {
+          id: "Math",
+          title: "Mathematics (गणित)",
+          colorClass: "math",
+          topics: [
+            { id:"numSys", name:"Number System", hint:"Number System, Decimals, Fractions, LCM and HCF", weight:1, stars: 3 },
+            { id:"ratio", name:"Ratio and Proportions", hint:"Ratio and Proportions", weight:1, stars: 2 },
+            { id:"percent", name:"Percentage", hint:"Percentage", weight:1, stars: 3 },
+            { id:"mensuration", name:"Mensuration", hint:"Mensuration", weight:1, stars: 2 },
+            { id:"timeWork", name:"Time and Work", hint:"Time and Work", weight:1, stars: 3 },
+            { id:"speedTime", name:"Speed, Time, and Distance", hint:"Speed, Time, and Distance", weight:1, stars: 3 },
+            { id:"simpleInterest", name:"Simple and Compound Interest", hint:"Simple and Compound Interest", weight:1, stars: 2 },
+            { id:"profitLoss", name:"Profit and Loss", hint:"Profit and Loss", weight:1, stars: 2 },
+            { id:"algebra", name:"Elementary Algebra", hint:"Elementary Algebra", weight:1, stars: 3 },
+            { id:"geometry", name:"Geometry", hint:"Geometry", weight:1, stars: 2 },
+            { id:"trigonometry", name:"Trigonometry", hint:"Trigonometry", weight:1, stars: 1 },
+            { id:"statistics", name:"Elementary Statistics", hint:"Elementary Statistics", weight:1, stars: 1 },
+            { id:"dataInterpretation", name:"Data Interpretation", hint:"Data Interpretation", weight:1, stars: 3 },
+            { id:"simplification", name:"Simplification", hint:"Simplification", weight:1, stars: 2 }
+          ]
+        },
+        {
+          id: "Reasoning",
+          title: "General Intelligence & Reasoning (तार्किक क्षमता)",
+          colorClass: "reasoning",
+          topics: [
+            { id:"analogies", name:"Analogies", hint:"Analogies", weight:1, stars: 2 },
+            { id:"series", name:"Completion of Number and Alphabetical Series", hint:"Completion of Number and Alphabetical Series", weight:1, stars: 3 },
+            { id:"coding", name:"Coding and Decoding", hint:"Coding and Decoding", weight:1, stars: 3 },
+            { id:"mathOps", name:"Mathematical Operations", hint:"Mathematical Operations", weight:1, stars: 2 },
+            { id:"similarities", name:"Similarities and Differences", hint:"Similarities and Differences", weight:1, stars: 1 },
+            { id:"relationships", name:"Relationships", hint:"Relationships", weight:1, stars: 1 },
+            { id:"analytical", name:"Analytical Reasoning", hint:"Analytical Reasoning", weight:1, stars: 3 },
+            { id:"syllogism", name:"Syllogism", hint:"Syllogism", weight:1, stars: 3 },
+            { id:"jumbling", name:"Jumbling", hint:"Jumbling", weight:1, stars: 2 },
+            { id:"venn", name:"Venn Diagrams", hint:"Venn Diagrams", weight:1, stars: 2 },
+            { id:"puzzle", name:"Puzzle", hint:"Puzzle", weight:1, stars: 3 },
+            { id:"dataSuff", name:"Data Sufficiency", hint:"Data Sufficiency", weight:1, stars: 2 },
+            { id:"statementConcl", name:"Statement-Conclusion", hint:"Statement-Conclusion", weight:1, stars: 2 },
+            { id:"coursesAction", name:"Statement: Courses of Action", hint:"Statement: Courses of Action", weight:1, stars: 1 },
+            { id:"decisionMaking", name:"Decision Making", hint:"Decision Making", weight:1, stars: 1 },
+            { id:"maps", name:"Maps", hint:"Maps", weight:1, stars: 1 },
+            { id:"graphs", name:"Interpretation of Graphs", hint:"Interpretation of Graphs", weight:1, stars: 2 }
+          ]
+        },
+        {
+          id: "Awareness",
+          title: "General Awareness & Science (सामान्य जागरूकता और विज्ञान)", // CHANGE: Merged title
+          colorClass: "awareness",
+          topics: [ // CHANGE: Appended all Science topics here
+            { id:"currentEvents", name:"Current Events of National and International Importance", hint:"Current Events of National and International Importance", weight:1, stars: 3 },
+            { id:"gamesSports", name:"Games and Sports", hint:"Games and Sports", weight:1, stars: 1 },
+            { id:"artCulture", name:"Art and Culture of India", hint:"Art and Culture of India", weight:1, stars: 2 },
+            { id:"indianLit", name:"Indian Literature", hint:"Indian Literature", weight:1, stars: 1 },
+            { id:"monuments", name:"Monuments and Places of India", hint:"Monuments and Places of India", weight:1, stars: 1 },
+            { id:"history", name:"History of India and Freedom Struggle", hint:"Ancient, Medieval, Modern History, Delhi Sultanate, Mughal Empire, British Rule, Freedom Struggle", weight:1, stars: 3 },
+            { id:"ancientHistory", name:"Ancient Indian History", hint:"Indus Valley Civilization, Vedic Period, Mauryan Empire, Gupta Empire", weight:1, stars: 2 },
+            { id:"medievalHistory", name:"Medieval Indian History", hint:"Delhi Sultanate, Mughal Empire, Vijayanagara Empire, Maratha Empire", weight:1, stars: 2 },
+            { id:"modernHistory", name:"Modern Indian History", hint:"British Rule, Revolt of 1857, Indian National Movement, Independence", weight:1, stars: 3 },
+            { id:"geography", name:"Physical, Social, and Economic Geography of India and the World", hint:"Physical, Social, and Economic Geography of India and the World", weight:1, stars: 3 },
+            { id:"polity", name:"Indian Polity and Governance", hint:"Constitution, Political System, Parliament, Judiciary, President, Prime Minister", weight:1, stars: 3 },
+            { id:"sciTech", name:"Scientific and Technological Developments", hint:"Space & Nuclear Programs, IT Revolution, Biotechnology", weight:1, stars: 2 },
+            { id:"worldOrgs", name:"UN and Other Important World Organisations", hint:"UN and Other Important World Organisations", weight:1, stars: 2 },
+            { id:"envIssues", name:"Environmental Issues", hint:"Environmental Issues", weight:1, stars: 2 },
+            { id:"computers", name:"Basics of Computers and Applications", hint:"Basics of Computers and Applications", weight:1, stars: 1 },
+            { id:"abbrev", name:"Common Abbreviations", hint:"Common Abbreviations", weight:1, stars: 1 },
+            { id:"transport", name:"Transport Systems in India", hint:"Transport Systems in India", weight:1, stars: 1 },
+            { id:"economy", name:"Indian Economy", hint:"Indian Economy", weight:1, stars: 3 },
+            { id:"personalities", name:"Famous Personalities", hint:"Famous Personalities", weight:1, stars: 1 },
+            { id:"govtProg", name:"Flagship Government Programmes", hint:"Flagship Government Programmes", weight:1, stars: 2 },
+            { id:"floraFauna", name:"Flora and Fauna of India", hint:"Flora and Fauna of India", weight:1, stars: 1 },
+            { id:"govtOrgs", name:"Important Government and Public Sector Organisations of India", hint:"Important Government and Public Sector Organisations of India", weight:1, stars: 2 },
+            // Merged Science topics below
+            { id:"physicsMeasure", name:"Physics: Units and Measurements", hint:"Units and Measurements", weight:1, stars: 2 },
+            { id:"physicsMotion", name:"Physics: Motion and Force", hint:"Motion, Force, Newton's Laws", weight:1, stars: 3 },
+            { id:"physicsWork", name:"Physics: Work, Energy and Power", hint:"Work, Energy and Power", weight:1, stars: 3 },
+            { id:"physicsHeat", name:"Physics: Heat and Thermodynamics", hint:"Heat and Thermodynamics", weight:1, stars: 2 },
+            { id:"physicsLight", name:"Physics: Light and Optics", hint:"Light and Optics", weight:1, stars: 2 },
+            { id:"physicsSound", name:"Physics: Sound and Waves", hint:"Sound and Waves", weight:1, stars: 1 },
+            { id:"physicsElectricity", name:"Physics: Electricity and Magnetism", hint:"Electricity and Magnetism", weight:1, stars: 3 },
+            { id:"physicsModern", name:"Physics: Modern Physics", hint:"Modern Physics", weight:1, stars: 1 },
+            { id:"chemMatter", name:"Chemistry: Matter and Its Properties", hint:"Matter and Its Properties", weight:1, stars: 2 },
+            { id:"chemAtomic", name:"Chemistry: Atomic Structure", hint:"Atomic Structure", weight:1, stars: 3 },
+            { id:"chemPeriodic", name:"Chemistry: Periodic Table", hint:"Periodic Table", weight:1, stars: 3 },
+            { id:"chemBonding", name:"Chemistry: Chemical Bonding", hint:"Chemical Bonding", weight:1, stars: 2 },
+            { id:"chemReactions", name:"Chemistry: Chemical Reactions", hint:"Chemical Reactions", weight:1, stars: 2 },
+            { id:"chemAcids", name:"Chemistry: Acids, Bases and Salts", hint:"Acids, Bases and Salts", weight:1, stars: 2 },
+            { id:"chemMetals", name:"Chemistry: Metals and Non-metals", hint:"Metals and Non-metals", weight:1, stars: 2 },
+            { id:"chemCarbon", name:"Chemistry: Carbon and Its Compounds", hint:"Carbon and Its Compounds", weight:1, stars: 1 },
+            { id:"bioCell", name:"Biology: Cell Structure and Function", hint:"Cell Structure and Function", weight:1, stars: 3 },
+            { id:"bioTissues", name:"Biology: Tissues and Organs", hint:"Tissues and Organs", weight:1, stars: 2 },
+            { id:"bioHuman", name:"Biology: Human Physiology", hint:"Human Physiology", weight:1, stars: 3 },
+            { id:"bioPlants", name:"Biology: Plant Physiology", hint:"Plant Physiology", weight:1, stars: 2 },
+            { id:"bioGenetics", name:"Biology: Genetics and Evolution", hint:"Genetics and Evolution", weight:1, stars: 2 },
+            { id:"bioHealth", name:"Biology: Health and Diseases", hint:"Health and Diseases", weight:1, stars: 2 },
+            { id:"bioEnvironment", name:"Biology: Environmental Science", hint:"Environmental Science", weight:1, stars: 2 }
+          ]
+        }
+        // CHANGE: Removed Science subject entirely
+      ]
+    };
+    /* ========== END CONFIG ========== */
+
+    // Storage keys (versioned)
+    const STORE_KEY = "rrb_ntpc_tracker_v2";
+    const UI_STATE_KEY = "rrb_ntpc_ui_v2";
+    const STUDENT_NAME_KEY = "rrb_ntpc_student_name";
+    const ADMIN_DATA_KEY = "rrb_ntpc_admin_data";
+
+    // Load saved data (persistent)
+    const saved = JSON.parse(localStorage.getItem(STORE_KEY) || "{}");
+    const uiSaved = JSON.parse(localStorage.getItem(UI_STATE_KEY) || "{}");
+    const studentName = localStorage.getItem(STUDENT_NAME_KEY) || "";
+    let adminData = JSON.parse(localStorage.getItem(ADMIN_DATA_KEY) || "{}");
+
+    // Motivational messages
+    const motivationalMessages = [
+      "आपकी सफलता की यात्रा आज से शुरू होती है!",
+      "हर दिन थोड़ा पढ़ें, सफलता आपके कदम चूमेगी!",
+      "मेहनत करने वालों की कभी हार नहीं होती!",
+      "सपने वो नहीं जो आप सोते समय देखते हैं, सपने वो हैं जो आपको सोने नहीं देते!",
+      "कठिनाइयाँ आपको तोड़ने नहीं, बल्कि मजबूत बनाने आती हैं!",
+      "सफलता छोटे-छोटे प्रयासों का योग है!",
+      "आज का समर्पण कल की सफलता की नींव है!",
+      "जो सीखता है वही आगे बढ़ता है!"
+    ];
+
+    // CHANGE: Always initialize welcome screen; conditional name handling
+    function initializeApp() {
+      const welcomeScreen = document.getElementById('welcomeScreen');
+      const mainApp = document.getElementById('mainApp');
+      const nameInput = document.getElementById('studentName');
+      const startBtn = document.getElementById('startTracking');
+      const welcomeTitle = document.getElementById('welcomeTitle');
+      const welcomeDesc = document.getElementById('welcomeDesc');
+
+      welcomeScreen.style.display = 'flex'; // Always show
+      mainApp.style.display = 'none';
+
+      if (studentName) {
+        // Prefill and make readonly; auto-start after 2s or click
+        nameInput.value = studentName;
+        nameInput.readOnly = true;
+        welcomeTitle.textContent = `Welcome Back, ${studentName}!`;
+        welcomeDesc.textContent = 'आज फिर से अपनी प्रगति ट्रैक करें। आपकी मेहनत जारी रखें।';
+        startBtn.textContent = 'Start Tracking Today';
+
+        // Auto-advance for seamless feel
+        setTimeout(() => {
+          if (document.visibilityState === 'visible') { // Only if tab active
+            startWelcomeTransition();
+          }
+        }, 2000);
+      } else {
+        // First time: Require input
+        nameInput.readOnly = false;
+        startBtn.textContent = 'Track Your Progress';
+      }
+
+      // Shared event for button
+      startBtn.onclick = () => {
+        const name = nameInput.value.trim();
+        if (!studentName && !name) { // Only validate first time
+          alert('कृपया अपना नाम दर्ज करें!');
+          return;
+        }
+        if (!studentName) {
+          localStorage.setItem(STUDENT_NAME_KEY, name);
+        }
+        startWelcomeTransition();
+      };
+
+      function startWelcomeTransition() {
+        welcomeScreen.classList.add('hidden');
+        setTimeout(() => {
+          welcomeScreen.style.display = 'none';
+          mainApp.style.display = 'block';
+          updateGreeting();
+          updateMotivationalMessage();
+          renderSubjects();
+          updateProgress();
+          saveStudentData(); // Initial save
+        }, 800);
+      }
+    }
+
+    function updateGreeting() {
+      const studentName = localStorage.getItem(STUDENT_NAME_KEY) || '';
+      const hour = new Date().getHours();
+      let greeting = '';
+      
+      if (hour < 12) {
+        greeting = 'Good Morning';
+      } else if (hour < 18) {
+        greeting = 'Good Afternoon';
+      } else {
+        greeting = 'Good Evening';
+      }
+      
+      document.getElementById('greetingText').textContent = `${greeting}, ${studentName}`;
+    }
+
+    function updateMotivationalMessage() {
+      const randomIndex = Math.floor(Math.random() * motivationalMessages.length);
+      document.getElementById('motivationalMessage').textContent = motivationalMessages[randomIndex];
+    }
+
+    // CHANGE: Simplified saveStudentData; now tracks 3 subjects
+    function saveStudentData() {
+      const studentName = localStorage.getItem(STUDENT_NAME_KEY);
+      if (!studentName) return;
+      
+      const progressData = calculateProgress();
+      
+      adminData[studentName] = {
+        name: studentName,
+        overallProgress: progressData.overall,
+        mathProgress: progressData.math,
+        reasoningProgress: progressData.reasoning,
+        awarenessProgress: progressData.awareness, // Now includes Science
+        lastUpdated: new Date().toISOString()
+      };
+      
+      localStorage.setItem(ADMIN_DATA_KEY, JSON.stringify(adminData));
+    }
+
+    // CHANGE: Updated calculateProgress for 3 subjects
+    function calculateProgress() {
+      const mathProgress = calculateSubjectProgress("Math");
+      const reasoningProgress = calculateSubjectProgress("Reasoning");
+      const awarenessProgress = calculateSubjectProgress("Awareness");
+      
+      const subjTotals = [
+        { progress: mathProgress, weight: 1 },
+        { progress: reasoningProgress, weight: 1 },
+        { progress: awarenessProgress, weight: 1 }
+      ];
+      const totalWeight = subjTotals.reduce((s, a) => s + a.weight, 0) || 1;
+      const overallProgress = subjTotals.reduce((s, a) => s + a.progress * a.weight, 0) / totalWeight;
+      
+      return {
+        overall: Math.round(overallProgress),
+        math: Math.round(mathProgress),
+        reasoning: Math.round(reasoningProgress),
+        awareness: Math.round(awarenessProgress)
+      };
+    }
+
+    function calculateSubjectProgress(subjectId) {
+      const subject = CONFIG.subjects.find(s => s.id === subjectId);
+      if (!subject) return 0;
+      
+      const totalWt = sumWeights(subject.topics);
+      const doneWt = doneWeights(subject);
+      return totalWt ? (doneWt/totalWt)*100 : 0;
+    }
+
+    const subjectsContainer = document.getElementById("subjectsContainer");
+
+    function subjectWeight(id){
+      const w = CONFIG.subjectWeights || {};
+      return (w[id] ?? 1);
+    }
+
+    function renderSubjects(){
+      subjectsContainer.innerHTML = "";
+      CONFIG.subjects.forEach(subj => { // Now loops 3 subjects
+        const section = document.createElement("div");
+        section.className = "subject";
+        section.dataset.subj = subj.id;
+
+        // Header
+        const header = document.createElement("div");
+        header.className = "subject-header";
+
+        const titleWrap = document.createElement("div");
+        titleWrap.className = "subject-title";
+        const badge = document.createElement("span");
+        badge.className = `badge ${subj.colorClass}`;
+        badge.textContent = subj.title.split(" ")[0];
+        const title = document.createElement("div");
+        title.innerHTML = `<strong>${subj.title}</strong>`;
+        titleWrap.appendChild(badge); titleWrap.appendChild(title);
+
+        const progressWrap = document.createElement("div");
+        progressWrap.className = "progress-wrap";
+        progressWrap.innerHTML = `
+          <div class="progress-bar"><div class="progress-fill" id="bar_${subj.id}"></div></div>
+          <div class="percent" id="percent_${subj.id}">0%</div>
+          <button class="secondary" data-toggle="${subj.id}">${(uiSaved[subj.id]?.collapsed)? "Expand" : "Collapse"}</button>
+        `;
+
+        header.appendChild(titleWrap);
+        header.appendChild(progressWrap);
+
+        // Topics (now more for Awareness)
+        const topics = document.createElement("div");
+        topics.className = "topics";
+        topics.id = `topics_${subj.id}`;
+        if (uiSaved[subj.id]?.collapsed) topics.style.display = "none";
+
+        subj.topics.forEach(t => {
+          const row = document.createElement("div");
+          row.className = "topic";
+          const input = document.createElement("input");
+          input.type = "checkbox";
+          input.id = `${subj.id}_${t.id}`;
+          input.checked = !!saved[input.id];
+          input.addEventListener("change", ()=> {
+            saved[input.id] = input.checked;
+            localStorage.setItem(STORE_KEY, JSON.stringify(saved));
+            updateProgress();
+            saveStudentData(); // CHANGE: Always save on tick
+            
+            if (input.checked) {
+              confetti({
+                particleCount: 150,
+                spread: 90,
+                origin: { y: 0.6 },
+                colors: ['#6366f1', '#10b981', '#ec4899', '#f59e0b', '#8b5cf6']
+              });
+              setTimeout(() => {
+                confetti({
+                  particleCount: 100,
+                  angle: 60,
+                  spread: 55,
+                  origin: { x: 0 },
+                  colors: ['#ec4899', '#f59e0b']
+                });
+                confetti({
+                  particleCount: 100,
+                  angle: 120,
+                  spread: 55,
+                  origin: { x: 1 },
+                  colors: ['#6366f1', '#10b981', '#8b5cf6']
+                });
+              }, 250);
+            }
+          });
+
+          const label = document.createElement("label");
+          label.setAttribute("for", input.id);
+          
+          let starClass = "";
+          if (t.stars === 3) starClass = "three-stars";
+          else if (t.stars === 2) starClass = "two-stars";
+          else if (t.stars === 1) starClass = "one-star";
+          
+          label.innerHTML = `<strong>${t.name}<span class="stars ${starClass}"></span></strong><small>${t.hint}</small>`;
+
+          const weight = document.createElement("span");
+          weight.className = "weight";
+          weight.title = "Topic weight (for progress calc)";
+          weight.textContent = `wt ${t.weight}`;
+
+          row.appendChild(input);
+          row.appendChild(label);
+          row.appendChild(weight);
+          topics.appendChild(row);
+        });
+
+        section.appendChild(header);
+        section.appendChild(topics);
+        subjectsContainer.appendChild(section);
+      });
+
+      // Collapse/Expand toggle
+      subjectsContainer.addEventListener("click", (e)=>{
+        const btn = e.target.closest("button[data-toggle]");
+        if(!btn) return;
+        const id = btn.getAttribute("data-toggle");
+        const topicsEl = document.getElementById(`topics_${id}`);
+        const collapsed = topicsEl.style.display === "none";
+        topicsEl.style.display = collapsed ? "" : "none";
+        btn.textContent = collapsed ? "Collapse" : "Expand";
+        uiSaved[id] = { collapsed: !collapsed };
+        localStorage.setItem(UI_STATE_KEY, JSON.stringify(uiSaved));
+      });
+    }
+
+    // Weight helpers
+    function sumWeights(arr){ return arr.reduce((s,a)=> s + (a.weight ?? 1), 0); }
+    function doneWeights(subj){
+      return subj.topics.reduce((s,t)=>{
+        const key = `${subj.id}_${t.id}`;
+        const isDone = !!saved[key];
+        const wt = t.weight ?? 1;
+        return s + (isDone ? wt : 0);
+      }, 0);
+    }
+
+    // Charts (CHANGE: Updated for 3 subjects; removed Science refs)
+    const OVERALL_CIRCUMFERENCE = 2 * Math.PI * 85;
+    function setDonut(id, percent){
+      const circle = document.getElementById(id);
+      if(!circle) return;
+      const circumference = id === "donutOverall" ? OVERALL_CIRCUMFERENCE : 2 * Math.PI * 40;
+      const offset = circumference * (1 - percent/100);
+      circle.setAttribute("stroke-dasharray", circumference.toFixed(0));
+      circle.setAttribute("stroke-dashoffset", offset.toFixed(2));
+    }
+    function setBar(id, percent){
+      const bar = document.getElementById(id);
+      if(bar) bar.style.width = `${percent}%`;
+    }
+    function setText(id, percent){
+      const el = document.getElementById(id);
+      if(el) el.textContent = `${percent.toFixed(0)}%`;
+    }
+
+    function updateProgress(){
+      CONFIG.subjects.forEach(subj=>{ // Now 3
+        const totalWt = sumWeights(subj.topics);
+        const doneWt = doneWeights(subj);
+        const pct = totalWt ? (doneWt/totalWt)*100 : 0;
+        setBar(`bar_${subj.id}`, pct);
+        setText(`${subj.id.toLowerCase()}Text`, pct);
+        setDonut(`donut${subj.id}`, pct);
+        const p = document.getElementById(`percent_${subj.id}`);
+        if(p) p.textContent = `${pct.toFixed(0)}%`;
+      });
+
+      // Overall for 3 subjects
+      const subjTotals = CONFIG.subjects.map(s=>{
+        const totalWt = sumWeights(s.topics);
+        const doneWt = doneWeights(s);
+        const pctFrac = totalWt ? (doneWt/totalWt) : 0;
+        return { id:s.id, pctFrac, weight:subjectWeight(s.id) };
+      });
+      const totalWeight = subjTotals.reduce((s,a)=> s+a.weight, 0) || 1;
+      const overallPct = subjTotals.reduce((s,a)=> s + a.pctFrac*a.weight, 0) / totalWeight * 100;
+      setDonut("donutOverall", overallPct);
+      setText("overallText", overallPct);
+    }
+
+ 
+
+    // Controls
+    document.getElementById("expandAll").addEventListener("click", ()=>{
+      CONFIG.subjects.forEach(s=>{
+        document.getElementById(`topics_${s.id}`).style.display = "";
+        uiSaved[s.id] = { collapsed:false };
+      });
+      localStorage.setItem(UI_STATE_KEY, JSON.stringify(uiSaved));
+    });
+    document.getElementById("collapseAll").addEventListener("click", ()=>{
+      CONFIG.subjects.forEach(s=>{
+        document.getElementById(`topics_${s.id}`).style.display = "none";
+        uiSaved[s.id] = { collapsed:true };
+      });
+      localStorage.setItem(UI_STATE_KEY, JSON.stringify(uiSaved));
+    });
+    document.getElementById("resetProgress").addEventListener("click", ()=>{
+      if(!confirm("Reset all ticks and progress?")) return;
+      localStorage.removeItem(STORE_KEY);
+      Object.keys(saved).forEach(k=> delete saved[k]);
+      updateProgress();
+      saveStudentData();
+      CONFIG.subjects.forEach(s=>{
+        s.topics.forEach(t=>{
+          const key = `${s.id}_${t.id}`;
+          const el = document.getElementById(key);
+          if(el) el.checked = false;
+        });
+      });
+    });
+
+    // Backup: Export/Import (unchanged, but now for 3 subjects)
+    document.getElementById("exportBtn").addEventListener("click", ()=>{
+      const payload = {
+        brand: CONFIG.brandName,
+        saved,
+        ui: uiSaved,
+        studentName: localStorage.getItem(STUDENT_NAME_KEY),
+        timestamp: new Date().toISOString(),
+        version: "v2"
+      };
+      const blob = new Blob([JSON.stringify(payload,null,2)], {type:"application/json"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "RRB_NTPC_Tracker_Backup.json";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      alert("Backup exported. Share to import on any device.");
+    });
+
+    const importFile = document.getElementById("importFile");
+    document.getElementById("importBtn").addEventListener("click", ()=> importFile.click());
+    importFile.addEventListener("change", async ()=>{
+      const file = importFile.files[0];
+      if(!file) return;
+      try{
+        const text = await file.text();
+        const data = JSON.parse(text);
+        if(!data || !data.saved) throw new Error("Invalid backup.");
+        Object.keys(saved).forEach(k=> delete saved[k]);
+        Object.assign(saved, data.saved);
+        localStorage.setItem(STORE_KEY, JSON.stringify(saved));
+
+        Object.keys(uiSaved).forEach(k=> delete uiSaved[k]);
+        Object.assign(uiSaved, data.ui || {});
+        localStorage.setItem(UI_STATE_KEY, JSON.stringify(uiSaved));
+
+        if (data.studentName) {
+          localStorage.setItem(STUDENT_NAME_KEY, data.studentName);
+          updateGreeting();
+        }
+
+        CONFIG.subjects.forEach(s=>{
+          s.topics.forEach(t=>{
+            const key = `${s.id}_${t.id}`;
+            const el = document.getElementById(key);
+            if(el) el.checked = !!saved[key];
+          });
+        });
+        CONFIG.subjects.forEach(s=>{
+          const topicsEl = document.getElementById(`topics_${s.id}`);
+          const collapsed = !!(uiSaved[s.id]?.collapsed);
+          topicsEl.style.display = collapsed ? "none" : "";
+          const btn = document.querySelector(`button[data-toggle="${s.id}"]`);
+          if(btn) btn.textContent = collapsed ? "Expand" : "Collapse";
+        });
+
+        updateProgress();
+        updateMotivationalMessage();
+        saveStudentData();
+        alert("Backup imported successfully!");
+      }catch(err){
+        alert("Import failed: Select a valid JSON backup.");
+      }finally{
+        importFile.value = "";
+      }
+    });
+
+   
+    // Initialize
+    initializeApp();
+    
+    setInterval(updateGreeting, 60 * 60 * 1000);
+    setInterval(updateMotivationalMessage, 30 * 60 * 1000);
+  </script>
+</body>
+</html>
