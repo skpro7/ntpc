@@ -31,6 +31,7 @@
       --danger: #dc2626;
       --drawer-bg: rgba(255, 255, 255, 0.98);
       --illustration: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="20" cy="20" r="5" fill="%234f46e5" opacity="0.2"/><circle cx="80" cy="30" r="8" fill="%23db2777" opacity="0.2"/><circle cx="40" cy="80" r="6" fill="%23d97706" opacity="0.2"/><path d="M10,50 Q50,10 90,50 T10,50" fill="none" stroke="%23059669" stroke-width="1" opacity="0.1"/></svg>');
+      --card-opacity: 0.95;
     }
     
     /* Dark Theme */
@@ -55,9 +56,10 @@
       --danger: #ef4444;
       --drawer-bg: rgba(15, 23, 42, 0.95);
       --illustration: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="20" cy="20" r="5" fill="%236366f1" opacity="0.2"/><circle cx="80" cy="30" r="8" fill="%23ec4899" opacity="0.2"/><circle cx="40" cy="80" r="6" fill="%23f59e0b" opacity="0.2"/><path d="M10,50 Q50,10 90,50 T10,50" fill="none" stroke="%2310b981" stroke-width="1" opacity="0.1"/></svg>');
+      --card-opacity: 0.92;
     }
     
-    /* Blue Theme - FIXED COLORS */
+    /* Blue Theme */
     .theme-blue {
       --bg: linear-gradient(135deg, #0c4a6e 0%, #0369a1 100%);
       --glass: rgba(255,255,255,0.15);
@@ -79,9 +81,10 @@
       --danger: #dc2626;
       --drawer-bg: rgba(12, 74, 110, 0.97);
       --illustration: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="20" cy="20" r="5" fill="%231d4ed8" opacity="0.3"/><circle cx="80" cy="30" r="8" fill="%232563eb" opacity="0.3"/><circle cx="40" cy="80" r="6" fill="%230ea5e9" opacity="0.3"/><path d="M10,50 Q50,10 90,50 T10,50" fill="none" stroke="%230284c7" stroke-width="1" opacity="0.2"/></svg>');
+      --card-opacity: 0.92;
     }
     
-    /* Green Theme - FIXED COLORS */
+    /* Green Theme */
     .theme-green {
       --bg: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
       --glass: rgba(255,255,255,0.15);
@@ -103,6 +106,7 @@
       --danger: #dc2626;
       --drawer-bg: rgba(6, 78, 59, 0.97);
       --illustration: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="20" cy="20" r="5" fill="%23047857" opacity="0.3"/><circle cx="80" cy="30" r="8" fill="%23059669" opacity="0.3"/><circle cx="40" cy="80" r="6" fill="%2310b981" opacity="0.3"/><path d="M10,50 Q50,10 90,50 T10,50" fill="none" stroke="%2334d399" stroke-width="1" opacity="0.2"/></svg>');
+      --card-opacity: 0.92;
     }
     
     /* ===== Base Styles ===== */
@@ -110,7 +114,7 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      -webkit-tap-highlight-color: transparent; /* Remove mobile highlight */
+      -webkit-tap-highlight-color: transparent;
     }
     
     html, body {
@@ -126,7 +130,7 @@
       color: var(--text);
       overflow-x: hidden;
       position: relative;
-      padding-bottom: 70px; /* Space for bottom navigation */
+      padding-bottom: 70px;
     }
     
     /* Animated background elements */
@@ -196,8 +200,8 @@
     
     .welcome-content {
       text-align: center;
-      max-width: 800px;
-      padding: 50px;
+      max-width: 600px;
+      padding: 40px 30px;
       background: var(--card);
       backdrop-filter: blur(20px);
       border-radius: 28px;
@@ -206,6 +210,7 @@
       position: relative;
       overflow: hidden;
       margin: 20px;
+      opacity: var(--card-opacity);
     }
     
     .welcome-content::before {
@@ -219,15 +224,15 @@
     }
     
     .welcome-logo {
-      width: 200px;
-      height: 200px;
+      width: 180px;
+      height: 180px;
       border-radius: 50%;
       background: var(--gradient);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 30px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      margin: 0 auto 20px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
       animation: pulse 2.5s infinite;
       border: 5px solid rgba(255, 255, 255, 0.2);
       overflow: hidden;
@@ -238,7 +243,7 @@
       height: 100%;
       object-fit: cover;
       border-radius: 50%;
-      padding: 10px;
+      padding: 8px;
       background: white;
     }
     
@@ -249,8 +254,8 @@
     }
     
     .welcome-content h1 {
-      font-size: 3.2rem;
-      margin: 0 0 20px;
+      font-size: 2.8rem;
+      margin: 0 0 15px;
       background: var(--gradient);
       -webkit-background-clip: text;
       background-clip: text;
@@ -261,21 +266,21 @@
     
     .welcome-content p {
       color: var(--muted);
-      font-size: 1.3rem;
-      line-height: 1.7;
-      margin-bottom: 30px;
-      padding: 0 20px;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 25px;
+      padding: 0 10px;
     }
     
     .name-input {
       width: 100%;
-      padding: 18px 24px;
-      margin: 20px 0;
+      padding: 15px 20px;
+      margin: 15px 0;
       background: rgba(255, 255, 255, 0.1);
       border: 2px solid var(--border);
       border-radius: 16px;
       color: var(--text);
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       text-align: center;
       transition: all 0.3s ease;
     }
@@ -287,212 +292,70 @@
       background: rgba(255, 255, 255, 0.15);
     }
     
-    /* ===== UIVERSE BUTTON STYLES ===== */
-    /* From Uiverse.io by mobinkakei */
-    button.btn-shine {
-      position: relative;
-      margin: 0;
-      padding: 17px 35px;
-      outline: none;
-      text-decoration: none;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      text-transform: uppercase;
-      background-color: var(--card);
-      border: 1px solid rgba(22, 76, 167, 0.6);
-      border-radius: 10px;
-      color: var(--text);
-      font-weight: 400;
-      font-family: inherit;
-      z-index: 0;
-      overflow: hidden;
-      transition: all 0.3s cubic-bezier(0.02, 0.01, 0.47, 1);
-      box-shadow: var(--shadow);
-    }
-    
-    .theme-light button.btn-shine {
-      background-color: #f1f5f9;
-      color: #0f172a;
-      border: 1px solid rgba(30, 58, 138, 0.3);
-    }
-    
-    button.btn-shine span {
-      color: var(--text);
-      font-size: 14px;
-      font-weight: 500;
-      letter-spacing: 0.7px;
-      z-index: 20;
-    }
-    
-    .theme-light button.btn-shine span {
-      color: #0f172a;
-    }
-    
-    button.btn-shine:hover {
-      animation: rotate624 0.7s ease-in-out both;
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-    }
-    
-    button.btn-shine:hover span {
-      animation: storm1261 0.7s ease-in-out both;
-      animation-delay: 0.06s;
-    }
-    
-    @keyframes rotate624 {
-      0% {
-        transform: rotate(0deg) translate3d(0, 0, 0);
-      }
-    
-      25% {
-        transform: rotate(3deg) translate3d(0, 0, 0);
-      }
-    
-      50% {
-        transform: rotate(-3deg) translate3d(0, 0, 0);
-      }
-    
-      75% {
-        transform: rotate(1deg) translate3d(0, 0, 0);
-      }
-    
-      100% {
-        transform: rotate(0deg) translate3d(0, 0, 0);
-      }
-    }
-    
-    @keyframes storm1261 {
-      0% {
-        transform: translate3d(0, 0, 0) translateZ(0);
-      }
-    
-      25% {
-        transform: translate3d(4px, 0, 0) translateZ(0);
-      }
-    
-      50% {
-        transform: translate3d(-3px, 0, 0) translateZ(0);
-      }
-    
-      75% {
-        transform: translate3d(2px, 0, 0) translateZ(0);
-      }
-    
-      100% {
-        transform: translate3d(0, 0, 0) translateZ(0);
-      }
-    }
-    
-    button.btn-shine:after {
-      background: var(--accent);
-      content: "";
-      height: 155px;
-      left: -75px;
-      opacity: 0.4;
-      position: absolute;
-      top: -50px;
-      transform: rotate(35deg);
-      transition: all 550ms cubic-bezier(0.19, 1, 0.22, 1);
-      width: 50px;
-      z-index: -10;
-    }
-    
-    button.btn-shine:hover:after {
-      left: 120%;
-      transition: all 550ms cubic-bezier(0.19, 1, 0.22, 1);
-    }
-    
-    /* Apply to all buttons */
-    button:not(.welcome-btn):not(.nav-btn):not(.drawer-close):not(.tab-btn):not(.cbt-type-btn):not(.test-type-btn):not(.graph-btn):not(.theme-btn):not(.lang-btn):not(.view-btn):not(.subject-selector-btn):not(.performance-subject-btn):not(.drawer-btn):not(.toggle-btn) {
-      position: relative;
-      margin: 0;
-      padding: 17px 35px;
-      outline: none;
-      text-decoration: none;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      text-transform: uppercase;
-      background-color: var(--card);
-      border: 1px solid rgba(22, 76, 167, 0.6);
-      border-radius: 10px;
-      color: var(--text);
-      font-weight: 400;
-      font-family: inherit;
-      z-index: 0;
-      overflow: hidden;
-      transition: all 0.3s cubic-bezier(0.02, 0.01, 0.47, 1);
-      box-shadow: var(--shadow);
-    }
-    
-    .theme-light button:not(.welcome-btn):not(.nav-btn):not(.drawer-close):not(.tab-btn):not(.cbt-type-btn):not(.test-type-btn):not(.graph-btn):not(.theme-btn):not(.lang-btn):not(.view-btn):not(.subject-selector-btn):not(.performance-subject-btn):not(.drawer-btn):not(.toggle-btn) {
-      background-color: #f1f5f9;
-      color: #0f172a;
-      border: 1px solid rgba(30, 58, 138, 0.3);
-    }
-    
-    button:not(.welcome-btn):not(.nav-btn):not(.drawer-close):not(.tab-btn):not(.cbt-type-btn):not(.test-type-btn):not(.graph-btn):not(.theme-btn):not(.lang-btn):not(.view-btn):not(.subject-selector-btn):not(.performance-subject-btn):not(.drawer-btn):not(.toggle-btn) span {
-      color: var(--text);
-      font-size: 14px;
-      font-weight: 500;
-      letter-spacing: 0.7px;
-      z-index: 20;
-    }
-    
-    .theme-light button:not(.welcome-btn):not(.nav-btn):not(.drawer-close):not(.tab-btn):not(.cbt-type-btn):not(.test-type-btn):not(.graph-btn):not(.theme-btn):not(.lang-btn):not(.view-btn):not(.subject-selector-btn):not(.performance-subject-btn):not(.drawer-btn):not(.toggle-btn) span {
-      color: #0f172a;
-    }
-    
-    button:not(.welcome-btn):not(.nav-btn):not(.drawer-close):not(.tab-btn):not(.cbt-type-btn):not(.test-type-btn):not(.graph-btn):not(.theme-btn):not(.lang-btn):not(.view-btn):not(.subject-selector-btn):not(.performance-subject-btn):not(.drawer-btn):not(.toggle-btn):hover {
-      animation: rotate624 0.7s ease-in-out both;
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-    }
-    
-    button:not(.welcome-btn):not(.nav-btn):not(.drawer-close):not(.tab-btn):not(.cbt-type-btn):not(.test-type-btn):not(.graph-btn):not(.theme-btn):not(.lang-btn):not(.view-btn):not(.subject-selector-btn):not(.performance-subject-btn):not(.drawer-btn):not(.toggle-btn):hover span {
-      animation: storm1261 0.7s ease-in-out both;
-      animation-delay: 0.06s;
-    }
-    
-    button:not(.welcome-btn):not(.nav-btn):not(.drawer-close):not(.tab-btn):not(.cbt-type-btn):not(.test-type-btn):not(.graph-btn):not(.theme-btn):not(.lang-btn):not(.view-btn):not(.subject-selector-btn):not(.performance-subject-btn):not(.drawer-btn):not(.toggle-btn):after {
-      background: var(--accent);
-      content: "";
-      height: 155px;
-      left: -75px;
-      opacity: 0.4;
-      position: absolute;
-      top: -50px;
-      transform: rotate(35deg);
-      transition: all 550ms cubic-bezier(0.19, 1, 0.22, 1);
-      width: 50px;
-      z-index: -10;
-    }
-    
-    button:not(.welcome-btn):not(.nav-btn):not(.drawer-close):not(.tab-btn):not(.cbt-type-btn):not(.test-type-btn):not(.graph-btn):not(.theme-btn):not(.lang-btn):not(.view-btn):not(.subject-selector-btn):not(.performance-subject-btn):not(.drawer-btn):not(.toggle-btn):hover:after {
-      left: 120%;
-      transition: all 550ms cubic-bezier(0.19, 1, 0.22, 1);
-    }
-    
+    /* UIVERISE BUTTON STYLES - UPDATED FOR CONTINUE BUTTON */
     .welcome-btn {
       background: var(--gradient);
       color: white;
       border: none;
-      padding: 20px 50px;
-      font-size: 1.4rem;
+      padding: 16px 40px;
+      font-size: 1.2rem;
       font-weight: 700;
       border-radius: 16px;
       cursor: pointer;
       box-shadow: 0 15px 35px rgba(79, 70, 229, 0.3);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
-      margin-top: 10px;
+      margin: 20px auto;
+      display: block;
+      width: 80%;
+      max-width: 300px;
+      text-align: center;
     }
     
     .welcome-btn:hover {
       transform: translateY(-5px);
       box-shadow: 0 25px 50px rgba(79, 70, 229, 0.4);
+    }
+    
+    /* Button shine effect */
+    .btn-shine {
+      position: relative;
+      overflow: hidden;
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: var(--shadow);
+    }
+    
+    .btn-shine::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 50%;
+      height: 200%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: rotate(30deg);
+      transition: all 0.6s ease;
+    }
+    
+    .btn-shine:hover::after {
+      left: 120%;
+      transition: all 0.6s ease;
+    }
+    
+    .btn-shine:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      background: var(--accent-2);
     }
     
     /* ===== Header / Navigation ===== */
@@ -520,19 +383,19 @@
       justify-content: space-between;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 15px 0;
+      padding: 12px 0;
     }
     
     .brand {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 12px;
     }
     
     .logo {
-      width: 90px;
-      height: 90px;
-      border-radius: 20px;
+      width: 70px;
+      height: 70px;
+      border-radius: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -545,14 +408,14 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: 20px;
-      padding: 5px;
+      border-radius: 16px;
+      padding: 4px;
       background: white;
     }
     
     .titles h1 {
       margin: 0;
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       letter-spacing: 0.2px;
       background: var(--gradient);
       -webkit-background-clip: text;
@@ -564,10 +427,10 @@
     .titles p {
       margin: 4px 0 0;
       color: var(--muted);
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
     
     .greeting {
@@ -578,15 +441,15 @@
     .nav-controls {
       display: flex;
       align-items: center;
-      gap: 15px;
+      gap: 12px;
     }
     
     .nav-btn {
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid var(--border);
       color: var(--text);
-      width: 50px;
-      height: 50px;
+      width: 45px;
+      height: 45px;
       border-radius: 12px;
       display: flex;
       align-items: center;
@@ -613,13 +476,14 @@
       display: flex;
       justify-content: center;
       z-index: 99;
-      padding: 10px;
+      padding: 8px;
       box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+      height: 65px;
     }
     
     .nav-tabs {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       max-width: 1200px;
       width: 100%;
       justify-content: center;
@@ -627,8 +491,8 @@
     
     .nav-tab-btn {
       flex: 1;
-      max-width: 200px;
-      padding: 15px 10px;
+      max-width: 180px;
+      padding: 12px 8px;
       background: rgba(255,255,255,0.05);
       border: 1px solid var(--border);
       border-radius: 12px;
@@ -640,8 +504,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      font-size: 0.9rem;
+      gap: 8px;
+      font-size: 0.85rem;
+      height: 45px;
     }
     
     .nav-tab-btn.active {
@@ -654,32 +519,6 @@
     .nav-tab-btn:hover:not(.active) {
       background: rgba(255,255,255,0.1);
       transform: translateY(-2px);
-    }
-    
-    @media (max-width: 768px) {
-      .nav-tab-btn {
-        padding: 12px 8px;
-        font-size: 0.8rem;
-      }
-      
-      .nav-tab-btn i {
-        font-size: 1rem;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .nav-tab-btn {
-        font-size: 0.75rem;
-        padding: 10px 6px;
-      }
-      
-      .nav-tab-btn i {
-        font-size: 0.9rem;
-      }
-      
-      .nav-tab-btn span {
-        display: none;
-      }
     }
     
     /* ===== Drawer Menu ===== */
@@ -704,21 +543,22 @@
     .drawer {
       position: fixed;
       top: 0;
-      right: -400px;
+      right: 0;
       width: 380px;
-      max-width: 90%;
+      max-width: 90vw;
       height: 100%;
       background: var(--drawer-bg);
       backdrop-filter: blur(20px);
       z-index: 1000;
       overflow-y: auto;
-      transition: right 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+      transition: transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
       box-shadow: -10px 0 40px rgba(0,0,0,0.3);
       border-left: 1px solid var(--border);
+      transform: translateX(100%);
     }
     
     .drawer.active {
-      right: 0;
+      transform: translateX(0);
     }
     
     .drawer-header {
@@ -771,10 +611,6 @@
       display: flex;
       align-items: center;
       gap: 10px;
-    }
-    
-    .drawer-section h3 i {
-      font-size: 1.2rem;
     }
     
     .theme-selector {
@@ -893,13 +729,14 @@
     /* ===== Main Container ===== */
     .container {
       max-width: 1200px;
-      margin: 30px auto;
-      padding: 0 25px;
+      margin: 25px auto;
+      padding: 0 20px;
     }
     
     /* ===== Tabs Content ===== */
     .tab-content {
       display: none;
+      opacity: var(--card-opacity);
     }
     
     .tab-content.active {
@@ -928,6 +765,7 @@
       overflow: hidden;
       position: relative;
       margin: 15px 0;
+      opacity: var(--card-opacity);
     }
     
     .card::before {
@@ -942,23 +780,62 @@
     
     .card h2 {
       margin: 0;
-      padding: 20px 25px;
-      font-size: 1.3rem;
+      padding: 18px 20px;
+      font-size: 1.2rem;
       background: linear-gradient(180deg, rgba(255,255,255,0.08), transparent);
       border-bottom: 1px solid var(--border);
       font-weight: 800;
       display: flex;
       align-items: center;
       gap: 10px;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    
+    .card h3 {
+      padding: 15px 20px;
+      font-size: 1.1rem;
+      border-bottom: 1px solid var(--border);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
     
     .card .body {
-      padding: 25px;
+      padding: 20px;
+    }
+    
+    /* ===== NEW: Subject Controls in Card Header ===== */
+    .subject-controls {
+      display: flex;
+      gap: 8px;
+      margin-left: auto;
+    }
+    
+    .subject-controls button {
+      padding: 6px 10px;
+      font-size: 0.75rem;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+    
+    .subject-controls button:hover {
+      background: var(--accent);
+      color: white;
     }
     
     /* ===== Subjects List ===== */
     .subject {
-      margin-bottom: 25px;
+      margin-bottom: 20px;
       border: 1px solid var(--border);
       border-radius: 18px;
       overflow: hidden;
@@ -969,7 +846,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 18px 20px;
+      padding: 16px 18px;
       background: var(--pill);
       cursor: pointer;
       transition: background 0.3s ease;
@@ -981,7 +858,7 @@
     
     .subject-title {
       display: flex;
-      gap: 15px;
+      gap: 12px;
       align-items: center;
     }
     
@@ -992,6 +869,7 @@
       color: white;
       font-weight: 800;
       background: var(--accent);
+      white-space: nowrap;
     }
     
     .badge.arithmetic { background: #4f46e5; }
@@ -1014,38 +892,11 @@
     
     .progress-bar {
       height: 12px;
-      width: 200px;
+      width: 150px;
       background: rgba(0,0,0,0.1);
       border: 1px solid var(--border);
       border-radius: 10px;
       overflow: hidden;
-    }
-    
-    @media (max-width: 768px) {
-      .progress-bar {
-        width: 120px;
-      }
-      
-      .subject-header {
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 10px;
-      }
-      
-      .subject-title {
-        flex: 1;
-        min-width: 200px;
-      }
-      
-      .progress-wrap {
-        width: 100%;
-        justify-content: space-between;
-      }
-      
-      .toggle-btn {
-        margin-left: auto;
-        padding: 8px 15px;
-      }
     }
     
     .progress-fill {
@@ -1063,7 +914,6 @@
       font-weight: 700;
     }
     
-    /* Toggle Button for Expand/Collapse */
     .toggle-btn {
       padding: 8px 16px;
       background: rgba(255,255,255,0.1);
@@ -1094,24 +944,6 @@
       overflow-y: auto;
       scrollbar-width: thin;
       scrollbar-color: var(--accent) rgba(255,255,255,0.05);
-    }
-    
-    .topics::-webkit-scrollbar {
-      width: 8px;
-    }
-    
-    .topics::-webkit-scrollbar-track {
-      background: rgba(255,255,255,0.05);
-      border-radius: 10px;
-    }
-    
-    .topics::-webkit-scrollbar-thumb {
-      background: var(--accent);
-      border-radius: 10px;
-    }
-    
-    .topics::-webkit-scrollbar-thumb:hover {
-      background: var(--accent-3);
     }
     
     .topic {
@@ -1285,7 +1117,7 @@
     
     /* ===== Modern Subject Selector ===== */
     .subject-selector-container {
-      margin: 25px 0;
+      margin: 20px 0;
     }
     
     .subject-selector-title {
@@ -1300,13 +1132,13 @@
     
     .subject-selector {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
       justify-content: center;
     }
     
     .subject-selector-btn {
-      padding: 12px 20px;
+      padding: 10px 16px;
       border-radius: 12px;
       border: 2px solid var(--border);
       background: rgba(255,255,255,0.05);
@@ -1319,21 +1151,7 @@
       gap: 8px;
       position: relative;
       overflow: hidden;
-    }
-    
-    .subject-selector-btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-      transition: left 0.6s ease;
-    }
-    
-    .subject-selector-btn:hover::before {
-      left: 100%;
+      font-size: 0.9rem;
     }
     
     .subject-selector-btn.active {
@@ -1396,14 +1214,14 @@
     
     .cbt-selection {
       display: flex;
-      gap: 15px;
+      gap: 12px;
       margin-bottom: 20px;
       flex-wrap: wrap;
       justify-content: center;
     }
     
     .cbt-type-btn {
-      padding: 12px 20px;
+      padding: 12px 18px;
       background: rgba(255,255,255,0.05);
       border: 1px solid var(--border);
       border-radius: 12px;
@@ -1412,11 +1230,12 @@
       transition: all 0.3s ease;
       font-weight: 600;
       flex: 1;
-      min-width: 120px;
+      min-width: 140px;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
+      font-size: 0.9rem;
     }
     
     .cbt-type-btn.active {
@@ -1445,6 +1264,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      font-size: 0.9rem;
     }
     
     .test-type-btn.active {
@@ -1468,7 +1288,6 @@
     .form-group label {
       font-weight: 600;
       color: var(--muted);
-      margin: 5px 0;
     }
     
     .form-group input, .form-group select {
@@ -1478,7 +1297,6 @@
       background: rgba(255,255,255,0.05);
       color: var(--text);
       font-size: 1rem;
-      margin: 5px 0;
     }
     
     .form-group input:focus, .form-group select:focus {
@@ -1493,10 +1311,115 @@
       gap: 15px;
     }
     
-    @media (max-width: 768px) {
-      .form-row {
-        grid-template-columns: 1fr;
-      }
+    /* ===== Test History Modal ===== */
+    .history-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+    
+    .history-modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .history-content {
+      background: var(--gradient-card);
+      border-radius: 24px;
+      padding: 30px;
+      text-align: center;
+      max-width: 800px;
+      width: 90%;
+      max-height: 80vh;
+      border: 1px solid var(--border);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .history-content::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: var(--gradient);
+    }
+    
+    .history-content h2 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    .history-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      max-height: 60vh;
+      overflow-y: auto;
+      display: block;
+    }
+    
+    .history-table thead {
+      position: sticky;
+      top: 0;
+      background: var(--card);
+      z-index: 10;
+    }
+    
+    .history-table th {
+      padding: 12px;
+      background: var(--accent);
+      color: white;
+      text-align: left;
+      font-weight: 600;
+      border: 1px solid var(--border);
+    }
+    
+    .history-table td {
+      padding: 12px;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+    
+    .history-table tr:nth-child(even) {
+      background: rgba(255,255,255,0.05);
+    }
+    
+    .history-table tr:hover {
+      background: rgba(255,255,255,0.1);
+    }
+    
+    .close-history {
+      padding: 12px 30px;
+      background: var(--accent);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      display: block;
+      margin: 20px auto 0;
+    }
+    
+    .close-history:hover {
+      transform: translateY(-3px);
     }
     
     /* ===== Congratulations Modal ===== */
@@ -1585,6 +1508,14 @@
       padding: 0 10px;
     }
     
+    /* Continue button को right align करने के लिए */
+    .congrats-content .button-container {
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+      margin-top: 20px;
+    }
+    
     .close-congrats {
       padding: 12px 30px;
       background: var(--accent);
@@ -1594,208 +1525,12 @@
       font-weight: 700;
       cursor: pointer;
       transition: transform 0.3s ease;
-      display: block;
-      margin: 0 auto;
+      display: inline-block;
+      margin-left: auto;
     }
     
     .close-congrats:hover {
       transform: translateY(-3px);
-    }
-    
-    /* ===== Controls ===== */
-    .controls {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin: 20px 0;
-      justify-content: center;
-      padding: 0 25px;
-    }
-    
-    button {
-      padding: 14px 22px;
-      border-radius: 12px;
-      border: none;
-      cursor: pointer;
-      font-weight: 700;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      -webkit-tap-highlight-color: transparent;
-    }
-    
-    .btn-primary {
-      background: var(--gradient);
-      color: white;
-    }
-    
-    .btn-secondary {
-      background: rgba(255,255,255,0.1);
-      color: var(--text);
-      border: 1px solid var(--border);
-    }
-    
-    .btn-danger {
-      background: rgba(239, 68, 68, 0.2);
-      color: var(--danger);
-      border: 1px solid var(--danger);
-    }
-    
-    .btn-danger:hover {
-      background: var(--danger);
-      color: white;
-    }
-    
-    button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    }
-    
-    /* ===== Graph Controls ===== */
-    .graph-controls {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    
-    .graph-btn {
-      padding: 10px 20px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      color: var(--text);
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    
-    .graph-btn.active {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: white;
-    }
-    
-    /* ===== Reset Confirmation ===== */
-    .reset-modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.7);
-      z-index: 2000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.5s ease, visibility 0.5s ease;
-    }
-    
-    .reset-modal.active {
-      opacity: 1;
-      visibility: visible;
-    }
-    
-    .reset-content {
-      background: var(--gradient-card);
-      border-radius: 24px;
-      padding: 40px;
-      text-align: center;
-      max-width: 500px;
-      width: 90%;
-      border: 1px solid var(--border);
-      box-shadow: 0 30px 60px rgba(0,0,0,0.5);
-    }
-    
-    .reset-content h2 {
-      font-size: 1.8rem;
-      margin-bottom: 15px;
-      color: var(--danger);
-    }
-    
-    .reset-content p {
-      color: var(--muted);
-      margin-bottom: 25px;
-      line-height: 1.6;
-      padding: 0 10px;
-    }
-    
-    .reset-confirm-input {
-      padding: 12px 16px;
-      border-radius: 12px;
-      border: 2px solid var(--border);
-      background: rgba(255,255,255,0.05);
-      color: var(--text);
-      font-size: 1rem;
-      width: 100%;
-      margin-bottom: 20px;
-    }
-    
-    .reset-confirm-input:focus {
-      outline: none;
-      border-color: var(--danger);
-    }
-    
-    .reset-buttons {
-      display: flex;
-      gap: 15px;
-      justify-content: center;
-    }
-    
-    /* ===== Performance Subject Buttons ===== */
-    .performance-subject-buttons {
-      display: flex;
-      gap: 10px;
-      margin: 20px 0;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    
-    .performance-subject-btn {
-      padding: 12px 20px;
-      background: rgba(255,255,255,0.05);
-      border: 2px solid var(--border);
-      border-radius: 12px;
-      color: var(--text);
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .performance-subject-btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-      transition: left 0.6s ease;
-    }
-    
-    .performance-subject-btn:hover::before {
-      left: 100%;
-    }
-    
-    .performance-subject-btn.active {
-      border-color: var(--accent);
-      background: var(--accent);
-      color: white;
-      transform: translateY(-3px);
-      box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
     }
     
     /* ===== BIG Subject Completion Modal ===== */
@@ -1888,6 +1623,14 @@
       padding: 0 20px;
     }
     
+    /* Continue button को right align करने के लिए */
+    .subject-congrats-content .button-container {
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+      margin-top: 20px;
+    }
+    
     .close-subject-congrats {
       padding: 15px 40px;
       background: var(--gradient);
@@ -1899,8 +1642,8 @@
       cursor: pointer;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       box-shadow: 0 15px 30px rgba(0,0,0,0.3);
-      display: block;
-      margin: 0 auto;
+      display: inline-block;
+      margin-left: auto;
     }
     
     .close-subject-congrats:hover {
@@ -1908,32 +1651,192 @@
       box-shadow: 0 25px 50px rgba(0,0,0,0.4);
     }
     
-    /* ===== Footer ===== */
-    footer {
-      margin: 40px auto;
-      max-width: 1200px;
-      padding: 0 20px;
-      color: var(--muted);
-      font-size: 0.95rem;
+    /* ===== Graph Controls ===== */
+    .graph-controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .graph-btn {
+      padding: 10px 18px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+    }
+    
+    .graph-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+    }
+    
+    /* ===== CBT Toggle for Graphs ===== */
+    .graph-cbt-toggle {
+      display: flex;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 4px;
+      margin-bottom: 20px;
+      max-width: 300px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .graph-cbt-btn {
+      flex: 1;
+      padding: 10px;
       text-align: center;
-      padding: 25px;
-      border-top: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 0.9rem;
     }
     
-    .creator {
-      font-weight: 800;
-      color: var(--accent);
+    .graph-cbt-btn.active {
+      background: var(--accent);
+      color: white;
     }
     
-    /* ===== No Data Image ===== */
+    .graph-info {
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-align: center;
+      margin-top: -10px;
+      margin-bottom: 15px;
+      font-style: italic;
+    }
+    
+    /* ===== Reset Confirmation ===== */
+    .reset-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+    
+    .reset-modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .reset-content {
+      background: var(--gradient-card);
+      border-radius: 24px;
+      padding: 40px;
+      text-align: center;
+      max-width: 500px;
+      width: 90%;
+      border: 1px solid var(--border);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+    }
+    
+    .reset-content h2 {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+      color: var(--danger);
+    }
+    
+    .reset-content p {
+      color: var(--muted);
+      margin-bottom: 25px;
+      line-height: 1.6;
+      padding: 0 10px;
+    }
+    
+    .reset-confirm-input {
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 2px solid var(--border);
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      font-size: 1rem;
+      width: 100%;
+      margin-bottom: 20px;
+      -webkit-text-security: disc;
+      text-security: disc;
+      font-family: monospace;
+      letter-spacing: 2px;
+      user-select: none;
+    }
+    
+    .reset-confirm-input:focus {
+      outline: none;
+      border-color: var(--danger);
+    }
+    
+    .reset-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+    }
+    
+    /* ===== Performance Subject Buttons ===== */
+    .performance-subject-buttons {
+      display: flex;
+      gap: 10px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .performance-subject-btn {
+      padding: 12px 18px;
+      background: rgba(255,255,255,0.05);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+    }
+    
+    .performance-subject-btn.active {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
+    }
+    
+    /* ===== BIGGER No Data Image ===== */
     .no-data-container {
       text-align: center;
       padding: 40px 20px;
     }
     
     .no-data-image {
-      width: 250px;
-      height: 200px;
+      width: 400px;
+      height: 300px;
       margin: 0 auto 20px;
       border-radius: 12px;
       overflow: hidden;
@@ -1971,6 +1874,7 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
+      font-size: 0.9rem;
     }
     
     .view-btn.active {
@@ -2024,52 +1928,160 @@
       margin-bottom: 25px;
     }
     
-    /* Syllabus tracker controls at top */
-    .syllabus-controls {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin: 0 25px 20px 25px;
-      justify-content: center;
-      padding: 20px 0 0 0;
-    }
-    
     /* Center all continue buttons */
     .center-button {
       display: block;
-      margin: 0 auto;
+      margin: 20px auto;
+    }
+    
+    /* NEW: Average Score Display */
+    .avg-score-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+    
+    .avg-score-card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      border: 1px solid var(--border);
+      transition: transform 0.3s ease;
+    }
+    
+    .avg-score-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    
+    .avg-score-value {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--accent);
+      margin: 10px 0;
+    }
+    
+    .avg-score-label {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+    
+    /* NEW: History Button */
+    .history-btn {
+      background: var(--accent-2);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 20px auto;
+      transition: all 0.3s ease;
+    }
+    
+    .history-btn:hover {
+      background: var(--accent-3);
+      transform: translateY(-3px);
+    }
+    
+    /* NEW: Mock Test History Item */
+    .history-item {
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      padding: 15px;
+      margin: 10px 0;
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .history-item:hover {
+      background: rgba(255,255,255,0.1);
+      transform: translateY(-3px);
+    }
+    
+    /* NEW: Full Test Subject Toggle */
+    .full-test-toggle {
+      display: flex;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 4px;
+      margin-bottom: 20px;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .full-test-btn {
+      flex: 1;
+      padding: 10px;
+      text-align: center;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 0.85rem;
+    }
+    
+    .full-test-btn.active {
+      background: var(--accent);
+      color: white;
+    }
+    
+    /* Progress Image Modal (removed) */
+    .progress-image-modal {
+      display: none !important;
     }
     
     /* Responsive adjustments */
     @media (max-width: 768px) {
       .welcome-content {
         padding: 30px 20px;
-        margin: 20px;
+        margin: 15px;
       }
       
       .welcome-content h1 {
-        font-size: 2.2rem;
+        font-size: 2.5rem;
       }
       
-      .welcome-content p {
-        font-size: 1.1rem;
+      .welcome-logo {
+        width: 150px;
+        height: 150px;
       }
       
       .titles h1 {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
       }
       
       .grid {
         gap: 20px;
       }
       
+      /* Drawer को mobile पर 75% width दी */
       .drawer {
-        width: 320px;
+        width: 75%;
+        max-width: 75%;
+      }
+      
+      /* Drawer overlay को 75% width दी और right 25% transparent */
+      .drawer-overlay.active {
+        background: linear-gradient(to right, rgba(0,0,0,0.5) 75%, rgba(0,0,0,0) 75%);
       }
       
       .subject-selector-btn, .performance-subject-btn {
-        padding: 10px 15px;
-        font-size: 0.9rem;
+        padding: 8px 12px;
+        font-size: 0.85rem;
       }
       
       .subject-congrats-content {
@@ -2085,38 +2097,70 @@
         height: 150px;
       }
       
-      .controls {
-        flex-direction: column;
-        align-items: center;
-      }
-      
-      .controls button {
-        width: 100%;
-        max-width: 300px;
-      }
-      
       body {
-        padding-bottom: 60px;
+        padding-bottom: 65px;
+      }
+      
+      .no-data-image {
+        width: 300px;
+        height: 225px;
+      }
+      
+      .history-content {
+        padding: 20px;
+      }
+      
+      .history-table {
+        font-size: 0.85rem;
+      }
+      
+      .avg-score-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      /* Subject controls को mobile पर row में रखा */
+      .card h2 {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      
+      .subject-controls {
+        margin-left: 0;
+        width: 100%;
+        justify-content: space-between;
+        flex-direction: row;
+      }
+      
+      .subject-controls button {
+        flex: 1;
+        max-width: 48%;
+        padding: 8px 10px;
+        font-size: 0.75rem;
+      }
+      
+      .full-test-toggle {
+        flex-direction: column;
       }
     }
     
     @media (max-width: 480px) {
       .nav-container {
-        padding: 10px 0;
+        padding: 8px 0;
       }
       
       .logo {
-        width: 70px;
-        height: 70px;
+        width: 60px;
+        height: 60px;
       }
       
       .titles h1 {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
       }
       
       .nav-btn {
-        width: 45px;
-        height: 45px;
+        width: 40px;
+        height: 40px;
       }
       
       .container {
@@ -2132,6 +2176,49 @@
         width: 100%;
         max-width: 300px;
       }
+      
+      .nav-tab-btn span {
+        display: inline;
+      }
+      
+      .bottom-nav {
+        height: 60px;
+      }
+      
+      .no-data-image {
+        width: 250px;
+        height: 200px;
+      }
+      
+      .avg-score-container {
+        grid-template-columns: 1fr;
+      }
+      
+      /* Mobile पर और छोटा किया */
+      .subject-controls button {
+        padding: 6px 8px;
+        font-size: 0.7rem;
+      }
+      
+      .welcome-content h1 {
+        font-size: 2.2rem;
+      }
+      
+      .welcome-logo {
+        width: 130px;
+        height: 130px;
+      }
+    }
+    
+    /* Fix for mobile touch issues */
+    @media (hover: none) and (pointer: coarse) {
+      button, .nav-btn, .toggle-btn, .subject-selector-btn, .performance-subject-btn {
+        min-height: 44px;
+      }
+      
+      input, select {
+        font-size: 16px !important;
+      }
     }
   </style>
 </head>
@@ -2145,14 +2232,14 @@
   <div id="welcomeScreen">
     <div class="welcome-content">
       <div class="welcome-logo">
-        <img src="https://image2url.com/images/1765965615977-c924ee63-e66d-4d45-add9-975c85125016.png" alt="NTPC PRO Logo">
+        <img src="https://image2url.com/images/1766043743592-6b43d649-a3ae-48d7-8b00-6c6c751e23d7.png" alt="NTPC PRO Logo">
       </div>
       <h1>NTPC PRO</h1>
       <p>Smart tool for RRB NTPC exam preparation. Track subject-wise progress, analyze mock tests, and improve your performance.</p>
       
       <input type="text" class="name-input" id="studentName" placeholder="Enter your name (e.g., Rahul Sharma)" maxlength="30">
       
-      <button class="welcome-btn" id="startTracking">
+      <button class="welcome-btn center-button" id="startTracking">
         <i class="fas fa-rocket"></i> Get Started
       </button>
     </div>
@@ -2247,11 +2334,38 @@
       <h2><i class="fas fa-exclamation-triangle"></i> Reset Data</h2>
       <p>Are you sure you want to reset all progress and data? This action cannot be undone.</p>
       <p>To confirm, type below: <strong>"RESET MY PROGRESS"</strong></p>
-      <input type="text" class="reset-confirm-input" id="resetConfirmInput" placeholder='Type "RESET MY PROGRESS" here'>
+      <input type="text" class="reset-confirm-input" id="resetConfirmInput" placeholder='Type "RESET MY PROGRESS" here' autocomplete="off">
       <div class="reset-buttons">
-        <button class="btn-shine" id="resetCancel"><span>Cancel</span></button>
-        <button class="btn-shine" id="resetConfirm" disabled><span>Reset</span></button>
+        <button class="btn-shine" id="resetCancel">Cancel</button>
+        <button class="btn-shine" id="resetConfirm" disabled>Reset</button>
       </div>
+    </div>
+  </div>
+  
+  <!-- Test History Modal -->
+  <div class="history-modal" id="historyModal">
+    <div class="history-content">
+      <h2><i class="fas fa-history"></i> Test History (Last 30 Tests)</h2>
+      <div class="history-table-container">
+        <table class="history-table" id="historyTable">
+          <thead>
+            <tr>
+              <th>Test Name</th>
+              <th>Type</th>
+              <th>CBT</th>
+              <th>Date</th>
+              <th>Total</th>
+              <th>Math</th>
+              <th>Reasoning</th>
+              <th>Awareness</th>
+            </tr>
+          </thead>
+          <tbody id="historyTableBody">
+            <!-- History will be populated here -->
+          </tbody>
+        </table>
+      </div>
+      <button class="close-history center-button" id="closeHistory">Close</button>
     </div>
   </div>
   
@@ -2263,7 +2377,9 @@
       </div>
       <h2>Congratulations!</h2>
       <p id="congratsMessage">You have completed a topic! Your hard work will lead you to success.</p>
-      <button class="close-congrats center-button" id="closeCongrats">Continue</button>
+      <div class="button-container">
+        <button class="close-congrats" id="closeCongrats">Continue</button>
+      </div>
     </div>
   </div>
   
@@ -2275,7 +2391,9 @@
       </div>
       <h2 id="subjectCongratsTitle">Amazing Achievement!</h2>
       <p id="subjectCongratsMessage">You have successfully completed an entire subject! Your dedication is inspiring.</p>
-      <button class="close-subject-congrats center-button" id="closeSubjectCongrats">Celebrate & Continue</button>
+      <div class="button-container">
+        <button class="close-subject-congrats" id="closeSubjectCongrats">Celebrate & Continue</button>
+      </div>
     </div>
   </div>
   
@@ -2285,7 +2403,7 @@
       <div class="nav-container">
         <div class="brand">
           <div class="logo">
-            <img src="https://image2url.com/images/1765965615977-c924ee63-e66d-4d45-add9-975c85125016.png" alt="NTPC PRO Logo">
+            <img src="https://image2url.com/images/1766043743592-6b43d649-a3ae-48d7-8b00-6c6c751e23d7.png" alt="NTPC PRO Logo">
           </div>
           <div class="titles">
             <h1>NTPC PRO</h1>
@@ -2303,20 +2421,20 @@
     <div class="container">
       <!-- Syllabus Tab -->
       <div class="tab-content active" id="syllabus-tab">
-        <!-- Controls at the top -->
-        <div class="syllabus-controls">
-          <button class="btn-shine" id="expandAll">
-            <span><i class="fas fa-expand-alt"></i> Expand All</span>
-          </button>
-          <button class="btn-shine" id="collapseAll">
-            <span><i class="fas fa-compress-alt"></i> Collapse All</span>
-          </button>
-        </div>
-        
         <div class="grid">
           <!-- Subjects List -->
           <div class="card">
-            <h2><i class="fas fa-graduation-cap"></i> Subjects and Topics <span id="totalProgress">(0% Complete)</span></h2>
+            <h2>
+              <i class="fas fa-graduation-cap"></i> Subjects and Topics <span id="totalProgress">(0% Complete)</span>
+              <div class="subject-controls">
+                <button id="expandAll">
+                  <i class="fas fa-expand-alt"></i> Expand All
+                </button>
+                <button id="collapseAll">
+                  <i class="fas fa-compress-alt"></i> Collapse All
+                </button>
+              </div>
+            </h2>
             <div class="body">
               <div id="subjectsContainer"></div>
             </div>
@@ -2444,21 +2562,21 @@
                       <div class="form-row">
                         <div class="form-group">
                           <label for="mathMarks">Mathematics (marks):</label>
-                          <input type="number" id="mathMarks" min="0" max="30" placeholder="0-30" required>
+                          <input type="number" id="mathMarks" min="0" max="30" placeholder="0-30">
                         </div>
                         <div class="form-group">
                           <label for="reasoningMarks">Reasoning (marks):</label>
-                          <input type="number" id="reasoningMarks" min="0" max="30" placeholder="0-30" required>
+                          <input type="number" id="reasoningMarks" min="0" max="30" placeholder="0-30">
                         </div>
                       </div>
                       <div class="form-row">
                         <div class="form-group">
                           <label for="awarenessMarks">General Awareness (marks):</label>
-                          <input type="number" id="awarenessMarks" min="0" max="40" placeholder="0-40" required>
+                          <input type="number" id="awarenessMarks" min="0" max="40" placeholder="0-40">
                         </div>
                         <div class="form-group">
                           <label for="accuracy">Accuracy (%):</label>
-                          <input type="number" id="accuracy" min="0" max="100" placeholder="0-100" step="0.1" required>
+                          <input type="number" id="accuracy" min="0" max="100" placeholder="0-100" step="0.1">
                         </div>
                       </div>
                       <div class="form-group">
@@ -2471,14 +2589,19 @@
                     <div id="sectionalTestFields" style="display: none;">
                       <div class="form-group">
                         <label id="sectionalMarksLabel">Marks:</label>
-                        <input type="number" id="sectionalMarks" min="0" max="30" placeholder="0-30" required>
+                        <input type="number" id="sectionalMarks" min="0" max="30" placeholder="0-30">
                       </div>
                     </div>
                     
-                    <button type="submit" class="btn-shine">
-                      <span><i class="fas fa-save"></i> Save & Update Graphs</span>
+                    <button type="submit" class="btn-shine center-button">
+                      <i class="fas fa-save"></i> Save & Update Graphs
                     </button>
                   </form>
+                  
+                  <!-- History Button -->
+                  <button class="history-btn center-button" id="showHistoryBtn">
+                    <i class="fas fa-history"></i> View Test History (Last 30 Tests)
+                  </button>
                 </div>
               </div>
               
@@ -2496,27 +2619,122 @@
                 </div>
               </div>
               
+              <!-- Graph 1: Full Test Performance -->
               <div class="card cbt-card">
-                <h3><i class="fas fa-chart-area"></i> Performance Graphs</h3>
+                <h3><i class="fas fa-chart-line"></i> Full Test Performance</h3>
                 <div class="body">
-                  <div class="graph-controls">
-                    <button class="graph-btn active" data-graph="full">
-                      <i class="fas fa-chart-line"></i> Full Test
+                  <div class="graph-cbt-toggle" id="graph1CbtToggle">
+                    <button class="graph-cbt-btn active" data-cbt="cbt1">
+                      <i class="fas fa-file-alt"></i> CBT-1
                     </button>
-                    <button class="graph-btn" data-graph="math">
-                      <i class="fas fa-calculator"></i> Mathematics
-                    </button>
-                    <button class="graph-btn" data-graph="reasoning">
-                      <i class="fas fa-brain"></i> Reasoning
-                    </button>
-                    <button class="graph-btn" data-graph="gs">
-                      <i class="fas fa-globe-asia"></i> General Awareness
-                    </button>
-                    <button class="graph-btn" data-graph="accuracy">
-                      <i class="fas fa-bullseye"></i> Accuracy
+                    <button class="graph-cbt-btn" data-cbt="cbt2">
+                      <i class="fas fa-file-alt"></i> CBT-2
                     </button>
                   </div>
-                  <canvas id="performanceChart" class="chart-canvas"></canvas>
+                  
+                  <!-- Full Test Subject Toggle -->
+                  <div class="full-test-toggle" id="fullTestToggle">
+                    <button class="full-test-btn active" data-view="total">
+                      <i class="fas fa-chart-line"></i> Total Marks
+                    </button>
+                    <button class="full-test-btn" data-view="math">
+                      <i class="fas fa-calculator"></i> Mathematics
+                    </button>
+                    <button class="full-test-btn" data-view="reasoning">
+                      <i class="fas fa-brain"></i> Reasoning
+                    </button>
+                    <button class="full-test-btn" data-view="awareness">
+                      <i class="fas fa-globe-asia"></i> Awareness
+                    </button>
+                  </div>
+                  
+                  <p class="graph-info" id="fullTestGraphInfo">Shows full test scores and accuracy</p>
+                  <div id="fullTestGraphContainer">
+                    <canvas id="fullTestChart" class="chart-canvas"></canvas>
+                  </div>
+                  <div id="fullTestNoData" style="display: none;">
+                    <div class="no-data-container">
+                      <div class="no-data-image">
+                        <img src="https://image2url.com/images/1765986538625-dc51de7a-19d5-4f09-9c44-b96d1a48e991.gif" alt="No Data Available">
+                      </div>
+                      <p style="color: var(--muted); margin: 10px 0;">No full test data available for selected CBT.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Graph 2: Subject-wise Performance -->
+              <div class="card cbt-card">
+                <h3><i class="fas fa-chart-bar"></i> Subject-wise Performance</h3>
+                <div class="body">
+                  <div class="graph-cbt-toggle" id="graph2CbtToggle">
+                    <button class="graph-cbt-btn active" data-cbt="cbt1">
+                      <i class="fas fa-file-alt"></i> CBT-1
+                    </button>
+                    <button class="graph-cbt-btn" data-cbt="cbt2">
+                      <i class="fas fa-file-alt"></i> CBT-2
+                    </button>
+                  </div>
+                  <p class="graph-info">Sectional test data only (full test marks not included)</p>
+                  <div class="performance-subject-buttons" id="subjectGraphButtons">
+                    <button class="performance-subject-btn active" data-subject="math">
+                      <i class="fas fa-calculator"></i> Mathematics
+                    </button>
+                    <button class="performance-subject-btn" data-subject="reasoning">
+                      <i class="fas fa-brain"></i> Reasoning
+                    </button>
+                    <button class="performance-subject-btn" data-subject="awareness">
+                      <i class="fas fa-globe-asia"></i> General Awareness
+                    </button>
+                  </div>
+                  <div id="subjectGraphContainer">
+                    <canvas id="subjectChart" class="chart-canvas"></canvas>
+                  </div>
+                  <div id="subjectNoData" style="display: none;">
+                    <div class="no-data-container">
+                      <div class="no-data-image">
+                        <img src="https://image2url.com/images/1765986538625-dc51de7a-19d5-4f09-9c44-b96d1a48e991.gif" alt="No Data Available">
+                      </div>
+                      <p style="color: var(--muted); margin: 10px 0;">No subject test data available for selected CBT.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Graph 3: Accuracy Analysis -->
+              <div class="card cbt-card">
+                <h3><i class="fas fa-bullseye"></i> Accuracy Analysis</h3>
+                <div class="body">
+                  <div class="graph-cbt-toggle" id="graph3CbtToggle">
+                    <button class="graph-cbt-btn active" data-cbt="cbt1">
+                      <i class="fas fa-file-alt"></i> CBT-1
+                    </button>
+                    <button class="graph-cbt-btn" data-cbt="cbt2">
+                      <i class="fas fa-file-alt"></i> CBT-2
+                    </button>
+                  </div>
+                  <p class="graph-info">Accuracy from full tests only</p>
+                  <div id="accuracyGraphContainer">
+                    <canvas id="accuracyChart" class="chart-canvas"></canvas>
+                  </div>
+                  <div id="accuracyNoData" style="display: none;">
+                    <div class="no-data-container">
+                      <div class="no-data-image">
+                        <img src="https://image2url.com/images/1765986538625-dc51de7a-19d5-4f09-9c44-b96d1a48e991.gif" alt="No Data Available">
+                      </div>
+                      <p style="color: var(--muted); margin: 10px 0;">No accuracy data available for selected CBT.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Average Scores Card -->
+              <div class="card cbt-card">
+                <h3><i class="fas fa-chart-pie"></i> Average Scores</h3>
+                <div class="body">
+                  <div class="avg-score-container" id="avgScoreContainer">
+                    <!-- Average scores will be populated here -->
+                  </div>
                 </div>
               </div>
             </div>
@@ -2529,10 +2747,10 @@
     <div class="bottom-nav">
       <div class="nav-tabs">
         <button class="nav-tab-btn active" data-tab="syllabus">
-          <i class="fas fa-book-open"></i> <span>Syllabus Tracker</span>
+          <i class="fas fa-book-open"></i> <span>Tracker</span>
         </button>
         <button class="nav-tab-btn" data-tab="mock-analysis">
-          <i class="fas fa-chart-line"></i> <span>Mock Analysis</span>
+          <i class="fas fa-chart-line"></i> <span>Analysis</span>
         </button>
       </div>
     </div>
@@ -2549,7 +2767,7 @@
     // ========== CONFIGURATION ==========
     const CONFIG = {
       appName: "NTPC PRO",
-      appVersion: "2026.2.2",
+      appVersion: "2026.4.0",
       
       // Hindi Translations
       translations: {
@@ -2596,6 +2814,7 @@
           resetPlaceholder: 'Type "RESET MY PROGRESS" here',
           shareProgress: "Share Progress",
           shareWebsite: "Share Website",
+          generateImage: "Generate Progress Image",
           helpQueries: "Help and Queries",
           exportBackup: "Export Backup",
           importBackup: "Import Backup",
@@ -2609,7 +2828,22 @@
           continueBtn: "Continue",
           celebrateBtn: "Celebrate & Continue",
           completed: "Completed",
-          remaining: "Remaining"
+          remaining: "Remaining",
+          viewHistory: "View Test History",
+          testHistory: "Test History",
+          avgScore: "Average Score",
+          cbt1Avg: "CBT-1 Average",
+          cbt2Avg: "CBT-2 Average",
+          overallAvg: "Overall Average",
+          fullTests: "Full Tests",
+          mathTests: "Math Tests",
+          reasoningTests: "Reasoning Tests",
+          awarenessTests: "Awareness Tests",
+          tests: "tests",
+          percentage: "Percentage",
+          downloadImage: "Download Image",
+          shareImage: "Share Image",
+          closeImage: "Close"
         },
         hi: {
           appName: "एनटीपीसी प्रो",
@@ -2654,6 +2888,7 @@
           resetPlaceholder: '"मेरी प्रगति रीसेट करें" टाइप करें',
           shareProgress: "प्रगति साझा करें",
           shareWebsite: "वेबसाइट साझा करें",
+          generateImage: "प्रगति छवि बनाएं",
           helpQueries: "सहायता और प्रश्न",
           exportBackup: "बैकअप निर्यात करें",
           importBackup: "बैकअप आयात करें",
@@ -2667,7 +2902,22 @@
           continueBtn: "जारी रखें",
           celebrateBtn: "जश्न मनाएं और जारी रखें",
           completed: "पूर्ण",
-          remaining: "शेष"
+          remaining: "शेष",
+          viewHistory: "टेस्ट इतिहास देखें",
+          testHistory: "टेस्ट इतिहास",
+          avgScore: "औसत स्कोर",
+          cbt1Avg: "सीबीटी-1 औसत",
+          cbt2Avg: "सीबीटी-2 औसत",
+          overallAvg: "कुल औसत",
+          fullTests: "पूर्ण टेस्ट",
+          mathTests: "गणित टेस्ट",
+          reasoningTests: "तर्कशक्ति टेस्ट",
+          awarenessTests: "सामान्य जागरूकता टेस्ट",
+          tests: "टेस्ट",
+          percentage: "प्रतिशत",
+          downloadImage: "छवि डाउनलोड करें",
+          shareImage: "छवि साझा करें",
+          closeImage: "बंद करें"
         }
       },
       
@@ -2866,10 +3116,10 @@
     
     // ========== GLOBAL VARIABLES ==========
     const STORAGE_KEYS = {
-      PROGRESS: "ntpc_progress_v7",
-      UI_STATE: "ntpc_ui_state_v7",
+      PROGRESS: "ntpc_progress_v12",
+      UI_STATE: "ntpc_ui_state_v12",
       STUDENT_NAME: "ntpc_student_name",
-      CBT_RESULTS: "ntpc_cbt_results_v7",
+      CBT_RESULTS: "ntpc_cbt_results_v12",
       THEME: "ntpc_theme",
       STUDY_LOG: "ntpc_study_log",
       LANGUAGE: "ntpc_language"
@@ -2882,12 +3132,16 @@
     let currentTheme = localStorage.getItem(STORAGE_KEYS.THEME) || "light";
     let currentLanguage = localStorage.getItem(STORAGE_KEYS.LANGUAGE) || "en";
     let charts = {
-      performance: null
+      fullTest: null,
+      subject: null,
+      accuracy: null
     };
     let currentCBT = "cbt1";
     let currentTestType = "full";
-    let currentGraph = "full";
     let selectedSubjectForGraph = null;
+    let currentGraphCBT = "cbt1";
+    let selectedSubjectForChart = "math";
+    let fullTestGraphView = "total"; // 'total', 'math', 'reasoning', 'awareness'
     
     // ========== INITIALIZATION ==========
     function initializeApp() {
@@ -2906,16 +3160,16 @@
       if (studentName) {
         nameInput.value = studentName;
         nameInput.readOnly = true;
-        startBtn.innerHTML = `<i class="fas fa-rocket"></i> ${t('continue')}`;
+        startBtn.innerHTML = `<i class="fas fa-rocket"></i> Continue`;
         
         setTimeout(() => {
           if (document.visibilityState === 'visible') {
             startWelcomeTransition();
           }
-        }, 2000);
+        }, 1500);
       } else {
         nameInput.readOnly = false;
-        startBtn.innerHTML = `<i class="fas fa-rocket"></i> ${t('getStarted')}`;
+        startBtn.innerHTML = `<i class="fas fa-rocket"></i> Get Started`;
       }
       
       startBtn.onclick = () => {
@@ -2957,6 +3211,8 @@
       initializeCBTForm();
       loadCBTResults();
       initializeSubjectSelector();
+      updateAllGraphs();
+      updateAverageScores();
       
       setInterval(saveAllData, 30000);
       setInterval(updateGreeting, 60000);
@@ -3005,7 +3261,6 @@
         header.innerHTML = `
           <div class="subject-title">
             <span class="badge ${subject.colorClass}">${subject.title[currentLanguage].split('(')[0].trim()}</span>
-            <div><strong>${subject.title[currentLanguage]}</strong></div>
           </div>
           <div class="progress-wrap">
             <div class="progress-bar">
@@ -3014,7 +3269,7 @@
             <div class="percent" id="percent_${subject.id}">${Math.round(progress)}%</div>
             <button class="toggle-btn" data-toggle="${subject.id}">
               ${collapsed ? '<i class="fas fa-chevron-right"></i>' : '<i class="fas fa-chevron-down"></i>'}
-              ${collapsed ? t('expandAll') : t('collapseAll')}
+              ${collapsed ? 'Expand' : 'Collapse'}
             </button>
           </div>
         `;
@@ -3065,8 +3320,8 @@
           const btn = e.currentTarget.querySelector(`.toggle-btn[data-toggle="${subjectId}"]`);
           if (btn) {
             btn.innerHTML = collapsed ? 
-              '<i class="fas fa-chevron-down"></i>' + t('collapseAll') : 
-              '<i class="fas fa-chevron-right"></i>' + t('expandAll');
+              '<i class="fas fa-chevron-down"></i> Collapse' : 
+              '<i class="fas fa-chevron-right"></i> Expand';
           }
           
           savedUIState[subjectId] = { collapsed: !collapsed };
@@ -3105,8 +3360,8 @@
           
           topicsEl.style.display = collapsed ? '' : 'none';
           this.innerHTML = collapsed ? 
-            '<i class="fas fa-chevron-down"></i>' + t('collapseAll') : 
-            '<i class="fas fa-chevron-right"></i>' + t('expandAll');
+            '<i class="fas fa-chevron-down"></i> Collapse' : 
+            '<i class="fas fa-chevron-right"></i> Expand';
           
           savedUIState[subjectId] = { collapsed: !collapsed };
           saveUIState();
@@ -3151,7 +3406,7 @@
     
     function updateProgress() {
       const overallProgress = calculateOverallProgress();
-      document.getElementById('totalProgress').textContent = `(${Math.round(overallProgress)}% ${t('complete')})`;
+      document.getElementById('totalProgress').textContent = `(${Math.round(overallProgress)}% Complete)`;
       
       const donut = document.getElementById('donutOverall');
       const circumference = 2 * Math.PI * 85;
@@ -3186,18 +3441,6 @@
       donut.setAttribute('stroke-dasharray', circumference);
       donut.setAttribute('stroke-dashoffset', offset);
       document.getElementById('subjectChartPercentage').textContent = `${Math.round(progress)}%`;
-      
-      // Update gradient based on subject color
-      const subjectColor = getComputedStyle(document.documentElement)
-        .getPropertyValue(`--${subject.colorClass}`) || '#4f46e5';
-      
-      const defs = donut.parentElement.querySelector('defs');
-      defs.innerHTML = `
-        <linearGradient id="gradSubject" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="${subjectColor}"/>
-          <stop offset="100%" stop-color="${subjectColor}99"/>
-        </linearGradient>
-      `;
     }
     
     function showCongratulations(checkbox) {
@@ -3317,7 +3560,9 @@
     
     // ========== CBT ANALYSIS FUNCTIONS ==========
     function initializeCBTForm() {
-      document.getElementById('testDate').valueAsDate = new Date();
+      const today = new Date();
+      const formattedDate = today.toISOString().split('T')[0];
+      document.getElementById('testDate').value = formattedDate;
       updateCBTForm();
       
       document.getElementById('mathMarks').addEventListener('input', updateTotalMarks);
@@ -3329,12 +3574,12 @@
       const config = CONFIG.cbtConfig[currentCBT];
       
       const titles = {
-        'full': t('fullTest'),
-        'math': t('mathematics'),
-        'reasoning': t('reasoning'),
-        'awareness': t('generalAwareness')
+        'full': 'Full Test',
+        'math': 'Mathematics',
+        'reasoning': 'Reasoning',
+        'awareness': 'General Awareness'
       };
-      document.getElementById('testFormTitle').innerHTML = `<i class="fas fa-edit"></i> ${titles[currentTestType]} ${t('marks')} ${t('entry')}`;
+      document.getElementById('testFormTitle').innerHTML = `<i class="fas fa-edit"></i> ${titles[currentTestType]} Marks Entry`;
       
       if (currentTestType === 'full') {
         document.getElementById('fullTestFields').style.display = 'block';
@@ -3353,7 +3598,7 @@
         document.getElementById('sectionalTestFields').style.display = 'block';
         
         const maxMarks = config.sections[currentTestType].maxMarks;
-        document.getElementById('sectionalMarksLabel').textContent = `${t('marks')} (0-${maxMarks}):`;
+        document.getElementById('sectionalMarksLabel').textContent = `Marks (0-${maxMarks}):`;
         document.getElementById('sectionalMarks').max = maxMarks;
         document.getElementById('sectionalMarks').placeholder = `0-${maxMarks}`;
       }
@@ -3380,7 +3625,7 @@
             <div class="no-data-image">
               <img src="https://image2url.com/images/1765986538625-dc51de7a-19d5-4f09-9c44-b96d1a48e991.gif" alt="No Data Available">
             </div>
-            <p style="color: var(--muted); margin: 10px 0;">${t('noData')}</p>
+            <p style="color: var(--muted); margin: 10px 0;">No test data yet. Add your first test entry.</p>
           </div>`;
         return;
       }
@@ -3391,7 +3636,7 @@
       let html = '';
       if (latest.testType === 'full') {
         const percentage = ((latest.total / latest.maxTotal) * 100).toFixed(1);
-        const date = new Date(latest.date).toLocaleDateString(currentLanguage === 'hi' ? 'en-IN' : 'en-US');
+        const date = new Date(latest.date).toLocaleDateString();
         const time = latest.time || '';
         
         html = `
@@ -3400,33 +3645,34 @@
             <div style="font-size: 2.5rem; font-weight: 800; color: var(--accent); margin: 15px 0;">${percentage}%</div>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0;">
               <div style="background: rgba(79, 70, 229, 0.1); padding: 15px; border-radius: 12px;">
-                <div style="font-size: 0.9rem; color: var(--muted);">${t('mathematics')}</div>
+                <div style="font-size: 0.9rem; color: var(--muted);">Mathematics</div>
                 <div style="font-size: 1.5rem; font-weight: 800;">${latest.math}/${latest.maxMath}</div>
               </div>
               <div style="background: rgba(5, 150, 105, 0.1); padding: 15px; border-radius: 12px;">
-                <div style="font-size: 0.9rem; color: var(--muted);">${t('reasoning')}</div>
+                <div style="font-size: 0.9rem; color: var(--muted);">Reasoning</div>
                 <div style="font-size: 1.5rem; font-weight: 800;">${latest.reasoning}/${latest.maxReasoning}</div>
               </div>
               <div style="background: rgba(217, 119, 6, 0.1); padding: 15px; border-radius: 12px;">
-                <div style="font-size: 0.9rem; color: var(--muted);">${t('generalAwareness')}</div>
+                <div style="font-size: 0.9rem; color: var(--muted);">General Awareness</div>
                 <div style="font-size: 1.5rem; font-weight: 800;">${latest.awareness}/${latest.maxAwareness}</div>
               </div>
               <div style="background: rgba(124, 58, 237, 0.1); padding: 15px; border-radius: 12px;">
-                <div style="font-size: 0.9rem; color: var(--muted);">${t('totalMarks')}</div>
+                <div style="font-size: 0.9rem; color: var(--muted);">Total Marks</div>
                 <div style="font-size: 1.5rem; font-weight: 800;">${latest.total}/${latest.maxTotal}</div>
               </div>
             </div>
-            <div style="color: var(--muted); font-size: 0.9rem; margin: 10px 0;">${t('date')}: ${date} ${time ? `(${time})` : ''}</div>
+            <div style="color: var(--muted); font-size: 0.9rem; margin: 10px 0;">Date: ${date} ${time ? `(${time})` : ''}</div>
+            <div style="color: var(--accent); font-size: 0.9rem; margin: 10px 0; font-weight: 600;">${latest.cbt === 'cbt1' ? 'CBT-1' : 'CBT-2'}</div>
           </div>
         `;
       } else {
         const percentage = ((latest.marks / latest.maxMarks) * 100).toFixed(1);
-        const date = new Date(latest.date).toLocaleDateString(currentLanguage === 'hi' ? 'en-IN' : 'en-US');
+        const date = new Date(latest.date).toLocaleDateString();
         const time = latest.time || '';
         const sectionNames = {
-          'math': t('mathematics'),
-          'reasoning': t('reasoning'),
-          'awareness': t('generalAwareness')
+          'math': 'Mathematics',
+          'reasoning': 'Reasoning',
+          'awareness': 'General Awareness'
         };
         
         html = `
@@ -3437,168 +3683,134 @@
               <div style="font-size: 1.2rem; color: var(--muted); margin-bottom: 10px;">${sectionNames[latest.section]}</div>
               <div style="font-size: 3rem; font-weight: 800; color: var(--accent);">${latest.marks}/${latest.maxMarks}</div>
             </div>
-            <div style="color: var(--muted); font-size: 0.9rem; margin: 10px 0;">${t('date')}: ${date} ${time ? `(${time})` : ''}</div>
+            <div style="color: var(--muted); font-size: 0.9rem; margin: 10px 0;">Date: ${date} ${time ? `(${time})` : ''}</div>
+            <div style="color: var(--accent); font-size: 0.9rem; margin: 10px 0; font-weight: 600;">${latest.cbt === 'cbt1' ? 'CBT-1' : 'CBT-2'}</div>
           </div>
         `;
       }
       
       latestPerformance.innerHTML = html;
-      updatePerformanceChart();
     }
     
-    function updatePerformanceChart() {
-      const ctx = document.getElementById('performanceChart').getContext('2d');
+    function updateAllGraphs() {
+      updateFullTestGraph();
+      updateSubjectGraph();
+      updateAccuracyGraph();
+    }
+    
+    function updateFullTestGraph() {
+      const ctx = document.getElementById('fullTestChart').getContext('2d');
       
-      if (charts.performance) {
-        charts.performance.destroy();
+      if (charts.fullTest) {
+        charts.fullTest.destroy();
       }
       
-      let filteredResults = cbtResults.filter(r => r.cbt === currentCBT);
+      let filteredResults = cbtResults.filter(r => r.cbt === currentGraphCBT && r.testType === 'full');
       
       if (filteredResults.length === 0) {
-        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-        ctx.fillStyle = 'var(--muted)';
-        ctx.font = '16px Arial';
-        ctx.textAlign = 'center';
-        ctx.fillText(t('noData'), ctx.canvas.width / 2, ctx.canvas.height / 2);
+        document.getElementById('fullTestGraphContainer').style.display = 'none';
+        document.getElementById('fullTestNoData').style.display = 'block';
         return;
       }
+      
+      document.getElementById('fullTestGraphContainer').style.display = 'block';
+      document.getElementById('fullTestNoData').style.display = 'none';
       
       filteredResults.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
       
       const labels = filteredResults.map(r => {
-        const date = new Date(r.date).toLocaleDateString(currentLanguage === 'hi' ? 'en-IN' : 'en-US', { month: 'short', day: 'numeric' });
-        return r.time ? `${date} ${r.time}` : date;
+        const date = new Date(r.date);
+        return date.toLocaleDateString('en-US', { 
+          month: 'short', 
+          day: 'numeric' 
+        });
       });
       
-      let datasets = [];
-      let graphTitle = '';
+      const pointRadius = filteredResults.length === 1 ? 8 : 6;
       
-      if (currentGraph === 'full') {
-        const fullTests = filteredResults.filter(r => r.testType === 'full');
-        const fullLabels = fullTests.map(r => {
-          const date = new Date(r.date).toLocaleDateString(currentLanguage === 'hi' ? 'en-IN' : 'en-US', { month: 'short', day: 'numeric' });
-          return r.time ? `${date} ${r.time}` : date;
-        });
+      let datasets = [];
+      
+      if (fullTestGraphView === 'total') {
+        const scores = filteredResults.map(r => r.total);
+        const percentages = filteredResults.map(r => r.accuracy || 0);
         
         datasets = [
           {
-            label: t('totalMarks'),
-            data: fullTests.map(r => r.total),
+            label: 'Total Marks',
+            data: scores,
             borderColor: '#4f46e5',
             backgroundColor: 'rgba(79, 70, 229, 0.1)',
             tension: 0.3,
             fill: true,
-            pointRadius: 6,
-            pointBackgroundColor: '#4f46e5'
-          }
-        ];
-        graphTitle = `${currentCBT === 'cbt1' ? 'CBT-1' : 'CBT-2'} - ${t('fullTestGraph')}`;
-      } 
-      else if (currentGraph === 'math') {
-        const mathData = filteredResults.map(r => {
-          if (r.testType === 'full') return r.math;
-          if (r.testType === 'sectional' && r.section === 'math') return r.marks;
-          return null;
-        }).filter(val => val !== null);
-        
-        datasets = [
+            pointRadius: pointRadius,
+            pointBackgroundColor: '#4f46e5',
+            yAxisID: 'y'
+          },
           {
-            label: t('mathematics'),
-            data: mathData,
-            borderColor: '#3b82f6',
-            backgroundColor: 'rgba(59, 130, 246, 0.1)',
-            tension: 0.3,
-            fill: true,
-            pointRadius: 6,
-            pointBackgroundColor: '#3b82f6'
-          }
-        ];
-        graphTitle = `${currentCBT === 'cbt1' ? 'CBT-1' : 'CBT-2'} - ${t('mathGraph')}`;
-      }
-      else if (currentGraph === 'reasoning') {
-        const reasoningData = filteredResults.map(r => {
-          if (r.testType === 'full') return r.reasoning;
-          if (r.testType === 'sectional' && r.section === 'reasoning') return r.marks;
-          return null;
-        }).filter(val => val !== null);
-        
-        datasets = [
-          {
-            label: t('reasoning'),
-            data: reasoningData,
-            borderColor: '#059669',
-            backgroundColor: 'rgba(5, 150, 105, 0.1)',
-            tension: 0.3,
-            fill: true,
-            pointRadius: 6,
-            pointBackgroundColor: '#059669'
-          }
-        ];
-        graphTitle = `${currentCBT === 'cbt1' ? 'CBT-1' : 'CBT-2'} - ${t('reasoningGraph')}`;
-      }
-      else if (currentGraph === 'gs') {
-        const gsData = filteredResults.map(r => {
-          if (r.testType === 'full') return r.awareness;
-          if (r.testType === 'sectional' && r.section === 'awareness') return r.marks;
-          return null;
-        }).filter(val => val !== null);
-        
-        datasets = [
-          {
-            label: t('generalAwareness'),
-            data: gsData,
-            borderColor: '#d97706',
-            backgroundColor: 'rgba(217, 119, 6, 0.1)',
-            tension: 0.3,
-            fill: true,
-            pointRadius: 6,
-            pointBackgroundColor: '#d97706'
-          }
-        ];
-        graphTitle = `${currentCBT === 'cbt1' ? 'CBT-1' : 'CBT-2'} - ${t('gsGraph')}`;
-      }
-      else if (currentGraph === 'accuracy') {
-        const accuracyTests = filteredResults.filter(r => r.testType === 'full');
-        const accuracyLabels = accuracyTests.map(r => {
-          const date = new Date(r.date).toLocaleDateString(currentLanguage === 'hi' ? 'en-IN' : 'en-US', { month: 'short', day: 'numeric' });
-          return r.time ? `${date} ${r.time}` : date;
-        });
-        
-        datasets = [
-          {
-            label: t('accuracy'),
-            data: accuracyTests.map(r => r.accuracy),
+            label: 'Accuracy',
+            data: percentages,
             borderColor: '#db2777',
             backgroundColor: 'rgba(219, 39, 119, 0.1)',
             tension: 0.3,
-            fill: true,
-            pointRadius: 6,
-            pointBackgroundColor: '#db2777'
+            fill: false,
+            pointRadius: pointRadius,
+            pointBackgroundColor: '#db2777',
+            yAxisID: 'y1'
           }
         ];
-        graphTitle = `${currentCBT === 'cbt1' ? 'CBT-1' : 'CBT-2'} - ${t('accuracyGraph')}`;
+        
+        document.getElementById('fullTestGraphInfo').textContent = 'Shows full test scores and accuracy';
+      } else {
+        const subjectData = filteredResults.map(r => {
+          if (fullTestGraphView === 'math') return r.math;
+          if (fullTestGraphView === 'reasoning') return r.reasoning;
+          if (fullTestGraphView === 'awareness') return r.awareness;
+          return 0;
+        });
+        
+        const colors = {
+          'math': '#4f46e5',
+          'reasoning': '#059669',
+          'awareness': '#d97706'
+        };
+        
+        const labelsText = {
+          'math': 'Mathematics',
+          'reasoning': 'Reasoning',
+          'awareness': 'General Awareness'
+        };
+        
+        datasets = [
+          {
+            label: labelsText[fullTestGraphView],
+            data: subjectData,
+            borderColor: colors[fullTestGraphView],
+            backgroundColor: colors[fullTestGraphView] + '40',
+            tension: 0.3,
+            fill: true,
+            pointRadius: pointRadius,
+            pointBackgroundColor: colors[fullTestGraphView],
+            yAxisID: 'y'
+          }
+        ];
+        
+        document.getElementById('fullTestGraphInfo').textContent = `Shows ${labelsText[fullTestGraphView]} marks from full tests`;
       }
       
-      const chartLabels = currentGraph === 'full' || currentGraph === 'accuracy' ? 
-        filteredResults.filter(r => r.testType === 'full').map(r => {
-          const date = new Date(r.date).toLocaleDateString(currentLanguage === 'hi' ? 'en-IN' : 'en-US', { month: 'short', day: 'numeric' });
-          return r.time ? `${date} ${r.time}` : date;
-        }) : 
-        filteredResults.map(r => {
-          const date = new Date(r.date).toLocaleDateString(currentLanguage === 'hi' ? 'en-IN' : 'en-US', { month: 'short', day: 'numeric' });
-          return r.time ? `${date} ${r.time}` : date;
-        });
-      
-      charts.performance = new Chart(ctx, {
+      charts.fullTest = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: chartLabels,
+          labels: labels,
           datasets: datasets
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
+          interaction: {
+            mode: 'index',
+            intersect: false,
+          },
+          stacked: false,
           plugins: {
             legend: {
               position: 'top',
@@ -3611,7 +3823,7 @@
             },
             title: {
               display: true,
-              text: graphTitle,
+              text: `${currentGraphCBT === 'cbt1' ? 'CBT-1' : 'CBT-2'} - Full Test Performance (${fullTestGraphView === 'total' ? 'Total Marks' : fullTestGraphView.charAt(0).toUpperCase() + fullTestGraphView.slice(1)})`,
               color: 'var(--text)',
               font: {
                 size: 16,
@@ -3626,7 +3838,13 @@
                     label += ': ';
                   }
                   if (context.parsed.y !== null) {
-                    label += currentGraph === 'accuracy' ? context.parsed.y.toFixed(1) + '%' : context.parsed.y;
+                    if (fullTestGraphView === 'total' && context.datasetIndex === 0) {
+                      label += context.parsed.y + ' marks';
+                    } else if (fullTestGraphView === 'total' && context.datasetIndex === 1) {
+                      label += context.parsed.y + '%';
+                    } else {
+                      label += context.parsed.y + ' marks';
+                    }
                   }
                   return label;
                 }
@@ -3647,20 +3865,440 @@
               }
             },
             y: {
-              beginAtZero: true,
+              type: 'linear',
+              display: true,
+              position: 'left',
+              title: {
+                display: true,
+                text: fullTestGraphView === 'total' ? 'Total Marks' : 'Marks',
+                color: 'var(--text)'
+              },
+              ticks: {
+                color: 'var(--text)'
+              },
+              grid: {
+                color: 'var(--border)'
+              }
+            },
+            y1: {
+              type: 'linear',
+              display: fullTestGraphView === 'total',
+              position: 'right',
+              title: {
+                display: true,
+                text: 'Accuracy (%)',
+                color: 'var(--text)'
+              },
+              ticks: {
+                color: 'var(--text)'
+              },
+              grid: {
+                drawOnChartArea: false,
+              },
+            }
+          }
+        }
+      });
+    }
+    
+    function updateSubjectGraph() {
+      const ctx = document.getElementById('subjectChart').getContext('2d');
+      
+      if (charts.subject) {
+        charts.subject.destroy();
+      }
+      
+      // Filter results for selected CBT and SECTIONAL tests only (not full tests)
+      let filteredResults = cbtResults.filter(r => r.cbt === currentGraphCBT && 
+        r.testType === 'sectional' && r.section === selectedSubjectForChart);
+      
+      if (filteredResults.length === 0) {
+        document.getElementById('subjectGraphContainer').style.display = 'none';
+        document.getElementById('subjectNoData').style.display = 'block';
+        return;
+      }
+      
+      document.getElementById('subjectGraphContainer').style.display = 'block';
+      document.getElementById('subjectNoData').style.display = 'none';
+      
+      filteredResults.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+      
+      const subjectData = filteredResults.map(r => r.marks);
+      const labels = filteredResults.map(r => {
+        const date = new Date(r.date);
+        return date.toLocaleDateString('en-US', { 
+          month: 'short', 
+          day: 'numeric' 
+        });
+      });
+      
+      const pointRadius = filteredResults.length === 1 ? 8 : 6;
+      
+      const subjectNames = {
+        'math': 'Mathematics',
+        'reasoning': 'Reasoning',
+        'awareness': 'General Awareness'
+      };
+      
+      const colors = {
+        'math': '#4f46e5',
+        'reasoning': '#059669',
+        'awareness': '#d97706'
+      };
+      
+      charts.subject = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: subjectNames[selectedSubjectForChart] + ' (Sectional)',
+              data: subjectData,
+              backgroundColor: colors[selectedSubjectForChart] + '40',
+              borderColor: colors[selectedSubjectForChart],
+              borderWidth: 2,
+              fill: true,
+              tension: 0.3,
+              pointRadius: pointRadius
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'top',
+              labels: {
+                color: 'var(--text)',
+                font: {
+                  size: 12
+                }
+              }
+            },
+            title: {
+              display: true,
+              text: `${currentGraphCBT === 'cbt1' ? 'CBT-1' : 'CBT-2'} - ${subjectNames[selectedSubjectForChart]} Performance (Sectional Tests Only)`,
+              color: 'var(--text)',
+              font: {
+                size: 16,
+                weight: 'bold'
+              }
+            }
+          },
+          scales: {
+            x: {
               ticks: {
                 color: 'var(--text)',
-                callback: function(value) {
-                  return currentGraph === 'accuracy' ? value + '%' : value;
+                maxRotation: 45,
+                font: {
+                  size: 11
                 }
               },
               grid: {
                 color: 'var(--border)'
               }
+            },
+            y: {
+              beginAtZero: true,
+              ticks: {
+                color: 'var(--text)'
+              },
+              grid: {
+                color: 'var(--border)'
+              },
+              title: {
+                display: true,
+                text: 'Marks',
+                color: 'var(--text)'
+              }
             }
           }
         }
       });
+    }
+    
+    function updateAccuracyGraph() {
+      const ctx = document.getElementById('accuracyChart').getContext('2d');
+      
+      if (charts.accuracy) {
+        charts.accuracy.destroy();
+      }
+      
+      let filteredResults = cbtResults.filter(r => r.cbt === currentGraphCBT && r.testType === 'full');
+      
+      if (filteredResults.length === 0) {
+        document.getElementById('accuracyGraphContainer').style.display = 'none';
+        document.getElementById('accuracyNoData').style.display = 'block';
+        return;
+      }
+      
+      document.getElementById('accuracyGraphContainer').style.display = 'block';
+      document.getElementById('accuracyNoData').style.display = 'none';
+      
+      filteredResults.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+      
+      const labels = filteredResults.map(r => {
+        const date = new Date(r.date);
+        return date.toLocaleDateString('en-US', { 
+          month: 'short', 
+          day: 'numeric' 
+        });
+      });
+      
+      const accuracyData = filteredResults.map(r => r.accuracy || 0);
+      const pointRadius = filteredResults.length === 1 ? 8 : 6;
+      
+      charts.accuracy = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Accuracy',
+              data: accuracyData,
+              borderColor: '#db2777',
+              backgroundColor: 'rgba(219, 39, 119, 0.1)',
+              tension: 0.3,
+              fill: true,
+              pointRadius: pointRadius,
+              pointBackgroundColor: '#db2777'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'top',
+              labels: {
+                color: 'var(--text)',
+                font: {
+                  size: 12
+                }
+              }
+            },
+            title: {
+              display: true,
+              text: `${currentGraphCBT === 'cbt1' ? 'CBT-1' : 'CBT-2'} - Accuracy Analysis`,
+              color: 'var(--text)',
+              font: {
+                size: 16,
+                weight: 'bold'
+              }
+            }
+          },
+          scales: {
+            x: {
+              ticks: {
+                color: 'var(--text)',
+                maxRotation: 45,
+                font: {
+                  size: 11
+                }
+              },
+              grid: {
+                color: 'var(--border)'
+              }
+            },
+            y: {
+              beginAtZero: true,
+              max: 100,
+              ticks: {
+                color: 'var(--text)',
+                callback: function(value) {
+                  return value + '%';
+                }
+              },
+              grid: {
+                color: 'var(--border)'
+              },
+              title: {
+                display: true,
+                text: 'Accuracy (%)',
+                color: 'var(--text)'
+              }
+            }
+          }
+        }
+      });
+    }
+    
+    function updateAverageScores() {
+      const container = document.getElementById('avgScoreContainer');
+      
+      if (cbtResults.length === 0) {
+        container.innerHTML = `
+          <div class="no-data-container" style="width: 100%;">
+            <p style="color: var(--muted); margin: 10px 0;">No test data yet. Add your first test entry.</p>
+          </div>`;
+        return;
+      }
+      
+      let cbt1FullTests = cbtResults.filter(r => r.cbt === 'cbt1' && r.testType === 'full');
+      let cbt2FullTests = cbtResults.filter(r => r.cbt === 'cbt2' && r.testType === 'full');
+      
+      let cbt1MathTests = cbtResults.filter(r => r.cbt === 'cbt1' && r.testType === 'sectional' && r.section === 'math');
+      let cbt2MathTests = cbtResults.filter(r => r.cbt === 'cbt2' && r.testType === 'sectional' && r.section === 'math');
+      
+      let cbt1ReasoningTests = cbtResults.filter(r => r.cbt === 'cbt1' && r.testType === 'sectional' && r.section === 'reasoning');
+      let cbt2ReasoningTests = cbtResults.filter(r => r.cbt === 'cbt2' && r.testType === 'sectional' && r.section === 'reasoning');
+      
+      let cbt1AwarenessTests = cbtResults.filter(r => r.cbt === 'cbt1' && r.testType === 'sectional' && r.section === 'awareness');
+      let cbt2AwarenessTests = cbtResults.filter(r => r.cbt === 'cbt2' && r.testType === 'sectional' && r.section === 'awareness');
+      
+      function calculateAverage(tests, type) {
+        if (tests.length === 0) return 0;
+        
+        let total = 0;
+        tests.forEach(test => {
+          if (type === 'full') {
+            total += test.total;
+          } else {
+            total += test.marks;
+          }
+        });
+        
+        return (total / tests.length).toFixed(1);
+      }
+      
+      const cbt1FullAvg = calculateAverage(cbt1FullTests, 'full');
+      const cbt2FullAvg = calculateAverage(cbt2FullTests, 'full');
+      const cbt1MathAvg = calculateAverage(cbt1MathTests, 'math');
+      const cbt2MathAvg = calculateAverage(cbt2MathTests, 'math');
+      const cbt1ReasoningAvg = calculateAverage(cbt1ReasoningTests, 'reasoning');
+      const cbt2ReasoningAvg = calculateAverage(cbt2ReasoningTests, 'reasoning');
+      const cbt1AwarenessAvg = calculateAverage(cbt1AwarenessTests, 'awareness');
+      const cbt2AwarenessAvg = calculateAverage(cbt2AwarenessTests, 'awareness');
+      
+      container.innerHTML = `
+        <div class="avg-score-card">
+          <div class="avg-score-label">CBT-1 Full Tests</div>
+          <div class="avg-score-value">${cbt1FullAvg > 0 ? cbt1FullAvg : '--'}</div>
+          <div class="avg-score-label">${cbt1FullTests.length} tests</div>
+        </div>
+        <div class="avg-score-card">
+          <div class="avg-score-label">CBT-2 Full Tests</div>
+          <div class="avg-score-value">${cbt2FullAvg > 0 ? cbt2FullAvg : '--'}</div>
+          <div class="avg-score-label">${cbt2FullTests.length} tests</div>
+        </div>
+        <div class="avg-score-card">
+          <div class="avg-score-label">CBT-1 Math Tests</div>
+          <div class="avg-score-value">${cbt1MathAvg > 0 ? cbt1MathAvg : '--'}</div>
+          <div class="avg-score-label">${cbt1MathTests.length} tests</div>
+        </div>
+        <div class="avg-score-card">
+          <div class="avg-score-label">CBT-2 Math Tests</div>
+          <div class="avg-score-value">${cbt2MathAvg > 0 ? cbt2MathAvg : '--'}</div>
+          <div class="avg-score-label">${cbt2MathTests.length} tests</div>
+        </div>
+        <div class="avg-score-card">
+          <div class="avg-score-label">CBT-1 Reasoning Tests</div>
+          <div class="avg-score-value">${cbt1ReasoningAvg > 0 ? cbt1ReasoningAvg : '--'}</div>
+          <div class="avg-score-label">${cbt1ReasoningTests.length} tests</div>
+        </div>
+        <div class="avg-score-card">
+          <div class="avg-score-label">CBT-2 Reasoning Tests</div>
+          <div class="avg-score-value">${cbt2ReasoningAvg > 0 ? cbt2ReasoningAvg : '--'}</div>
+          <div class="avg-score-label">${cbt2ReasoningTests.length} tests</div>
+        </div>
+        <div class="avg-score-card">
+          <div class="avg-score-label">CBT-1 Awareness Tests</div>
+          <div class="avg-score-value">${cbt1AwarenessAvg > 0 ? cbt1AwarenessAvg : '--'}</div>
+          <div class="avg-score-label">${cbt1AwarenessTests.length} tests</div>
+        </div>
+        <div class="avg-score-card">
+          <div class="avg-score-label">CBT-2 Awareness Tests</div>
+          <div class="avg-score-value">${cbt2AwarenessAvg > 0 ? cbt2AwarenessAvg : '--'}</div>
+          <div class="avg-score-label">${cbt2AwarenessTests.length} tests</div>
+        </div>
+      `;
+    }
+    
+    function showTestHistory() {
+      const tableBody = document.getElementById('historyTableBody');
+      tableBody.innerHTML = '';
+      
+      const sortedResults = [...cbtResults].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+      const recentTests = sortedResults.slice(0, 30);
+      
+      if (recentTests.length === 0) {
+        tableBody.innerHTML = `
+          <tr>
+            <td colspan="8" style="text-align: center; padding: 30px; color: var(--muted);">
+              No test data yet. Add your first test entry.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+      
+      recentTests.forEach(test => {
+        const row = document.createElement('tr');
+        row.className = 'history-item';
+        
+        const date = new Date(test.date);
+        const formattedDate = date.toLocaleDateString();
+        const time = test.time || '';
+        
+        let typeText = '';
+        let mathText = '', reasoningText = '', awarenessText = '';
+        
+        if (test.testType === 'full') {
+          typeText = 'Full Test';
+          mathText = `${test.math}/${test.maxMath}`;
+          reasoningText = `${test.reasoning}/${test.maxReasoning}`;
+          awarenessText = `${test.awareness}/${test.maxAwareness}`;
+        } else {
+          const sectionNames = {
+            'math': 'Mathematics',
+            'reasoning': 'Reasoning',
+            'awareness': 'General Awareness'
+          };
+          typeText = sectionNames[test.section] || test.section;
+          if (test.section === 'math') mathText = `${test.marks}/${test.maxMarks}`;
+          else if (test.section === 'reasoning') reasoningText = `${test.marks}/${test.maxMarks}`;
+          else if (test.section === 'awareness') awarenessText = `${test.marks}/${test.maxMarks}`;
+        }
+        
+        row.innerHTML = `
+          <td>${test.name}</td>
+          <td>${typeText}</td>
+          <td>${test.cbt === 'cbt1' ? 'CBT-1' : 'CBT-2'}</td>
+          <td>${formattedDate} ${time ? `(${time})` : ''}</td>
+          <td><strong>${test.testType === 'full' ? `${test.total}/${test.maxTotal}` : ''}</strong></td>
+          <td>${mathText}</td>
+          <td>${reasoningText}</td>
+          <td>${awarenessText}</td>
+        `;
+        
+        row.addEventListener('click', () => {
+          let details = `${test.name}\n`;
+          details += `Date: ${formattedDate} ${time ? `(${time})` : ''}\n`;
+          details += `Type: ${typeText}\n`;
+          details += `CBT: ${test.cbt === 'cbt1' ? 'CBT-1' : 'CBT-2'}\n`;
+          
+          if (test.testType === 'full') {
+            details += `\nMathematics: ${test.math}/${test.maxMath}\n`;
+            details += `Reasoning: ${test.reasoning}/${test.maxReasoning}\n`;
+            details += `General Awareness: ${test.awareness}/${test.maxAwareness}\n`;
+            details += `Total Marks: ${test.total}/${test.maxTotal}\n`;
+            if (test.accuracy) {
+              details += `Accuracy: ${test.accuracy}%`;
+            }
+          } else {
+            details += `\nMarks: ${test.marks}/${test.maxMarks}\n`;
+            details += `Percentage: ${((test.marks / test.maxMarks) * 100).toFixed(1)}%`;
+          }
+          
+          alert(details);
+        });
+        
+        tableBody.appendChild(row);
+      });
+      
+      document.getElementById('historyModal').classList.add('active');
     }
     
     function logStudyActivity(topicId) {
@@ -3748,8 +4386,14 @@
           });
           document.getElementById(`${tabId}-tab`).classList.add('active');
           
-          // Scroll to top when switching tabs
           window.scrollTo(0, 0);
+          
+          if (tabId === 'mock-analysis') {
+            setTimeout(() => {
+              updateAllGraphs();
+              updateAverageScores();
+            }, 100);
+          }
         });
       });
       
@@ -3784,7 +4428,6 @@
           this.classList.add('active');
           currentCBT = this.dataset.cbt;
           updateCBTForm();
-          updatePerformanceChart();
         });
       });
       
@@ -3798,17 +4441,49 @@
         });
       });
       
-      // Graph buttons in CBT analysis
-      document.querySelectorAll('.graph-btn[data-graph]').forEach(btn => {
+      // Graph CBT Toggles
+      document.querySelectorAll('.graph-cbt-btn').forEach(btn => {
         btn.addEventListener('click', function() {
-          document.querySelectorAll('.graph-btn[data-graph]').forEach(b => b.classList.remove('active'));
-          this.classList.add('active');
-          currentGraph = this.dataset.graph;
-          updatePerformanceChart();
+          const cbt = this.dataset.cbt;
+          
+          document.querySelectorAll('.graph-cbt-toggle .graph-cbt-btn').forEach(b => {
+            b.classList.remove('active');
+            if (b.dataset.cbt === cbt) {
+              b.classList.add('active');
+            }
+          });
+          
+          currentGraphCBT = cbt;
+          updateAllGraphs();
+          updateAverageScores();
         });
       });
       
-      // CBT form submission - FIXED
+      // Subject graph buttons
+      document.querySelectorAll('.performance-subject-btn[data-subject]').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.performance-subject-btn[data-subject]').forEach(b => {
+            b.classList.remove('active');
+          });
+          this.classList.add('active');
+          selectedSubjectForChart = this.dataset.subject;
+          updateSubjectGraph();
+        });
+      });
+      
+      // Full Test Toggle buttons
+      document.querySelectorAll('.full-test-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.full-test-btn').forEach(b => {
+            b.classList.remove('active');
+          });
+          this.classList.add('active');
+          fullTestGraphView = this.dataset.view;
+          updateFullTestGraph();
+        });
+      });
+      
+      // CBT form submission
       document.getElementById('cbtForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -3824,6 +4499,24 @@
           const awareness = parseInt(document.getElementById('awarenessMarks').value) || 0;
           const accuracy = parseFloat(document.getElementById('accuracy').value) || 0;
           const total = math + reasoning + awareness;
+          
+          if (total === 0) {
+            alert('Total marks cannot be 0. Please enter some marks.');
+            return;
+          }
+          
+          if (math < 0 || math > config.sections.math.maxMarks) {
+            alert(`Mathematics marks must be between 0 and ${config.sections.math.maxMarks}`);
+            return;
+          }
+          if (reasoning < 0 || reasoning > config.sections.reasoning.maxMarks) {
+            alert(`Reasoning marks must be between 0 and ${config.sections.reasoning.maxMarks}`);
+            return;
+          }
+          if (awareness < 0 || awareness > config.sections.awareness.maxMarks) {
+            alert(`General Awareness marks must be between 0 and ${config.sections.awareness.maxMarks}`);
+            return;
+          }
           
           testData = {
             name: document.getElementById('testName').value,
@@ -3844,6 +4537,16 @@
           };
         } else {
           const marks = parseInt(document.getElementById('sectionalMarks').value) || 0;
+          if (marks === 0) {
+            alert('Marks cannot be 0. Please enter some marks.');
+            return;
+          }
+          
+          if (marks < 0 || marks > config.sections[currentTestType].maxMarks) {
+            alert(`Marks must be between 0 and ${config.sections[currentTestType].maxMarks}`);
+            return;
+          }
+          
           testData = {
             name: document.getElementById('testName').value,
             date: document.getElementById('testDate').value,
@@ -3861,12 +4564,16 @@
         localStorage.setItem(STORAGE_KEYS.CBT_RESULTS, JSON.stringify(cbtResults));
         
         this.reset();
-        document.getElementById('testDate').valueAsDate = new Date();
+        const today = new Date();
+        const formattedDate = today.toISOString().split('T')[0];
+        document.getElementById('testDate').value = formattedDate;
         updateCBTForm();
         
         loadCBTResults();
+        updateAllGraphs();
+        updateAverageScores();
         
-        alert(currentLanguage === 'hi' ? 'टेस्ट डेटा सफलतापूर्वक सहेजा गया! ग्राफ अपडेट हो गए हैं।' : 'Test data saved successfully! Graphs have been updated.');
+        alert('Test data saved successfully! Graphs have been updated.');
       });
       
       // Control buttons
@@ -3875,7 +4582,7 @@
           const topicsEl = document.getElementById(`topics_${subject.id}`);
           topicsEl.style.display = '';
           const btn = document.querySelector(`.toggle-btn[data-toggle="${subject.id}"]`);
-          if (btn) btn.innerHTML = '<i class="fas fa-chevron-down"></i>' + t('collapseAll');
+          if (btn) btn.innerHTML = '<i class="fas fa-chevron-down"></i> Collapse';
           
           savedUIState[subject.id] = { collapsed: false };
         });
@@ -3887,11 +4594,17 @@
           const topicsEl = document.getElementById(`topics_${subject.id}`);
           topicsEl.style.display = 'none';
           const btn = document.querySelector(`.toggle-btn[data-toggle="${subject.id}"]`);
-          if (btn) btn.innerHTML = '<i class="fas fa-chevron-right"></i>' + t('expandAll');
+          if (btn) btn.innerHTML = '<i class="fas fa-chevron-right"></i> Expand';
           
           savedUIState[subject.id] = { collapsed: true };
         });
         saveUIState();
+      });
+      
+      // History button
+      document.getElementById('showHistoryBtn').addEventListener('click', showTestHistory);
+      document.getElementById('closeHistory').addEventListener('click', () => {
+        document.getElementById('historyModal').classList.remove('active');
       });
       
       // Reset button
@@ -3907,7 +4620,7 @@
       
       document.getElementById('resetConfirmInput').addEventListener('input', function() {
         document.getElementById('resetConfirm').disabled = 
-          this.value !== t('resetConfirm');
+          this.value !== "RESET MY PROGRESS";
       });
       
       document.getElementById('resetConfirm').addEventListener('click', () => {
@@ -3925,12 +4638,14 @@
         
         updateProgress();
         loadCBTResults();
+        updateAllGraphs();
+        updateAverageScores();
         
         document.getElementById('resetModal').classList.remove('active');
         document.getElementById('resetConfirmInput').value = '';
         document.getElementById('resetConfirm').disabled = true;
         
-        alert(currentLanguage === 'hi' ? 'सभी डेटा रीसेट कर दिया गया है!' : 'All data has been reset!');
+        alert('All data has been reset!');
       });
       
       // Export/Import buttons
@@ -3973,7 +4688,7 @@
       });
       
       setTimeout(() => {
-        if (charts.performance) updatePerformanceChart();
+        updateAllGraphs();
         if (selectedSubjectForGraph) {
           updateSubjectDonutChart(selectedSubjectForGraph);
         }
@@ -4004,28 +4719,20 @@
         startBtn.innerHTML = `<i class="fas fa-rocket"></i> ${studentName ? t('continue') : t('getStarted')}`;
       }
       
-      const welcomeTitle = document.querySelector('.welcome-content h1');
-      const welcomeSubtitle = document.querySelector('.welcome-content p');
-      if (welcomeTitle) welcomeTitle.textContent = t('welcomeTitle');
-      if (welcomeSubtitle) welcomeSubtitle.textContent = t('welcomeSubtitle');
-      
       updateGreeting();
       
-      // Update bottom navigation tabs
-      document.querySelectorAll('.nav-tab-btn').forEach(btn => {
-        const tab = btn.dataset.tab;
-        if (tab === 'syllabus') {
-          btn.innerHTML = `<i class="fas fa-book-open"></i> <span>${t('syllabusTracker')}</span>`;
-        } else if (tab === 'mock-analysis') {
-          btn.innerHTML = `<i class="fas fa-chart-line"></i> <span>${t('mockAnalysis')}</span>`;
-        }
-      });
-      
-      // Update card titles
       document.querySelectorAll('.card h2').forEach(card => {
         if (card.innerHTML.includes('Subjects and Topics')) {
           const progressSpan = document.getElementById('totalProgress');
-          card.innerHTML = `<i class="fas fa-graduation-cap"></i> ${t('subjects')} <span id="totalProgress">${progressSpan ? progressSpan.textContent : '(0% Complete)'}</span>`;
+          card.innerHTML = `<i class="fas fa-graduation-cap"></i> ${t('subjects')} <span id="totalProgress">${progressSpan ? progressSpan.textContent : '(0% Complete)'}</span>
+            <div class="subject-controls">
+              <button id="expandAll">
+                <i class="fas fa-expand-alt"></i> ${t('expandAll')}
+              </button>
+              <button id="collapseAll">
+                <i class="fas fa-compress-alt"></i> ${t('collapseAll')}
+              </button>
+            </div>`;
         } else if (card.innerHTML.includes('Progress Overview')) {
           card.innerHTML = `<i class="fas fa-chart-pie"></i> ${t('progressOverview')}`;
         } else if (card.innerHTML.includes('Mock Test Analysis')) {
@@ -4033,13 +4740,49 @@
         }
       });
       
-      // Update all other texts as before...
-      // (Previous updateAllTexts function content remains similar but updated for new elements)
+      const formLabels = {
+        'testName': t('testName'),
+        'testDate': t('date'),
+        'mathMarks': t('mathMarks'),
+        'reasoningMarks': t('reasoningMarks'),
+        'awarenessMarks': t('awarenessMarks'),
+        'accuracy': t('accuracy'),
+        'totalMarks': t('totalMarks')
+      };
+      
+      Object.keys(formLabels).forEach(id => {
+        const label = document.querySelector(`label[for="${id}"]`);
+        if (label) {
+          label.textContent = formLabels[id];
+        }
+      });
+      
+      const saveButton = document.querySelector('#cbtForm button[type="submit"]');
+      if (saveButton) {
+        saveButton.innerHTML = `<i class="fas fa-save"></i> ${t('save')}`;
+      }
+      
+      const historyButton = document.getElementById('showHistoryBtn');
+      if (historyButton) {
+        historyButton.innerHTML = `<i class="fas fa-history"></i> ${t('viewHistory')}`;
+      }
+      
+      const historyTitle = document.querySelector('#historyModal h2');
+      if (historyTitle) {
+        historyTitle.innerHTML = `<i class="fas fa-history"></i> ${t('testHistory')}`;
+      }
+      
+      const expandBtn = document.getElementById('expandAll');
+      const collapseBtn = document.getElementById('collapseAll');
+      if (expandBtn) expandBtn.innerHTML = `<i class="fas fa-expand-alt"></i> ${t('expandAll')}`;
+      if (collapseBtn) collapseBtn.innerHTML = `<i class="fas fa-compress-alt"></i> ${t('collapseAll')}`;
       
       renderSubjects();
       updateProgress();
       loadCBTResults();
       initializeSubjectSelector();
+      updateAllGraphs();
+      updateAverageScores();
       
       if (selectedSubjectForGraph) {
         updateSubjectDonutChart(selectedSubjectForGraph);
@@ -4123,7 +4866,7 @@
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
       
-      alert(currentLanguage === 'hi' ? 'बैकअप सफलतापूर्वक निर्यात किया गया!' : 'Backup exported successfully!');
+      alert('Backup exported successfully!');
     }
     
     function importBackup(event) {
@@ -4180,10 +4923,12 @@
           updateProgress();
           loadCBTResults();
           initializeSubjectSelector();
+          updateAllGraphs();
+          updateAverageScores();
           
-          alert(currentLanguage === 'hi' ? 'बैकअप सफलतापूर्वक आयात किया गया!' : 'Backup imported successfully!');
+          alert('Backup imported successfully!');
         } catch (error) {
-          alert(currentLanguage === 'hi' ? 'अमान्य बैकअप फ़ाइल। कृपया एक वैध बैकअप फ़ाइल चुनें।' : 'Invalid backup file. Please choose a valid backup file.');
+          alert('Invalid backup file. Please choose a valid backup file.');
           console.error('Import error:', error);
         }
       };
@@ -4196,14 +4941,11 @@
     async function shareProgress() {
       try {
         const overallProgress = calculateOverallProgress();
-        const studentName = localStorage.getItem(STORAGE_KEYS.STUDENT_NAME) || t('Student');
-        const aboutText = currentLanguage === 'hi' ? 
-          `मैं NTPC PRO ऐप का उपयोग करके अपनी RRB NTPC परीक्षा की तैयारी कर रहा हूँ। मैंने पाठ्यक्रम का ${Math.round(overallProgress)}% पूरा कर लिया है।` :
-          `I'm preparing for RRB NTPC exam using NTPC PRO app. I've completed ${Math.round(overallProgress)}% of the syllabus.`;
+        const studentName = localStorage.getItem(STORAGE_KEYS.STUDENT_NAME) || "Student";
         
         const shareText = currentLanguage === 'hi' ? 
-          `${studentName} की RRB NTPC तैयारी की प्रगति देखें!\n\n${aboutText}\n\nअपनी तैयारी ट्रैक करें: https://skpro7.github.io/ntpc/\n\n#NTPCPRO #RRBNTPC #ExamPreparation` :
-          `Check out ${studentName}'s RRB NTPC preparation progress!\n\n${aboutText}\n\nTrack your preparation at: https://skpro7.github.io/ntpc/\n\n#NTPCPRO #RRBNTPC #ExamPreparation`;
+          `📊 मेरी NTPC PRO प्रगति: ${Math.round(overallProgress)}% पूर्ण\n👤 छात्र: ${studentName}\n📅 तारीख: ${new Date().toLocaleDateString('hi-IN')}\n🚀 अपनी तैयारी ट्रैक करें: https://skpro7.github.io/ntpc/\n\n#NTPCPRO #RRBNTPC #ExamPreparation` :
+          `📊 My NTPC PRO Progress: ${Math.round(overallProgress)}% Complete\n👤 Student: ${studentName}\n📅 Date: ${new Date().toLocaleDateString('en-US')}\n🚀 Track your preparation: https://skpro7.github.io/ntpc/\n\n#NTPCPRO #RRBNTPC #ExamPreparation`;
         
         if (navigator.share) {
           await navigator.share({
@@ -4213,8 +4955,8 @@
         } else {
           await navigator.clipboard.writeText(shareText);
           alert(currentLanguage === 'hi' ? 
-            'प्रगति पाठ क्लिपबोर्ड पर कॉपी किया गया! आप अब इसे कहीं भी साझा कर सकते हैं।' : 
-            'Progress text copied to clipboard! You can now share it anywhere.');
+            'प्रगति पाठ क्लिपबोर्ड पर कॉपी किया गया! आप अब इसे साझा कर सकते हैं।' : 
+            'Progress text copied to clipboard! You can now share it.');
         }
       } catch (error) {
         console.error('Error sharing progress:', error);
@@ -4224,12 +4966,12 @@
     async function shareWebsite() {
       try {
         const shareText = currentLanguage === 'hi' ? 
-          'आरआरबी एनटीपीसी परीक्षा की तैयारी के लिए NTPC PRO ऐप का उपयोग करें! अपनी प्रगति ट्रैक करें और अपने प्रदर्शन में सुधार करें: https://skpro7.github.io/ntpc/' :
-          'Use NTPC PRO app for RRB NTPC exam preparation! Track your progress and improve your performance: https://skpro7.github.io/ntpc/';
+          '🚀 आरआरबी एनटीपीसी परीक्षा की तैयारी के लिए NTPC PRO ऐप का उपयोग करें!\n\n📊 अपनी प्रगति ट्रैक करें और अपने प्रदर्शन में सुधार करें।\n\n🔗 लिंक: https://skpro7.github.io/ntpc/\n\n#NTPCPRO #RRBNTPC #ExamPreparation 💪' :
+          '🚀 Use NTPC PRO app for RRB NTPC exam preparation!\n\n📊 Track your progress and improve your performance.\n\n🔗 Link: https://skpro7.github.io/ntpc/\n\n#NTPCPRO #RRBNTPC #ExamPreparation 💪';
         
         if (navigator.share) {
           await navigator.share({
-            title: 'NTPC PRO',
+            title: 'NTPC PRO - RRB NTPC Preparation',
             text: shareText
           });
         } else {
