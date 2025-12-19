@@ -309,6 +309,8 @@
       width: 80%;
       max-width: 300px;
       text-align: center;
+      position: relative;
+      overflow: hidden;
     }
     
     .welcome-btn:hover {
@@ -340,16 +342,15 @@
       position: absolute;
       top: -50%;
       left: -60%;
-      width: 50%;
+      width: 40%;
       height: 200%;
-      background: rgba(255, 255, 255, 0.3);
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
       transform: rotate(30deg);
-      transition: all 0.6s ease;
+      transition: all 0.8s ease;
     }
     
     .btn-shine:hover::after {
       left: 120%;
-      transition: all 0.6s ease;
     }
     
     .btn-shine:hover {
@@ -457,12 +458,30 @@
       cursor: pointer;
       transition: all 0.3s ease;
       font-size: 1.2rem;
+      position: relative;
+      overflow: hidden;
     }
     
     .nav-btn:hover {
       background: var(--accent);
       transform: translateY(-3px);
       box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    
+    .nav-btn::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 30%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transform: rotate(30deg);
+      transition: all 0.8s ease;
+    }
+    
+    .nav-btn:hover::after {
+      left: 120%;
     }
     
     /* ===== Bottom Navigation Bar ===== */
@@ -507,6 +526,8 @@
       gap: 8px;
       font-size: 0.85rem;
       height: 45px;
+      position: relative;
+      overflow: hidden;
     }
     
     .nav-tab-btn.active {
@@ -519,6 +540,22 @@
     .nav-tab-btn:hover:not(.active) {
       background: rgba(255,255,255,0.1);
       transform: translateY(-2px);
+    }
+    
+    .nav-tab-btn::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 30%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transform: rotate(30deg);
+      transition: all 0.8s ease;
+    }
+    
+    .nav-tab-btn:hover::after {
+      left: 120%;
     }
     
     /* ===== Drawer Menu ===== */
@@ -629,11 +666,29 @@
       cursor: pointer;
       transition: all 0.3s ease;
       font-weight: 600;
+      position: relative;
+      overflow: hidden;
     }
     
     .theme-btn.active {
       border-color: var(--accent);
       box-shadow: 0 5px 15px rgba(79, 70, 229, 0.3);
+    }
+    
+    .theme-btn::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 30%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transform: rotate(30deg);
+      transition: all 0.8s ease;
+    }
+    
+    .theme-btn:hover::after {
+      left: 120%;
     }
     
     /* Language Toggle */
@@ -655,11 +710,29 @@
       transition: all 0.3s ease;
       font-weight: 700;
       font-size: 0.95rem;
+      position: relative;
+      overflow: hidden;
     }
     
     .lang-btn.active {
       background: var(--accent);
       color: white;
+    }
+    
+    .lang-btn::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 30%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transform: rotate(30deg);
+      transition: all 0.8s ease;
+    }
+    
+    .lang-btn:hover::after {
+      left: 120%;
     }
     
     .social-links {
@@ -678,6 +751,8 @@
       text-decoration: none;
       color: var(--text);
       transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
     
     .social-link:hover {
@@ -709,11 +784,29 @@
       display: flex;
       align-items: center;
       gap: 12px;
+      position: relative;
+      overflow: hidden;
     }
     
     .drawer-btn:hover {
       background: var(--accent);
       transform: translateX(5px);
+    }
+    
+    .drawer-btn::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 30%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transform: rotate(30deg);
+      transition: all 0.8s ease;
+    }
+    
+    .drawer-btn:hover::after {
+      left: 120%;
     }
     
     .drawer-btn.danger {
@@ -826,11 +919,29 @@
       align-items: center;
       gap: 4px;
       white-space: nowrap;
+      position: relative;
+      overflow: hidden;
     }
     
     .subject-controls button:hover {
       background: var(--accent);
       color: white;
+    }
+    
+    .subject-controls button::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 30%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transform: rotate(30deg);
+      transition: all 0.8s ease;
+    }
+    
+    .subject-controls button:hover::after {
+      left: 120%;
     }
     
     /* ===== Subjects List ===== */
@@ -842,14 +953,16 @@
       background: linear-gradient(180deg, rgba(255,255,255,0.05), transparent);
     }
     
+    /* FIXED: Mobile layout for subject header */
     .subject-header {
       display: flex;
       align-items: center;
-      justify-content: space-between;
       padding: 16px 18px;
       background: var(--pill);
       cursor: pointer;
       transition: background 0.3s ease;
+      flex-wrap: wrap;
+      gap: 10px;
     }
     
     .subject-header:hover {
@@ -860,6 +973,8 @@
       display: flex;
       gap: 12px;
       align-items: center;
+      flex: 1;
+      min-width: 200px;
     }
     
     .badge {
@@ -884,15 +999,27 @@
     .badge.science { background: #f97316; }
     .badge.computer { background: #8b5cf6; }
     
+    /* NEW: Mobile-friendly progress section */
+    .subject-progress-mobile {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      width: 100%;
+      margin-top: 10px;
+      justify-content: space-between;
+    }
+    
     .progress-wrap {
       display: flex;
       gap: 15px;
       align-items: center;
+      flex: 1;
     }
     
     .progress-bar {
       height: 12px;
-      width: 150px;
+      flex: 1;
+      max-width: 150px;
       background: rgba(0,0,0,0.1);
       border: 1px solid var(--border);
       border-radius: 10px;
@@ -928,11 +1055,29 @@
       align-items: center;
       gap: 6px;
       transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
     
     .toggle-btn:hover {
       background: var(--accent);
       color: white;
+    }
+    
+    .toggle-btn::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 30%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transform: rotate(30deg);
+      transition: all 0.8s ease;
+    }
+    
+    .toggle-btn:hover::after {
+      left: 120%;
     }
     
     /* ===== FIXED TOPICS CONTAINER ===== */
@@ -1162,6 +1307,22 @@
       box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
     }
     
+    .subject-selector-btn::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 30%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transform: rotate(30deg);
+      transition: all 0.8s ease;
+    }
+    
+    .subject-selector-btn:hover::after {
+      left: 120%;
+    }
+    
     /* ===== Circular Subject Charts ===== */
     .subject-chart-container {
       display: flex;
@@ -1236,12 +1397,30 @@
       justify-content: center;
       gap: 10px;
       font-size: 0.9rem;
+      position: relative;
+      overflow: hidden;
     }
     
     .cbt-type-btn.active {
       background: var(--accent);
       border-color: var(--accent);
       color: white;
+    }
+    
+    .cbt-type-btn::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 30%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transform: rotate(30deg);
+      transition: all 0.8s ease;
+    }
+    
+    .cbt-type-btn:hover::after {
+      left: 120%;
     }
     
     .test-type-selection {
@@ -1265,12 +1444,30 @@
       align-items: center;
       gap: 8px;
       font-size: 0.9rem;
+      position: relative;
+      overflow: hidden;
     }
     
     .test-type-btn.active {
       background: var(--accent-3);
       border-color: var(--accent-3);
       color: white;
+    }
+    
+    .test-type-btn::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 30%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transform: rotate(30deg);
+      transition: all 0.8s ease;
+    }
+    
+    .test-type-btn:hover::after {
+      left: 120%;
     }
     
     .cbt-form {
@@ -1416,10 +1613,28 @@
       transition: transform 0.3s ease;
       display: block;
       margin: 20px auto 0;
+      position: relative;
+      overflow: hidden;
     }
     
     .close-history:hover {
       transform: translateY(-3px);
+    }
+    
+    .close-history::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 30%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transform: rotate(30deg);
+      transition: all 0.8s ease;
+    }
+    
+    .close-history:hover::after {
+      left: 120%;
     }
     
     /* ===== Congratulations Modal ===== */
@@ -1527,10 +1742,28 @@
       transition: transform 0.3s ease;
       display: inline-block;
       margin-left: auto;
+      position: relative;
+      overflow: hidden;
     }
     
     .close-congrats:hover {
       transform: translateY(-3px);
+    }
+    
+    .close-congrats::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 30%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transform: rotate(30deg);
+      transition: all 0.8s ease;
+    }
+    
+    .close-congrats:hover::after {
+      left: 120%;
     }
     
     /* ===== BIG Subject Completion Modal ===== */
@@ -1644,11 +1877,29 @@
       box-shadow: 0 15px 30px rgba(0,0,0,0.3);
       display: inline-block;
       margin-left: auto;
+      position: relative;
+      overflow: hidden;
     }
     
     .close-subject-congrats:hover {
       transform: translateY(-5px) scale(1.05);
       box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+    }
+    
+    .close-subject-congrats::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 30%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transform: rotate(30deg);
+      transition: all 0.8s ease;
+    }
+    
+    .close-subject-congrats:hover::after {
+      left: 120%;
     }
     
     /* ===== Graph Controls ===== */
@@ -1673,12 +1924,30 @@
       align-items: center;
       gap: 8px;
       font-size: 0.9rem;
+      position: relative;
+      overflow: hidden;
     }
     
     .graph-btn.active {
       background: var(--accent);
       border-color: var(--accent);
       color: white;
+    }
+    
+    .graph-btn::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 30%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transform: rotate(30deg);
+      transition: all 0.8s ease;
+    }
+    
+    .graph-btn:hover::after {
+      left: 120%;
     }
     
     /* ===== CBT Toggle for Graphs ===== */
@@ -1707,11 +1976,29 @@
       justify-content: center;
       gap: 8px;
       font-size: 0.9rem;
+      position: relative;
+      overflow: hidden;
     }
     
     .graph-cbt-btn.active {
       background: var(--accent);
       color: white;
+    }
+    
+    .graph-cbt-btn::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 30%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transform: rotate(30deg);
+      transition: all 0.8s ease;
+    }
+    
+    .graph-cbt-btn:hover::after {
+      left: 120%;
     }
     
     .graph-info {
@@ -1818,6 +2105,8 @@
       align-items: center;
       gap: 8px;
       font-size: 0.9rem;
+      position: relative;
+      overflow: hidden;
     }
     
     .performance-subject-btn.active {
@@ -1826,6 +2115,22 @@
       color: white;
       transform: translateY(-3px);
       box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
+    }
+    
+    .performance-subject-btn::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 30%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transform: rotate(30deg);
+      transition: all 0.8s ease;
+    }
+    
+    .performance-subject-btn:hover::after {
+      left: 120%;
     }
     
     /* ===== BIGGER No Data Image ===== */
@@ -1875,11 +2180,29 @@
       justify-content: center;
       gap: 8px;
       font-size: 0.9rem;
+      position: relative;
+      overflow: hidden;
     }
     
     .view-btn.active {
       background: var(--accent);
       color: white;
+    }
+    
+    .view-btn::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 30%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transform: rotate(30deg);
+      transition: all 0.8s ease;
+    }
+    
+    .view-btn:hover::after {
+      left: 120%;
     }
     
     /* Settings buttons */
@@ -1898,11 +2221,29 @@
       align-items: center;
       justify-content: space-between;
       margin-bottom: 10px;
+      position: relative;
+      overflow: hidden;
     }
     
     .settings-btn:hover {
       background: var(--accent);
       transform: translateX(5px);
+    }
+    
+    .settings-btn::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 30%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transform: rotate(30deg);
+      transition: all 0.8s ease;
+    }
+    
+    .settings-btn:hover::after {
+      left: 120%;
     }
     
     .settings-content {
@@ -1983,11 +2324,29 @@
       gap: 8px;
       margin: 20px auto;
       transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
     
     .history-btn:hover {
       background: var(--accent-3);
       transform: translateY(-3px);
+    }
+    
+    .history-btn::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 30%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transform: rotate(30deg);
+      transition: all 0.8s ease;
+    }
+    
+    .history-btn:hover::after {
+      left: 120%;
     }
     
     /* NEW: Mock Test History Item */
@@ -2032,6 +2391,8 @@
       justify-content: center;
       gap: 8px;
       font-size: 0.85rem;
+      position: relative;
+      overflow: hidden;
     }
     
     .full-test-btn.active {
@@ -2039,9 +2400,150 @@
       color: white;
     }
     
-    /* Progress Image Modal (removed) */
-    .progress-image-modal {
-      display: none !important;
+    .full-test-btn::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 30%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transform: rotate(30deg);
+      transition: all 0.8s ease;
+    }
+    
+    .full-test-btn:hover::after {
+      left: 120%;
+    }
+    
+    /* Test Data Saved Congratulations Modal */
+    .test-congrats-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.85);
+      z-index: 2500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+    
+    .test-congrats-modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .test-congrats-content {
+      background: var(--gradient-card);
+      border-radius: 30px;
+      padding: 50px 40px;
+      text-align: center;
+      max-width: 600px;
+      width: 90%;
+      border: 3px solid var(--border);
+      box-shadow: 0 40px 80px rgba(0,0,0,0.7);
+      position: relative;
+      overflow: hidden;
+      animation: zoomIn 0.5s ease-out;
+    }
+    
+    .test-congrats-content::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 8px;
+      background: var(--gradient);
+    }
+    
+    .test-congrats-image {
+      width: 300px;
+      height: 200px;
+      margin: 0 auto 30px;
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 3px solid var(--accent);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+    
+    .test-congrats-image img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      animation: bounce 2s infinite alternate;
+    }
+    
+    .test-congrats-content h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    .test-congrats-content p {
+      color: var(--muted);
+      font-size: 1.3rem;
+      margin-bottom: 30px;
+      line-height: 1.6;
+      padding: 0 20px;
+    }
+    
+    .test-congrats-content .button-container {
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+      margin-top: 20px;
+    }
+    
+    .close-test-congrats {
+      padding: 15px 40px;
+      background: var(--gradient);
+      border: none;
+      border-radius: 16px;
+      color: white;
+      font-weight: 800;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+      display: inline-block;
+      margin-left: auto;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .close-test-congrats:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+    }
+    
+    .close-test-congrats::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 30%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transform: rotate(30deg);
+      transition: all 0.8s ease;
+    }
+    
+    .close-test-congrats:hover::after {
+      left: 120%;
     }
     
     /* Responsive adjustments */
@@ -2068,15 +2570,10 @@
         gap: 20px;
       }
       
-      /* Drawer को mobile पर 75% width दी */
+      /* Drawer को mobile पर 85% width दी */
       .drawer {
-        width: 75%;
-        max-width: 75%;
-      }
-      
-      /* Drawer overlay को 75% width दी और right 25% transparent */
-      .drawer-overlay.active {
-        background: linear-gradient(to right, rgba(0,0,0,0.5) 75%, rgba(0,0,0,0) 75%);
+        width: 85%;
+        max-width: 85%;
       }
       
       .subject-selector-btn, .performance-subject-btn {
@@ -2118,11 +2615,14 @@
         grid-template-columns: repeat(2, 1fr);
       }
       
-      /* Subject controls को mobile पर row में रखा */
-      .card h2 {
+      /* FIXED: Mobile पर subject header का layout */
+      .subject-header {
         flex-direction: column;
         align-items: flex-start;
-        gap: 10px;
+      }
+      
+      .subject-progress-mobile {
+        display: flex !important;
       }
       
       .subject-controls {
@@ -2130,6 +2630,7 @@
         width: 100%;
         justify-content: space-between;
         flex-direction: row;
+        margin-top: 10px;
       }
       
       .subject-controls button {
@@ -2141,6 +2642,19 @@
       
       .full-test-toggle {
         flex-direction: column;
+      }
+      
+      .test-congrats-content {
+        padding: 30px 20px;
+      }
+      
+      .test-congrats-content h2 {
+        font-size: 2rem;
+      }
+      
+      .test-congrats-image {
+        width: 250px;
+        height: 180px;
       }
     }
     
@@ -2207,6 +2721,24 @@
       .welcome-logo {
         width: 130px;
         height: 130px;
+      }
+      
+      .progress-bar {
+        max-width: 120px;
+      }
+      
+      .toggle-btn {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+      }
+      
+      .test-congrats-content h2 {
+        font-size: 1.8rem;
+      }
+      
+      .test-congrats-image {
+        width: 200px;
+        height: 150px;
       }
     }
     
@@ -2393,6 +2925,20 @@
       <p id="subjectCongratsMessage">You have successfully completed an entire subject! Your dedication is inspiring.</p>
       <div class="button-container">
         <button class="close-subject-congrats" id="closeSubjectCongrats">Celebrate & Continue</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Test Data Saved Congratulations Modal -->
+  <div class="test-congrats-modal" id="testCongratsModal">
+    <div class="test-congrats-content">
+      <div class="test-congrats-image">
+        <img src="https://image2url.com/images/1766104959384-526229c1-deb3-4ac8-949e-300960e18dfd.png" alt="Test Data Saved">
+      </div>
+      <h2>Test Data Saved!</h2>
+      <p>Your test data has been saved successfully. Keep up the good work!</p>
+      <div class="button-container">
+        <button class="close-test-congrats" id="closeTestCongrats">Continue</button>
       </div>
     </div>
   </div>
@@ -2593,7 +3139,7 @@
                       </div>
                     </div>
                     
-                    <button type="submit" class="btn-shine center-button">
+                    <button type="submit" class="btn-shine center-button" id="submitTestBtn">
                       <i class="fas fa-save"></i> Save & Update Graphs
                     </button>
                   </form>
@@ -3258,19 +3804,23 @@
         
         const header = document.createElement('div');
         header.className = 'subject-header';
+        
+        // Mobile-friendly HTML structure
         header.innerHTML = `
           <div class="subject-title">
             <span class="badge ${subject.colorClass}">${subject.title[currentLanguage].split('(')[0].trim()}</span>
           </div>
-          <div class="progress-wrap">
-            <div class="progress-bar">
-              <div class="progress-fill" id="bar_${subject.id}" style="width: ${progress}%"></div>
+          <div class="subject-progress-mobile" style="display: none;">
+            <div class="progress-wrap">
+              <div class="progress-bar">
+                <div class="progress-fill" id="bar_${subject.id}" style="width: ${progress}%"></div>
+              </div>
+              <div class="percent" id="percent_${subject.id}">${Math.round(progress)}%</div>
+              <button class="toggle-btn" data-toggle="${subject.id}">
+                ${collapsed ? '<i class="fas fa-chevron-right"></i>' : '<i class="fas fa-chevron-down"></i>'}
+                ${collapsed ? 'Expand' : 'Collapse'}
+              </button>
             </div>
-            <div class="percent" id="percent_${subject.id}">${Math.round(progress)}%</div>
-            <button class="toggle-btn" data-toggle="${subject.id}">
-              ${collapsed ? '<i class="fas fa-chevron-right"></i>' : '<i class="fas fa-chevron-down"></i>'}
-              ${collapsed ? 'Expand' : 'Collapse'}
-            </button>
           </div>
         `;
         
@@ -3306,18 +3856,18 @@
         subjectElement.appendChild(header);
         subjectElement.appendChild(topicsContainer);
         container.appendChild(subjectElement);
-      });
-      
-      document.querySelectorAll('.subject-header').forEach(header => {
+        
+        // Set up event listener for the subject header
+        const progressMobileEl = header.querySelector('.subject-progress-mobile');
         header.addEventListener('click', (e) => {
           if (e.target.closest('.toggle-btn')) return;
           
-          const subjectId = e.currentTarget.closest('.subject').dataset.subject;
+          const subjectId = subjectElement.dataset.subject;
           const topicsEl = document.getElementById(`topics_${subjectId}`);
           const collapsed = topicsEl.style.display === 'none';
           
           topicsEl.style.display = collapsed ? '' : 'none';
-          const btn = e.currentTarget.querySelector(`.toggle-btn[data-toggle="${subjectId}"]`);
+          const btn = header.querySelector(`.toggle-btn[data-toggle="${subjectId}"]`);
           if (btn) {
             btn.innerHTML = collapsed ? 
               '<i class="fas fa-chevron-down"></i> Collapse' : 
@@ -3328,6 +3878,13 @@
           saveUIState();
         });
       });
+      
+      // Now show the progress sections on mobile
+      setTimeout(() => {
+        document.querySelectorAll('.subject-progress-mobile').forEach(el => {
+          el.style.display = 'flex';
+        });
+      }, 100);
       
       document.querySelectorAll('.topic input[type="checkbox"]').forEach(checkbox => {
         checkbox.addEventListener('change', function() {
@@ -3494,6 +4051,11 @@
       
       document.getElementById('subjectCongratsModal').classList.add('active');
       launchBigConfetti();
+    }
+    
+    function showTestCongratsModal() {
+      document.getElementById('testCongratsModal').classList.add('active');
+      launchConfetti();
     }
     
     function launchConfetti() {
@@ -4349,28 +4911,28 @@
         this.querySelector('i').classList.toggle('fa-chevron-down');
       });
       
-      // Language toggle
-      document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-          const lang = this.dataset.lang;
+      // Language toggle - FIXED: Use event delegation
+      document.getElementById('languageSettings').addEventListener('click', function(e) {
+        const langBtn = e.target.closest('.lang-btn');
+        if (langBtn) {
+          const lang = langBtn.dataset.lang;
           setLanguage(lang);
           
           document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-          this.classList.add('active');
-          
-          updateAllTexts();
-        });
+          langBtn.classList.add('active');
+        }
       });
       
-      // Theme buttons
-      document.querySelectorAll('.theme-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-          const theme = this.dataset.theme;
+      // Theme buttons - FIXED: Use event delegation
+      document.getElementById('themeSettings').addEventListener('click', function(e) {
+        const themeBtn = e.target.closest('.theme-btn');
+        if (themeBtn) {
+          const theme = themeBtn.dataset.theme;
           setTheme(theme);
           
           document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
-          this.classList.add('active');
-        });
+          themeBtn.classList.add('active');
+        }
       });
       
       // Bottom Navigation Tabs
@@ -4483,7 +5045,7 @@
         });
       });
       
-      // CBT form submission
+      // CBT form submission - FIXED: Remove double validation
       document.getElementById('cbtForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -4493,6 +5055,12 @@
         const now = new Date();
         const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
         
+        // Disable submit button to prevent double submission
+        const submitBtn = document.getElementById('submitTestBtn');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+        submitBtn.disabled = true;
+        
         if (currentTestType === 'full') {
           const math = parseInt(document.getElementById('mathMarks').value) || 0;
           const reasoning = parseInt(document.getElementById('reasoningMarks').value) || 0;
@@ -4500,21 +5068,23 @@
           const accuracy = parseFloat(document.getElementById('accuracy').value) || 0;
           const total = math + reasoning + awareness;
           
-          if (total === 0) {
-            alert('Total marks cannot be 0. Please enter some marks.');
-            return;
-          }
-          
+          // Validate marks
           if (math < 0 || math > config.sections.math.maxMarks) {
             alert(`Mathematics marks must be between 0 and ${config.sections.math.maxMarks}`);
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
             return;
           }
           if (reasoning < 0 || reasoning > config.sections.reasoning.maxMarks) {
             alert(`Reasoning marks must be between 0 and ${config.sections.reasoning.maxMarks}`);
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
             return;
           }
           if (awareness < 0 || awareness > config.sections.awareness.maxMarks) {
             alert(`General Awareness marks must be between 0 and ${config.sections.awareness.maxMarks}`);
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
             return;
           }
           
@@ -4537,13 +5107,11 @@
           };
         } else {
           const marks = parseInt(document.getElementById('sectionalMarks').value) || 0;
-          if (marks === 0) {
-            alert('Marks cannot be 0. Please enter some marks.');
-            return;
-          }
           
           if (marks < 0 || marks > config.sections[currentTestType].maxMarks) {
             alert(`Marks must be between 0 and ${config.sections[currentTestType].maxMarks}`);
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
             return;
           }
           
@@ -4573,7 +5141,14 @@
         updateAllGraphs();
         updateAverageScores();
         
-        alert('Test data saved successfully! Graphs have been updated.');
+        // Reset button and show congratulations
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+        
+        // Show congratulations modal instead of alert
+        setTimeout(() => {
+          showTestCongratsModal();
+        }, 300);
       });
       
       // Control buttons
@@ -4667,6 +5242,10 @@
       
       document.getElementById('closeSubjectCongrats').addEventListener('click', () => {
         document.getElementById('subjectCongratsModal').classList.remove('active');
+      });
+      
+      document.getElementById('closeTestCongrats').addEventListener('click', () => {
+        document.getElementById('testCongratsModal').classList.remove('active');
       });
     }
     
